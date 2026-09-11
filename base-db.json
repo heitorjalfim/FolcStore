@@ -4,8 +4,8 @@
       "id": "1",
       "nomeArtesao": "Maria da Silva",
       "cpf": "012.345.678-90",
-      "email": "maria.artesao@example.com",
-      "senha": "12345678",
+      "email": "artesao@gmail.com",
+      "senha": "senha",
       "regiaoProducao": "Olinda",
       "telefone": "81999999999",
       "biografia": "Claro! Aqui vai uma versão curta e profissional:
@@ -22,8 +22,8 @@ Se quiser, posso adaptar para um artesão de madeira, cerâmica, palha, couro, t
     {
       "id": "1",
       "nome": "João Cliente",
-      "email": "joao.cliente@example.com",
-      "senha": "coxinha@10",
+      "email": "comprador@gmail.com",
+      "senha": "senha",
       "cpf": "123.456.789-00",
       "telefone": "81988887777",
       "enderecos": [
