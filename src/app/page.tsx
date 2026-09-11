@@ -5,7 +5,6 @@ import { useSessionStore } from '../store/sessionStore';
 import { useCartStore } from '../store/cartStore';
 
 export default function Home() {
-  // Pull the single login function instead
   const { user, login } = useSessionStore();
   const { items, addItem, removeItem, clearCart } = useCartStore();
 
@@ -21,20 +20,17 @@ export default function Home() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
 
-    {/* ROLE SWITCHER SECTION */}
     <section style={{ border: '1px solid #ddd', padding: '20px', borderRadius: '8px' }}>
     <h2>Change Your Role</h2>
     <p>Current Role: <strong>{user.role}</strong> ({user.name})</p>
 
     <div style={{ display: 'flex', gap: '10px' }}>
-    {/* Pass the ID for each specific mock user */}
     <button onClick={() => login('1')}>Set as Visitante</button>
     <button onClick={() => login('2')}>Set as Comprador</button>
     <button onClick={() => login('3')}>Set as Artesão</button>
     </div>
     </section>
 
-    {/* CART SECTION */}
     <section style={{ border: '1px solid #ddd', padding: '20px', borderRadius: '8px' }}>
     <h2>Shopping Cart Demo</h2>
     <button onClick={handleBuyProduct} style={{ marginBottom: '15px' }}>
