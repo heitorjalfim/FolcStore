@@ -1,0 +1,60 @@
+{
+  "artesaos": [
+    {
+      "id": "1",
+      "nomeArtesao": "Maria da Silva",
+      "cpf": "012.345.678-90",
+      "email": "maria.artesao@example.com",
+      "senha": "12345678",
+      "regiaoProducao": "Olinda",
+      "telefone": "81999999999",
+      "biografia": "Claro! Aqui vai uma versão curta e profissional:
+
+Biografia de artesão
+
+
+[Nome do artesão] é um artesão dedicado à criação de peças únicas, feitas à mão com criatividade, cuidado e atenção aos detalhes. Seu trabalho valoriza a tradição artesanal e transforma materiais em objetos que carregam personalidade, beleza e significado.
+
+Se quiser, posso adaptar para um artesão de madeira, cerâmica, palha, couro, tecido ou outro material, deixando a biografia mais pessoal."
+    }
+  ],
+  "customers": [
+    {
+      "id": "1",
+      "nome": "João Cliente",
+      "email": "joao.cliente@example.com",
+      "senha": "coxinha@10",
+      "cpf": "123.456.789-00",
+      "telefone": "81988887777",
+      "enderecos": [
+        {
+          "bairro": "São Thomaz",
+          "rua": "Rua da avenida",
+          "numero": "97",
+          "complemento": "casa",
+          "cidade": "Recife",
+          "estado": "PE"
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "IdArtesao": "1",
+      "título": "Vaso de Barro Decorativo",
+      "descriçao": "Vaso artesanal feito com argila regional.",
+      "materiaPrima": "Argila",
+      "tecnica": "Modelagem Manual",
+      "regiaoProducao": "Alto do Moura",
+      "categoria": "Decoração",
+      "preço": 95,
+      "QuantidadeEstoque": 12,
+      "dimensoes": "20cm x 15cm",
+      "LinkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ]
+    }
+  ]
+}
