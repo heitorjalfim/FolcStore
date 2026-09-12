@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSessionStore } from '@/store/sessionStore'; // Adjust path if your store is named differently
+import { sessionStore } from '@/store/sessionStore'; // Adjust path if your store is named differently
 import { userService } from '@/services/userService';
 
 export default function ArtesaoLoginPage() {
@@ -16,7 +16,7 @@ export default function ArtesaoLoginPage() {
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
-    const loginArtesao = useSessionStore((state) => state.loginArtesao);
+    const loginArtesao = sessionStore((state) => state.loginArtesao);
 
     // Do not render the form until the client has mounted to prevent SSR errors
     if (!mounted) return null;

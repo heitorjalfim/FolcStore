@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSessionStore } from '../store/sessionStore'; // Adjust path if needed
+import { sessionStore } from '../store/sessionStore'; // Adjust path if needed
 import { useCartStore } from '../store/cartStore';
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
   useEffect(() => setMounted(true), []);
 
   const router = useRouter();
-  const { customer, artesao, logoutAll } = useSessionStore();
+  const { customer, artesao, logoutAll } = sessionStore();
   const { items, addItem, removeItem, clearCart } = useCartStore();
 
   if (!mounted) return null;

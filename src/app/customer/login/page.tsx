@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSessionStore } from '@/store/sessionStore'; // Adjust path if your store is named differently
+import { sessionStore } from '@/store/sessionStore'; // Adjust path if your store is named differently
 import { userService } from '@/services/userService';
 
 export default function CustomerLoginPage() {
@@ -16,10 +16,17 @@ export default function CustomerLoginPage() {
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
-    const loginCustomer = useSessionStore((state) => state.loginCustomer);
+    const loginCustomer = sessionStore((state) => state.loginCustomer);
+    const isCustomerLogged = sessionStore((state) => state.isCustomerLogged)
+
+    useEffect(() => {
+        if(isCustomerLogged()) {
+            router.push('/')
+        }
+    },[]);
 
     // Do not render the form until the client has mounted to prevent SSR errors
-    if (!mounted) return null;
+    if (!mounted || isCustomerLogged()) return null;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
