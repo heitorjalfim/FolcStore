@@ -2,34 +2,35 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-export type Role = 'visitante' | 'comprador' | 'artesao';
-
-const MOCK_USERS = [
-    { id: '1', name: 'Usuário Visitante', role: 'visitante' as Role },
-    { id: '2', name: 'Usuário Comprador', role: 'comprador' as Role },
-    { id: '3', name: 'Usuário Artesão', role: 'artesao' as Role },
-                    ];
+import { Artesao, Customer } from './types';
 
 interface SessionState {
-    user: { id: string; name: string; role: Role };
-    login: (id: string) => void;
+    customer: Customer | null;
+    artesao: Artesao | null;
+
+    loginCustomer: (customer: Customer) => void;
+    logoutCustomer: () => void;
+
+    loginArtesao: (artesao: Artesao) => void;
+    logoutArtesao: () => void;
 }
 
 export const useSessionStore = create<SessionState>()(
     persist(
         (set) => ({
-            user: MOCK_USERS[0],
+            customer: null,
+            artesao: null,
 
-        login: (id: string) => set((state) => {
-            const foundUser = MOCK_USERS.find((u) => u.id === id);
+            loginCustomer: (customer) => set({ customer }),
+                  logoutCustomer: () => set({ customer: null }),
 
-            if (foundUser) {
-                return { user: foundUser };
-            }
-            return state;
+                  loginArtesao: (artesao) => set({ artesao }),
+                  logoutArtesao: () => set({ artesao: null }),
+
+                  logoutAll: () => set({ customer: null, artesao: null }),
         }),
-        }),
-        { name: 'session-storage' }
+        {
+            name: 'session-storage',
+        }
     )
 );

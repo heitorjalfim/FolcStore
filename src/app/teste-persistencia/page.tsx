@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { useSessionStore } from '../../store/sessionStore';
 
 export default function OlaRolePage() {
-    const { user } = useSessionStore();
     const [mounted, setMounted] = useState(false);
-
     useEffect(() => setMounted(true), []);
-
     if (!mounted) return null;
+
+    const { user } = useSessionStore();
+
 
     return (
         <div>
