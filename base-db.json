@@ -34,17 +34,17 @@
   "products": [
     {
       "id": "1",
-      "IdArtesao": "1",
-      "título": "Vaso de Barro Decorativo",
-      "descriçao": "Vaso artesanal feito com argila regional.",
+      "idArtesao": "1",
+      "titulo": "Vaso de Barro Decorativo",
+      "descricao": "Vaso artesanal feito com argila regional.",
       "materiaPrima": "Argila",
       "tecnica": "Modelagem Manual",
       "regiaoProducao": "Alto do Moura",
       "categoria": "Decoração",
-      "preço": 95,
-      "QuantidadeEstoque": 12,
+      "preco": 95,
+      "quantidadeEstoque": 12,
       "dimensoes": "20cm x 15cm",
-      "LinkImagens": [
+      "linkImagens": [
         "https://picsum.photos/200/300",
         "https://picsum.photos/200/300"
       ]
