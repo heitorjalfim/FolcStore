@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Artesao, Customer } from './types';
+import { Artesao, Customer } from '@/types';
 
 interface SessionState {
     customer: Customer | null;

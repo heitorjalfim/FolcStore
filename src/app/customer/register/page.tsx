@@ -1,1 +1,1 @@
-export default function customerRegisterPage() { }
+export default function CustomerRegisterPage() { }
