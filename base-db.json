@@ -2,7 +2,7 @@
   "artesaos": [
     {
       "id": "1",
-      "nomeArtesao": "Maria da Silva",
+      "nome": "Maria da Silva",
       "cpf": "012.345.678-90",
       "email": "artesao@gmail.com",
       "senha": "senha",

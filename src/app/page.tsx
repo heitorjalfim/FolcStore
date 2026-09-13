@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { sessionStore } from '../store/sessionStore'; // Adjust path if needed
+import { sessionStore } from '../store/sessionStore';
 import { useCartStore } from '../store/cartStore';
 
 export default function Home() {
@@ -15,44 +15,12 @@ export default function Home() {
 
   if (!mounted) return null;
 
-  // Dynamically determine the current role and name
-  let currentRole = 'Visitante';
-  let currentName = 'Anônimo';
-
-  if (customer) {
-    currentRole = 'Comprador';
-    currentName = customer.nome;
-  } else if (artesao) {
-    currentRole = 'Artesão';
-    currentName = artesao.nomeArtesao;
-  }
-
   const handleBuyProduct = () => {
     addItem({ id: 'p1', name: 'Handmade Vase', price: 45.0 });
   };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', padding: '20px' }}>
-
-    <section style={{ border: '1px solid #ddd', padding: '20px', borderRadius: '8px' }}>
-    <h2>Sessão Atual</h2>
-    <p>Current Role: <strong>{currentRole}</strong> ({currentName})</p>
-
-    <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
-    {/* Show Login buttons if no one is logged in */}
-    {!customer && !artesao && (
-      <>
-      <button onClick={() => router.push('/customer/login')}>Login como Comprador</button>
-      <button onClick={() => router.push('/artesao/login')}>Login como Artesão</button>
-      </>
-    )}
-
-    {/* Show Logout if either user type is logged in */}
-    {(customer || artesao) && (
-      <button onClick={logoutAll}>Sair (Logout)</button>
-    )}
-    </div>
-    </section>
 
     <section style={{ border: '1px solid #ddd', padding: '20px', borderRadius: '8px' }}>
     <h2>Shopping Cart Demo</h2>

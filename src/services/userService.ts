@@ -1,5 +1,5 @@
 import { api } from './api';
-import { Customer, Artesao } from '@/types'; // Adjust path if your types are elsewhere
+import { Customer, Artesao } from '@/types';
 
 export const userService = {
     async loginCustomer(email: string, senha: string): Promise<Customer | null> {
@@ -14,5 +14,15 @@ export const userService = {
             params: { email, senha },
         });
         return response.data.length > 0 ? response.data[0] : null;
+    },
+
+    async registerCustomer(customerData: Omit<Customer, 'id'>): Promise<Customer> {
+        const response = await api.post<Customer>('/customers', customerData);
+        return response.data;
+    },
+
+    async registerArtesao(artesaoData: Omit<Artesao, 'id'>): Promise<Artesao> {
+        const response = await api.post<Artesao>('/artesaos', artesaoData);
+        return response.data;
     }
 };

@@ -1,6 +1,6 @@
 export interface Artesao {
     id: string;
-    nomeArtesao: string;
+    nome: string;
     cpf: string;
     email: string;
     senha: string;
