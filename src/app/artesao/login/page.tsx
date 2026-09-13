@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { sessionStore } from '@/store/sessionStore';
 import { userService } from '@/services/userService';
 
-export default function CustomerLoginPage() {
+export default function ArtesaoLoginPage() {
     const [mounted, setMounted] = useState(false);
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
@@ -14,14 +14,15 @@ export default function CustomerLoginPage() {
     const router = useRouter();
     const loginArtesao = sessionStore((state) => state.loginArtesao);
     const isArtesaoLogged = sessionStore((state) => state.isArtesaoLogged)
+    const register = () => router.push('/artesao/register');
 
     useEffect(() => setMounted(true), []);
 
     useEffect(() => {
-        if(isArtesaoLogged()) {
+        if (isArtesaoLogged()) {
             router.push('/artesao')
         }
-    },[]);
+    }, []);
 
     if (!mounted || isArtesaoLogged()) return null;
 
@@ -49,37 +50,38 @@ export default function CustomerLoginPage() {
 
     return (
         <div>
-        <h2>Login de Artesão</h2>
-        {error && <p>{error}</p>}
+            <h2>Login de Artesão</h2>
+            {error && <p>{error}</p>}
 
-        <form onSubmit={handleSubmit}>
-        <div>
-        <label>E-mail:</label>
-        <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        />
-        </div>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>E-mail:</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
 
-        <div>
-        <label>Senha:</label>
-        <input
-        type="password"
-        value={senha}
-        onChange={(e) => setSenha(e.target.value)}
-        required
-        />
-        </div>
+                <div>
+                    <label>Senha:</label>
+                    <input
+                        type="password"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                        required
+                    />
+                </div>
 
-        <button
-        type="submit"
-        disabled={isLoading}
-        >
-        {isLoading ? 'Entrando...' : 'Entrar como Artesão'}
-        </button>
-        </form>
+                <button
+                    type="submit"
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Entrando...' : 'Entrar como Artesão'}
+                </button>
+            </form>
+            <button onClick={register}>Registrar</button>
         </div>
     );
 }

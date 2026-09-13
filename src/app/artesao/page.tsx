@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { sessionStore } from '@/store/sessionStore';
 
-export default function ArtesaoDashboard() {
+export default function Artesao() {
     const [mounted, setMounted] = useState(false);
     const router = useRouter();
 
@@ -30,10 +30,10 @@ export default function ArtesaoDashboard() {
 
     return (
         <div>
-        <h1>Dashboard Artesão</h1>
-        <p>Bem-vindo, {artesao?.nome}</p>
+            <h1>Dashboard Artesão</h1>
+            <p>Bem-vindo, {artesao?.nome}</p>
 
-        <button onClick={handleLogout}>Sair (Logout)</button>
+            <button onClick={handleLogout}>Sair (Logout)</button>
         </div>
     );
 }

@@ -30,10 +30,10 @@ export default function CustomerPage() {
 
     return (
         <div>
-        <h1>Dashboard customer</h1>
-        <p>Bem-vindo, {customer?.nome}</p>
+            <h1>Dashboard customer</h1>
+            <p>Bem-vindo, {customer?.nome}</p>
 
-        <button onClick={handleLogout}>Sair (Logout)</button>
+            <button onClick={handleLogout}>Sair (Logout)</button>
         </div>
     );
 }

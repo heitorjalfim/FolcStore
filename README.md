@@ -2,6 +2,7 @@
 
 ```bash
 npm install
+npm run produzirDB
 ```
 
 ## Rodando
@@ -16,8 +17,12 @@ npm run dev:full
 
 Essa aplicação usa json-server para subir uma API localmente para testes usando os seguintes endpoints:
 
-http://localhost:3001/artesaos
-http://localhost:3001/customers
+http://localhost:3001/artesaos<br>
+http://localhost:3001/customers<br>
 http://localhost:3001/products
 
-Toda vez que o mock api sobe, é usado uma copia de base-db.json para não poluir a base de dados falsa. Para alteração persistente dos dados mockados, altere base-db.json e tipagem em src/types
+base-db.json é a base de dados mockados, o comando "npm run produzirDB" cria local-db.json que sera usado pra API local. Para resetar local-db.json, execute:
+
+```bash
+npm run produzirDB
+```

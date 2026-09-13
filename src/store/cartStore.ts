@@ -17,7 +17,7 @@ interface CartState {
     clearCart: () => void;
 }
 
-export const useCartStore = create<CartState>()(
+export const cartStore = create<CartState>()(
     persist(
         (set) => ({
             items: [],
@@ -29,7 +29,7 @@ export const useCartStore = create<CartState>()(
                 return { items: [...state.items, { ...newItem, quantity: 1 }] };
             }),
             removeItem: (id) => set((state) => ({ items: state.items.filter((i) => i.id !== id) })),
-                  clearCart: () => set({ items: [] }),
+            clearCart: () => set({ items: [] }),
         }),
         { name: 'cart-storage' }
     )

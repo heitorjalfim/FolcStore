@@ -14,14 +14,15 @@ export default function CustomerLoginPage() {
     const router = useRouter();
     const loginCustomer = sessionStore((state) => state.loginCustomer);
     const isCustomerLogged = sessionStore((state) => state.isCustomerLogged)
+    const register = () => router.push('/customer/register');
 
     useEffect(() => setMounted(true), []);
 
     useEffect(() => {
-        if(isCustomerLogged()) {
+        if (isCustomerLogged()) {
             router.push('/customer')
         }
-    },[]);
+    }, []);
 
     if (!mounted || isCustomerLogged()) return null;
 
@@ -49,37 +50,38 @@ export default function CustomerLoginPage() {
 
     return (
         <div>
-        <h2>Login de Comprador</h2>
-        {error && <p>{error}</p>}
+            <h2>Login de Comprador</h2>
+            {error && <p>{error}</p>}
 
-        <form onSubmit={handleSubmit}>
-        <div>
-        <label>E-mail:</label>
-        <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        />
-        </div>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>E-mail:</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
 
-        <div>
-        <label>Senha:</label>
-        <input
-        type="password"
-        value={senha}
-        onChange={(e) => setSenha(e.target.value)}
-        required
-        />
-        </div>
+                <div>
+                    <label>Senha:</label>
+                    <input
+                        type="password"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                        required
+                    />
+                </div>
 
-        <button
-        type="submit"
-        disabled={isLoading}
-        >
-        {isLoading ? 'Entrando...' : 'Entrar como Comprador'}
-        </button>
-        </form>
+                <button
+                    type="submit"
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Entrando...' : 'Entrar como Comprador'}
+                </button>
+            </form>
+            <button onClick={register}>Registrar</button>
         </div>
     );
 }
