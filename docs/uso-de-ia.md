@@ -9,8 +9,7 @@ A equipe utilizou ferramentas de Inteligência Artificial durante o desenvolvime
 
 Caso tenha utilizado, descreva de forma geral como a IA apoiou o desenvolvimento do projeto.
 
-A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a estrutura inicial (boilerplate) do frontend, implementar lógica de negocio e codigo exemplo para a equipe entender o funcionamento e boilerplate de bibliotecas como Zustand
-
+A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a estrutura inicial (boilerplate) do frontend, implementar lógica de negocio e codigo exemplo para a equipe entender o funcionamento e boilerplate de bibliotecas como Zustand. Além disso, a IA apoiou o entendimento do ciclo de vida de renderização do Next.js (Hydration), estruturou requisições HTTP (Axios) para a Fake API, e ajudou a depurar erros lógicos no fluxo de hooks do React.
 ---
 
 ## 2. Ferramentas utilizadas
@@ -29,12 +28,14 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 
 | Data | Ferramenta | Uso realizado | Parte do projeto impactada | Resultado incorporado? | Revisão feita pela equipe |
 |---|---|---|---|---|---|
-| 10/09/2026 | Gemini | Criação das stores de sessão e carrinho usando Zustand com a dependência de persistência (`persist`).[cite: 3] | Frontend, Gerenciamento de Estado | Sim | A equipe revisou o código inicial e solicitou a divisão em dois arquivos isolados (`sessionStore.ts` e `cartStore.ts`).[cite: 3] |
-| 10/09/2026 | Gemini | Resolução de erros de "hydration mismatch" entre o servidor do Next.js e o navegador (`localStorage`).[cite: 3] | Frontend, Páginas | Sim | A equipe validou e aplicou a lógica do estado `mounted` via `useEffect` para impedir a renderização inicial incorreta.[cite: 3] |
-| 10/09/2026 | Gemini | Refatoração do sistema de login simulado, alterando de funções isoladas para busca por `id` em um array de usuários mockados.[cite: 3] | Frontend, Sessão/Autenticação | Sim | A lógica foi testada e integrada aos botões da interface garantindo as trocas de perfis corretas.[cite: 3] |
+| 10/09/2026 | Gemini | Criação das stores de sessão e carrinho usando Zustand com a dependência de persistência (`persist`).| Frontend, Gerenciamento de Estado | Sim | A equipe revisou o código inicial e solicitou a divisão em dois arquivos isolados (`sessionStore.ts` e `cartStore.ts`).|
+| 10/09/2026 | Gemini | Resolução de erros de "hydration mismatch" entre o servidor do Next.js e o navegador (`localStorage`). | Frontend, Páginas | Sim | A equipe validou e aplicou a lógica do estado `mounted` via `useEffect` para impedir a renderização inicial incorreta. |
+| 10/09/2026 | Gemini | Refatoração do sistema de login simulado, alterando de funções isoladas para busca por `id` em um array de usuários mockados. | Frontend, Sessão/Autenticação | Sim | A lógica foi testada e integrada aos botões da interface garantindo as trocas de perfis corretas. |
 | 11/09/2026 | Gemini | Configuração do `json-server` e criação do arquivo `routes.json` baseados nos contratos de API do projeto. | Backend (Fake API) | Sim | A equipe validou a estrutura JSON final e testou as requisições HTTP (`curl`) localmente. |
 | 11/09/2026 | Gemini | Downgrade de versão da biblioteca `json-server` para restaurar compatibilidade de rotas. | Dependências, Ambiente | Sim | A equipe executou os comandos recomendados para substituir a versão que quebrava o script local. |
 | 11/09/2026 | Gemini | Criação do script NPM `preapi` para automatizar a cópia do arquivo `base-db.json` e evitar conflitos no Git. | Configuração (package.json) | Sim | O fluxo foi adaptado ao ambiente Linux da equipe, usando comandos bash para copiar o arquivo a cada inicialização do servidor. |
+| 13/09/2026 | Gemini | Explicação do ciclo de hidratação e implementação de Proteção de Rotas (Route Guards) para as páginas de Dashboard e Login. | Frontend, Roteamento | Sim | A equipe posicionou as barreiras de retorno nulo (`return null`) rigorosamente após a declaração dos hooks, respeitando as regras do React. |
+| 13/09/2026 | Gemini | Implementação de serviços HTTP (Axios) para Login e Cadastro na Fake API, utilizando o utilitário TypeScript `Omit` para ignorar o campo `id`. | Frontend, Consumo de API | Sim | O código foi integrado aos formulários de autenticação de Clientes e Artesãos, permitindo a persistência simulada. |
 
 ---
 
@@ -68,19 +69,28 @@ Prompt ou descrição:
 Como a resposta foi utilizada:
 > A resposta orientou a criação do arquivo `routes.json` para prefixar as rotas da Fake API com `/api/v1/` e estruturou o banco de dados inicial (`base-db.json`) contendo todos os atributos exigidos nos contratos. As orientações permitiram testar a API mockada de forma isolada antes da construção do backend real.
 
+### Prompt 4
+
+Prompt ou descrição:
+> "what is the best place to put if(!mounted || isCustomerLogged()) return null; ?"
+
+Como a resposta foi utilizada:
+> A resposta confirmou o local exato (antes do retorno JSX e após todas as declarações de Hooks) e explicou os motivos técnicos (Rules of Hooks), o que auxiliou a equipe a aplicar a lógica de proteção de rota de maneira segura nas páginas de Dashboard sem gerar erros no React
+
+
 ---
 
 ## 5. Partes do projeto que tiveram apoio de IA
 
 Marquem os itens em que houve uso de IA.
 
-- [ ] Entendimento do problema
+- [x] Entendimento do problema
 - [ ] Pesquisa técnica
 - [ ] Prototipação de telas
 - [x] Estruturação do frontend
 - [ ] Componentização
 - [x] Tipagem TypeScript
-- [ ] Consumo de API
+- [x] Consumo de API
 - [x] Fake API
 - [ ] Backend
 - [ ] Banco de dados
@@ -121,6 +131,8 @@ Registro da equipe:
 - Falta de extensões em arquivos: a IA recomendou arquivos sem enfatizar que, devido à sintaxe JSX no Next.js (Turbopack), os arquivos precisavam obrigatoriamente da extensão `.tsx`, ocasionando um erro de "The default export is not a React Component". A equipe corrigiu renomeando o arquivo.
 - Conflito de versão na dependência: a IA gerou scripts para o `json-server` utilizando a flag `--routes`, que foi removida nas versões 1.0+ da ferramenta, quebrando a inicialização da API local. A equipe precisou intervir, relatar o erro de terminal ("Unknown option '--routes'") e aplicar um downgrade forçado para a versão `0.17.4` para restaurar o funcionamento da Fake API.
 - Gestão de versão do banco de dados: a IA sugeriu inicialmente usar o `.gitignore` para mascarar as alterações do arquivo `db.json`, o que falhou pois o arquivo já estava sendo rastreado pelo Git. A equipe interveio e alterou a estratégia para uma abordagem de template, criando um `base-db.json` e automatizando sua cópia para um `running-db.json` via script no NPM.
+- Tela em branco por dependência de Hooks: Durante a implementação da proteção do Dashboard, a equipe enfrentou um erro de "not loading" (tela em branco). A IA foi utilizada para diagnosticar que o gatilho de redirecionamento falhava por conta de um array de dependências vazio `[]` no `useEffect`, além de uma inconsistência de tipagem (`nome` vs `nomeArtesao`) não alinhada ao contrato da API. A equipe corrigiu ambas as falhas guiada pela explicação técnica.
+
 
 ---
 
