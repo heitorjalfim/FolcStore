@@ -21,7 +21,7 @@ http://localhost:3001/artesaos<br>
 http://localhost:3001/customers<br>
 http://localhost:3001/products
 
-base-db.json é a base de dados mockados, o comando "npm run produzirDB" cria local-db.json que sera usado pra API local. Para resetar local-db.json, execute:
+O arquivo base-db.json é a base que é copiada para o BD local. Para resetar a DB local, execute:
 
 ```bash
 npm run produzirDB
