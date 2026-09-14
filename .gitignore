@@ -41,4 +41,4 @@ yarn-error.log*
 next-env.d.ts
 
 # nao boilerplate
-running-db.json
+local-db.json
