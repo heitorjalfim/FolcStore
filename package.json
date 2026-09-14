@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "produzirDB": "cp base-db.json local-db.json",
-    "api": "json-server --watch local-db.json --routes routes.json --port 3001",
+    "produzirDB": "cp base-db.json running-db.json",
+    "api": "json-server --watch running-db.json --routes routes.json --port 3001",
     "dev": "next dev",
     "dev:full": "concurrently \"npm run api\" \"npm run dev\"",
     "build": "next build",

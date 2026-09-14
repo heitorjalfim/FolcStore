@@ -16,26 +16,25 @@ import {
     Spinner
 } from '@chakra-ui/react';
 
-export default function CustomerLoginPage() {
+export default function AdminLoginPage() {
     const [mounted, setMounted] = useState(false);
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    const salvarCustomer = sessionStore((state) => state.salvarCustomer);
-    const isCustomerLogged = sessionStore((state) => state.isCustomerLogged)
-    const register = () => router.push('/customer/register');
+    const salvarAdmin = sessionStore((state) => state.salvarAdmin);
+    const isAdminLogged = sessionStore((state) => state.isAdminLogged)
 
     useEffect(() => setMounted(true), []);
 
     useEffect(() => {
-        if (isCustomerLogged()) {
-            router.push('/customer')
+        if (isAdminLogged()) {
+            router.push('/admin')
         }
     }, []);
 
-    if (!mounted || isCustomerLogged()) return (
+    if (!mounted || isAdminLogged()) return (
         <Flex minH="80vh" align="center" justify="center">
             <Spinner size="xl" color="brand.500" />
         </Flex>
@@ -47,11 +46,11 @@ export default function CustomerLoginPage() {
         setError('');
 
         try {
-            const customer = await userService.loginCustomer(email, senha);
+            const admin = await userService.loginAdmin(email, senha);
 
-            if (customer) {
-                salvarCustomer(customer);
-                router.push('/customer');
+            if (admin) {
+                salvarAdmin(admin);
+                router.push('/admin');
             } else {
                 setError('E-mail ou senha inválidos.');
             }
@@ -68,7 +67,7 @@ export default function CustomerLoginPage() {
             <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="md">
                 <VStack spacing={6} align="stretch">
                     <Heading size="lg" textAlign="center" color="brand.500">
-                        Login de Cliente
+                        Login de Admin
                     </Heading>
 
                     {error && (
@@ -109,21 +108,12 @@ export default function CustomerLoginPage() {
                                 loadingText="Entrando..."
                                 mt={2}
                             >
-                                Entrar como Cliente
+                                Entrar como Admin
                             </Button>
                         </VStack>
                     </form>
-
-                    <Button
-                        onClick={register}
-                        variant="ghost"
-                        colorPalette="brand"
-                        w="full"
-                    >
-                        Registrar como Cliente
-                    </Button>
                 </VStack>
             </Box>
         </Flex>
-    );
+    )
 }

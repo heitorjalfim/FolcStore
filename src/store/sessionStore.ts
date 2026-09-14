@@ -2,19 +2,24 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Artesao, Customer } from '@/types';
+import { Artesao, Customer, Admin } from '@/types';
 
 interface SessionState {
     customer: Customer | null;
     artesao: Artesao | null;
+    admin: Admin | null;
 
     isCustomerLogged: () => boolean;
-    loginCustomer: (customer: Customer) => void;
+    salvarCustomer: (customer: Customer) => void;
     logoutCustomer: () => void;
 
     isArtesaoLogged: () => boolean;
-    loginArtesao: (artesao: Artesao) => void;
+    salvarArtesao: (artesao: Artesao) => void;
     logoutArtesao: () => void;
+
+    isAdminLogged: () => boolean;
+    salvarAdmin: (admin: Admin) => void;
+    logoutAdmin: () => void;
 
     logoutAll: () => void;
 }
@@ -24,14 +29,19 @@ export const sessionStore = create<SessionState>()(
         (set, get) => ({
             customer: null,
             artesao: null,
+            admin: null,
 
             isCustomerLogged: () => get().customer !== null,
-            loginCustomer: (customer) => set({ customer }),
+            salvarCustomer: (customer) => set({ customer }),
             logoutCustomer: () => set({ customer: null }),
 
             isArtesaoLogged: () => get().artesao !== null,
-            loginArtesao: (artesao) => set({ artesao }),
+            salvarArtesao: (artesao) => set({ artesao }),
             logoutArtesao: () => set({ artesao: null }),
+
+            isAdminLogged: () => get().admin !== null,
+            salvarAdmin: (admin) => set({ admin }),
+            logoutAdmin: () => set({ artesao: null }),
 
             logoutAll: () => set({ customer: null, artesao: null }),
         }),

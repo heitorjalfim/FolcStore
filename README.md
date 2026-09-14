@@ -19,7 +19,8 @@ Essa aplicação usa json-server para subir uma API localmente para testes usand
 
 http://localhost:3001/artesaos<br>
 http://localhost:3001/customers<br>
-http://localhost:3001/products
+http://localhost:3001/products<br>
+http://localhost:3001/admins<br>
 
 O arquivo base-db.json é a base que é copiada para o BD local. Para resetar a DB local, execute:
 

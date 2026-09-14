@@ -1,12 +1,3 @@
-export interface Endereco {
-    bairro: string;
-    rua: string;
-    numero: string;
-    complemento: string;
-    cidade: string;
-    estado: string;
-}
-
 export interface Customer {
     id: string;
     nome: string;
@@ -15,4 +6,13 @@ export interface Customer {
     cpf: string;
     telefone: string;
     enderecos: Endereco[];
+}
+
+export interface Endereco {
+    bairro: string;
+    rua: string;
+    numero: string;
+    complemento: string;
+    cidade: string;
+    estado: string;
 }

@@ -1,19 +1,18 @@
 {
   "artesaos": [
     {
-      "id": "1",
       "nome": "Maria da Silva",
       "cpf": "012.345.678-90",
       "email": "artesao@gmail.com",
       "senha": "senha",
       "regiaoProducao": "Olinda",
       "telefone": "81999999999",
-      "biografia": "Claro! Aqui vai uma versão curta e profissional: Biografia de artesão [Nome do artesão] é um artesão dedicado à criação de peças únicas, feitas à mão com criatividade, cuidado e atenção aos detalhes. Seu trabalho valoriza a tradição artesanal e transforma materiais em objetos que carregam personalidade, beleza e significado. Se quiser, posso adaptar para um artesão de madeira, cerâmica, palha, couro, tecido ou outro material, deixando a biografia mais pessoal."
+      "biografia": "Claro! Aqui vai uma versão curta e profissional: Biografia de artesão [Nome do artesão] é um artesão dedicado à criação de peças únicas, feitas à mão com criatividade, cuidado e atenção aos detalhes. Seu trabalho valoriza a tradição artesanal e transforma materiais em objetos que carregam personalidade, beleza e significado. Se quiser, posso adaptar para um artesão de madeira, cerâmica, palha, couro, tecido ou outro material, deixando a biografia mais pessoal.",
+      "id": "e1eK141d4u70m471c4m3n73"
     }
   ],
   "customers": [
     {
-      "id": "1",
       "nome": "João Cliente",
       "email": "comprador@gmail.com",
       "senha": "senha",
@@ -28,12 +27,12 @@
           "cidade": "Recife",
           "estado": "PE"
         }
-      ]
+      ],
+      "id": "3s3mp3B0t4n0F1nnn"
     }
   ],
   "products": [
     {
-      "id": "1",
       "idArtesao": "1",
       "titulo": "Vaso de Barro Decorativo",
       "descricao": "Vaso artesanal feito com argila regional.",
@@ -47,7 +46,16 @@
       "linkImagens": [
         "https://picsum.photos/200/300",
         "https://picsum.photos/200/300"
-      ]
+      ],
+      "id": "posseee"
+    }
+  ],
+  "admins": [
+    {
+      "nome": "Cirio Adinilson",
+      "email": "admin@gmail.com",
+      "senha": "senha",
+      "id": "wasd"
     }
   ]
 }

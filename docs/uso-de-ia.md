@@ -36,6 +36,9 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 | 11/09/2026 | Gemini | Criação do script NPM `preapi` para automatizar a cópia do arquivo `base-db.json` e evitar conflitos no Git. | Configuração (package.json) | Sim | O fluxo foi adaptado ao ambiente Linux da equipe, usando comandos bash para copiar o arquivo a cada inicialização do servidor. |
 | 13/09/2026 | Gemini | Explicação do ciclo de hidratação e implementação de Proteção de Rotas (Route Guards) para as páginas de Dashboard e Login. | Frontend, Roteamento | Sim | A equipe posicionou as barreiras de retorno nulo (`return null`) rigorosamente após a declaração dos hooks, respeitando as regras do React. |
 | 13/09/2026 | Gemini | Implementação de serviços HTTP (Axios) para Login e Cadastro na Fake API, utilizando o utilitário TypeScript `Omit` para ignorar o campo `id`. | Frontend, Consumo de API | Sim | O código foi integrado aos formulários de autenticação de Clientes e Artesãos, permitindo a persistência simulada. |
+| 14/09/2026 | Gemini | Conversão dos formulários de autenticação e registro para componentes básicos do Chakra UI v3 (`Field.Root`, `Grid`, `Box`, `Button`). | Frontend, Componentização/UI | Sim | A equipe validou a estrutura visual, o uso de temas personalizados (`brand`) e o comportamento responsivo dos inputs. |
+| 14/09/2026 | Gemini | Implementação de validação de duplicidade de E-mail e CPF nos serviços de cadastro (`userService`) com tratamento de exceções via `throw new Error`. | Frontend/Backend, Validação de Dados | Sim | A equipe revisou a captura de erros no bloco `catch` dos formulários e testou as mensagens personalizadas exibidas aos usuários. |
+| 14/09/2026 | Gemini | Adaptação do cadastro de Clientes para suportar a nova estrutura complexa de dados do tipo `Endereco` (array de objetos). | Frontend, Tipagem TypeScript | Sim | A equipe validou o mapeamento correto dos inputs do formulário para o payload esperado pela API. |
 
 ---
 
@@ -77,6 +80,21 @@ Prompt ou descrição:
 Como a resposta foi utilizada:
 > A resposta confirmou o local exato (antes do retorno JSX e após todas as declarações de Hooks) e explicou os motivos técnicos (Rules of Hooks), o que auxiliou a equipe a aplicar a lógica de proteção de rota de maneira segura nas páginas de Dashboard sem gerar erros no React
 
+### Prompt 5
+
+Prompt ou descrição:
+> por favor altere pra user componentes basico de chakra ui
+
+Como a resposta foi utilizada:
+> deu um boilerplate bonito
+
+### Prompt 6
+
+Prompt ou descrição:
+> change this to check if someone with the same email or cpf already exists, and return a different error for each
+
+Como a resposta foi utilizada:
+> depois de algumas iterações foi mantido o try catch
 
 ---
 
@@ -88,7 +106,7 @@ Marquem os itens em que houve uso de IA.
 - [ ] Pesquisa técnica
 - [ ] Prototipação de telas
 - [x] Estruturação do frontend
-- [ ] Componentização
+- [x] Componentização
 - [x] Tipagem TypeScript
 - [x] Consumo de API
 - [x] Fake API
@@ -132,6 +150,8 @@ Registro da equipe:
 - Conflito de versão na dependência: a IA gerou scripts para o `json-server` utilizando a flag `--routes`, que foi removida nas versões 1.0+ da ferramenta, quebrando a inicialização da API local. A equipe precisou intervir, relatar o erro de terminal ("Unknown option '--routes'") e aplicar um downgrade forçado para a versão `0.17.4` para restaurar o funcionamento da Fake API.
 - Gestão de versão do banco de dados: a IA sugeriu inicialmente usar o `.gitignore` para mascarar as alterações do arquivo `db.json`, o que falhou pois o arquivo já estava sendo rastreado pelo Git. A equipe interveio e alterou a estratégia para uma abordagem de template, criando um `base-db.json` e automatizando sua cópia para um `running-db.json` via script no NPM.
 - Tela em branco por dependência de Hooks: Durante a implementação da proteção do Dashboard, a equipe enfrentou um erro de "not loading" (tela em branco). A IA foi utilizada para diagnosticar que o gatilho de redirecionamento falhava por conta de um array de dependências vazio `[]` no `useEffect`, além de uma inconsistência de tipagem (`nome` vs `nomeArtesao`) não alinhada ao contrato da API. A equipe corrigiu ambas as falhas guiada pela explicação técnica.
+- Limite de tokens
+- Queria tratar erros quebrando o programa
 
 
 ---
