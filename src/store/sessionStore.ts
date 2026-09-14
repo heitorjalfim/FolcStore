@@ -43,7 +43,7 @@ export const sessionStore = create<SessionState>()(
             salvarAdmin: (admin) => set({ admin }),
             logoutAdmin: () => set({ artesao: null }),
 
-            logoutAll: () => set({ customer: null, artesao: null }),
+            logoutAll: () => set({ customer: null, artesao: null, admin: null }),
         }),
         {
             name: 'session-storage',
