@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import AvaliacaoCard from "./components/AvaliacaoCard";
 import FormularioAvaliacao from "./components/FormularioAvaliacao";
+import ListaAvaliacoes from "./components/ListaAvaliacoes";
 
 type Avaliacao = {
   nota: number;
@@ -21,19 +21,10 @@ export default function Home() {
     setAvaliacoes([...avaliacoes, novaAvaliacao]);
   }
 
-  let conteudo;
-  if (avaliacoes.length === 0) {
-    conteudo = <p>Ainda não há avaliações para esse vendedor.</p>;
-  } else {
-    conteudo = avaliacoes.map((avaliacao, index) => (
-      <AvaliacaoCard key={index} avaliacao={avaliacao} />
-    ));
-  }
-
   return (
     <div>
       <h1>Avaliações do produto</h1>
-      {conteudo}
+      <ListaAvaliacoes avaliacoes={avaliacoes} />
       <FormularioAvaliacao onEnviar={adicionarAvaliacao} />
     </div>
   );
