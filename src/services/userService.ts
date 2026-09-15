@@ -1,5 +1,5 @@
 import { apiService } from './apiService';
-import { Customer, Artesao, Admin } from '@/types';
+import { Customer, Artesao, Admin, Product } from '@/types';
 
 export const userService = {
     async loginCustomer(email: string, senha: string): Promise<Customer | null> {
@@ -58,6 +58,28 @@ export const userService = {
         }
 
         const response = await apiService.post<Artesao>('/artesaos', artesaoData);
+        return response.data;
+    },
+
+    async getProduct(tituloOrId: string | number): Promise<Product | null> {
+        try {
+            // Tenta buscar diretamente pela rota padrão de ID/slug se o backend suportar
+            const response = await apiService.get<Product>(`/products/${tituloOrId}`);
+            return response.data;
+        } catch {
+            // Fallback: se a API espera busca por parâmetro ou se falhar, buscamos todos e filtramos
+            const response = await apiService.get<Product[]>('/products');
+            const produtoEncontrado = response.data.find(
+                (p) => String(p.id) === String(tituloOrId) || p.titulo.toLowerCase() === String(tituloOrId).toLowerCase()
+            );
+            return produtoEncontrado || null;
+        }
+    },
+
+    async getProducts(titulo?: string): Promise<Product[]> {
+        const response = await apiService.get<Product[]>('/products', {
+            params: titulo ? { titulo } : undefined,
+        });
         return response.data;
     }
 };

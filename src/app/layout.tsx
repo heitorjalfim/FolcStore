@@ -35,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                                         <Link href="/customer" style={linkStyle}>Cliente</Link>
                                         <Link href="/artesao" style={linkStyle}>Artesão</Link>
                                         <Link href="/admin" style={linkStyle}>Admin</Link>
+                                        <Link href="/cart" style={linkStyle}>Carrinho</Link>
                                         <Link href="/debug" style={linkStyle}>debug();</Link>
                                     </Flex>
                                 </Flex>
