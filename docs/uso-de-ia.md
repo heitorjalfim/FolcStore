@@ -44,6 +44,7 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 | 16/09/2026 | Gemini | Correção de erro de rede (AxiosError - Network Error) na busca de produtos em destaque/recomendados no json-server. | Frontend, Consumo de API | Sim | A lógica de busca foi refatorada para buscar a lista completa de produtos e filtrá-los no frontend (`userService.ts`) com base nos arrays de IDs retornados. |
 | 16/09/2026 | Gemini | Resolução do problema de renderização de informações do Artesão na página de detalhes do Produto ("Informações não disponíveis"). | Frontend/Backend (Fake API) | Sim | A IA identificou que o endpoint chamado no `userService` estava no singular (`/artesao/`) ao invés do plural esperado pelo json-server (`/artesaos/`). A equipe corrigiu a rota. |
 | 16/09/2026 | Gemini | Solução para remover um arquivo já rastreado (`running-db.json`) do histórico do Git sem deletá-lo localmente, complementando o `.gitignore`. | Configuração, Git | Sim | A equipe executou o comando `git rm --cached` e validou que o arquivo parou de ser rastreado nos próximos commits. |
+| 16/09/2026 | Gemini | Fazer o atributo cor funcionar. | Chakra | Não | O gemini tentava implementar codigo errado, creio que do Chakra V2 |
 
 ---
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { Box, Heading, Text, VStack, HStack, Button, Image } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -19,19 +19,24 @@ type ProductWithImages = Product & {
 };
 
 export default function DetalheProdutoPage({ params }: PageProps) {
+    const resolvedParams = use(params);
+    const productId = resolvedParams.id;
+
     const [produto, setProduto] = useState<ProductWithImages | null>(null);
     const [artesao, setArtesao] = useState<Artesao | null>(null);
     const [loading, setLoading] = useState(true);
     const [quantidade, setQuantidade] = useState(1);
+    const [erroEstoque, setErroEstoque] = useState(false);
+    const [isNavigating, setIsNavigating] = useState(false);
 
     const router = useRouter();
+
     const addItem = cartStore((state) => state.addItem);
+    const cartItems = cartStore((state: any) => state.items || []);
 
     useEffect(() => {
         async function fetchDados() {
-            const resolvedParams = await params;
-            const productId = resolvedParams.id;
-
+            setLoading(true);
             const produtoRes = await userService.getProduct(productId);
             setProduto(produtoRes);
 
@@ -48,7 +53,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         }
 
         fetchDados();
-    }, [params]);
+    }, [productId]);
 
     if (loading) {
         return (
@@ -81,10 +86,24 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     }
 
     const estoqueDisponivel = produto.quantidadeEstoque ?? 0;
-    const esgotado = estoqueDisponivel < 1;
+
+    const quantidadeNoCarrinho = cartItems.reduce((total: number, item: any) => {
+        if (String(item.id) === String(produto.id)) {
+            return total + (item.quantity || 1);
+        }
+        return total;
+    }, 0);
+
+    const estoqueRestante = estoqueDisponivel - quantidadeNoCarrinho;
+    const esgotado = estoqueDisponivel < 1 || estoqueRestante < 1;
+    const limiteAtingido = quantidade > estoqueRestante || estoqueRestante < 1;
+
+    if (quantidade > estoqueRestante && estoqueRestante > 0) {
+        setQuantidade(estoqueRestante);
+    }
 
     const handleIncrement = () => {
-        if (quantidade < estoqueDisponivel) {
+        if (quantidade < estoqueRestante) {
             setQuantidade((prev) => prev + 1);
         }
     };
@@ -96,7 +115,11 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     };
 
     const handleAddToCart = () => {
-        if (esgotado || quantidade > estoqueDisponivel) return;
+        if (esgotado || limiteAtingido || quantidade > estoqueRestante || isNavigating) {
+            return;
+        }
+
+        setIsNavigating(true);
 
         for (let i = 0; i < quantidade; i++) {
             addItem({
@@ -108,6 +131,8 @@ export default function DetalheProdutoPage({ params }: PageProps) {
 
         router.push("/cart");
     };
+
+    const botaoDesabilitado = Boolean(esgotado || limiteAtingido || isNavigating || quantidade > estoqueRestante);
 
     return (
         <Box maxW="7xl" mx="auto" py={8} px={4}>
@@ -133,22 +158,28 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                         R$ {produto.preco.toFixed(2)}
                     </Text>
 
-                    <Text fontSize="sm" color={esgotado ? "red.500" : "gray.600"} mb={4}>
-                        {esgotado ? "Produto Esgotado" : `Estoque disponível: ${estoqueDisponivel}`}
+                    <Text fontSize="sm" color={esgotado ? "red.500" : "gray.600"} mb={1}>
+                        {esgotado ? "Produto Esgotado" : `Estoque total: ${estoqueDisponivel}`}
                     </Text>
 
-                    <Text color="gray.700" mb={6}>
+                    <Text color="gray.700" mb={6} mt={3}>
                         {produto.descricao}
                     </Text>
 
-                    {!esgotado && (
+                    {!esgotado && quantidadeNoCarrinho > 0 && !isNavigating && (
+                        <Text fontSize="sm" color="orange.500" mb={4} fontWeight="medium">
+                            Você já tem esse item no seu carrinho. (Total {quantidadeNoCarrinho})
+                        </Text>
+                    )}
+
+                    {!esgotado && estoqueRestante > 0 && (
                         <HStack spacing={4} mb={6} align="center">
                             <Text fontWeight="medium">Quantidade:</Text>
                             <HStack>
                                 <Button
                                     size="sm"
                                     onClick={handleDecrement}
-                                    isDisabled={quantidade <= 1}
+                                    disabled={quantidade <= 1 || isNavigating}
                                 >
                                     -
                                 </Button>
@@ -156,7 +187,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                 <Button
                                     size="sm"
                                     onClick={handleIncrement}
-                                    isDisabled={quantidade >= estoqueDisponivel}
+                                    disabled={quantidade >= estoqueRestante || isNavigating}
                                 >
                                     +
                                 </Button>
@@ -164,17 +195,29 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                         </HStack>
                     )}
 
+                    {erroEstoque && !isNavigating && (
+                        <Text color="red.500" fontSize="sm" mb={4}>
+                            A quantidade selecionada excede o estoque disponível.
+                        </Text>
+                    )}
+
                     <Button
-                        colorScheme="blue"
                         size="lg"
+                        bg="blue.500"
+                        color="white"
+                        _hover={{ bg: "blue.600" }}
                         onClick={handleAddToCart}
-                        isDisabled={esgotado}
+                        disabled={botaoDesabilitado}
+                        loading={isNavigating}
                         mb={6}
                     >
-                        {esgotado ? "Indisponível" : "Adicionar ao Carrinho"}
+                        {esgotado || estoqueRestante < 1
+                            ? "Indisponível"
+                            : limiteAtingido
+                                ? "Limite do estoque no carrinho"
+                                : "Adicionar ao Carrinho"}
                     </Button>
 
-                    {/* Substituído o Divider por uma borda superior via Box */}
                     <Box pt={6} borderTop="1px solid" borderColor="gray.200" w="full">
                         {artesao ? (
                             <Box bg="gray.50" p={4} borderRadius="md" borderWidth="1px" borderColor="gray.200" w="full">
@@ -191,7 +234,6 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                     as={Link}
                                     href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}
                                     size="sm"
-                                    colorScheme="teal"
                                     variant="outline"
                                 >
                                     Ver Perfil do Artesão

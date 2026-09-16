@@ -17,7 +17,7 @@ export default function CartPage() {
                         Seu carrinho está vazio
                     </Heading>
                     <Text color="gray.500">Adicione alguns produtos para começar a comprar.</Text>
-                    <Button as={Link} href="/" colorScheme="blue" mt={2}>
+                    <Button as={Link} href="/" mt={2}>
                         Voltar para a Loja
                     </Button>
                 </VStack>
@@ -56,8 +56,7 @@ export default function CartPage() {
                                         </Text>
                                         <Button
                                             size="sm"
-                                            colorScheme="red"
-                                            variant="outline"
+                                            bg="red"
                                             onClick={() => removeItem(item.id)}
                                         >
                                             Remover
@@ -69,7 +68,7 @@ export default function CartPage() {
                     </VStack>
 
                     <Flex justify="space-between" align="center" mt={6} pt={4} borderTop="2px solid" borderColor="gray.100">
-                        <Button size="sm" variant="ghost" colorScheme="gray" onClick={clearCart}>
+                        <Button size="sm" variant="ghost" bg="gray" onClick={clearCart}>
                             Esvaziar Carrinho
                         </Button>
                         <Text fontSize="xl" fontWeight="bold" color="gray.800">
@@ -82,7 +81,7 @@ export default function CartPage() {
                     <Button
                         as={Link}
                         href="/cart/checkout"
-                        colorScheme="blue"
+                        bg="blue"
                         size="lg"
                     >
                         Finalizar Compra

@@ -29,7 +29,7 @@ export default function CheckoutSubmitPage() {
                     <Input placeholder="Ex: Cartão de Crédito, Pix..." />
                 </Box>
 
-                <Button colorScheme="blue" size="lg" w="full" mt={4}>
+                <Button bg="blue" size="lg" w="full" mt={4}>
                     Confirmar Pedido
                 </Button>
 

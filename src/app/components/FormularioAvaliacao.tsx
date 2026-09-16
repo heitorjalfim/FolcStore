@@ -106,7 +106,7 @@ export default function FormularioAvaliacao({ onEnviar }: FormularioAvaliacaoPro
                 </Box>
 
                 <Button
-                    colorScheme="blue"
+                    bg="blue"
                     onClick={enviarAvaliacao}
                     w="full"
                 >
