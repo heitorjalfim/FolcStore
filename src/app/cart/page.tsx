@@ -3,6 +3,8 @@
 import { Box, Heading, Text, VStack, HStack, Button, Flex } from "@chakra-ui/react";
 import Link from "next/link";
 import { cartStore } from "@/store/cartStore";
+import SecaoProdutos from "@/app/components/SecaoProdutos";
+
 
 export default function CartPage() {
     const { items, removeItem, clearCart } = cartStore();
@@ -87,6 +89,7 @@ export default function CartPage() {
                         Finalizar Compra
                     </Button>
                 </Flex>
+                <SecaoProdutos tipo="recomendado" titulo="Compre também" />
             </VStack>
         </Box>
     );

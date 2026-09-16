@@ -18,15 +18,18 @@ export default function SecaoProdutos({ titulo, tipo }: SecaoProdutosProps) {
     useEffect(() => {
         async function fetchData() {
             try {
-                const resultado = tipo === "destaque"
-                    ? await userService.getDestaques()
-                    : await userService.getRecomendados();
-
+                let resultado: Product[] = [];
+                if (tipo === "destaque") {
+                    resultado = await userService.getDestaques()
+                }
+                if (tipo === "recomendado") {
+                    resultado = await userService.getRecomendados();
+                }
                 setProdutos(resultado);
             } catch (error) {
                 console.error(`Erro ao carregar ${titulo}:`, error);
             } finally {
-                setLoading(false); // Garante que o estado de loading desliga por último
+                setLoading(false);
             }
         }
 
