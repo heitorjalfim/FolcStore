@@ -81,7 +81,7 @@ export default function CartPage() {
                 <Flex justify="flex-end" gap={4}>
                     <Button
                         as={Link}
-                        href="/cart/submit"
+                        href="/cart/checkout"
                         colorScheme="blue"
                         size="lg"
                     >

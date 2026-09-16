@@ -7,18 +7,8 @@
       "senha": "senha",
       "regiaoProducao": "Olinda",
       "telefone": "81999999999",
-      "biografia": "Claro! Aqui vai uma versão curta e profissional: Biografia de artesão [Nome do artesão] é um artesão dedicado à criação de peças únicas, feitas à mão com criatividade, cuidado e atenção aos detalhes. Seu trabalho valoriza a tradição artesanal e transforma materiais em objetos que carregam personalidade, beleza e significado. Se quiser, posso adaptar para um artesão de madeira, cerâmica, palha, couro, tecido ou outro material, deixando a biografia mais pessoal.",
-      "id": "arte1"
-    },
-    {
-      "nome": "Joao de Carmago",
-      "cpf": "012.345.678-91",
-      "email": "artesao2@gmail.com",
-      "senha": "senha",
-      "regiaoProducao": "Recife",
-      "telefone": "81999999999",
-      "biografia": "Muito artistico.",
-      "id": "arte2"
+      "biografia": "Biografia de artesão...",
+      "id": "e1eK141d4u70m471c4m3n73"
     }
   ],
   "customers": [
@@ -43,7 +33,7 @@
   ],
   "products": [
     {
-      "idArtesao": "arte1",
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
       "titulo": "Vaso de Barro Decorativo",
       "descricao": "Vaso artesanal feito com argila regional.",
       "materiaPrima": "Argila",
@@ -53,33 +43,27 @@
       "preco": 95,
       "quantidadeEstoque": 12,
       "dimensoes": "20cm x 15cm",
-      "linkImagens": [
-        "https://picsum.photos/200/300",
-        "https://picsum.photos/200/300"
-      ],
-      "id": "posseee"
+      "linkImagens": ["https://picsum.photos/200/300"],
+      "id": "1"
     },
     {
-      "idArtesao": "arte1",
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
       "titulo": "Boneco de Barro Vitalino",
-      "descricao": "Escultura em miniatura inspirada no tradicional figurino nordestino, rica em detalhes e expressividade.",
+      "descricao": "Escultura em miniatura inspirada no tradicional figurino nordestino.",
       "materiaPrima": "Argila",
-      "tecnica": "Modelagem e Queima a Frio",
+      "tecnica": "Modelagem",
       "regiaoProducao": "Caruaru",
       "categoria": "Escultura",
       "preco": 150,
       "quantidadeEstoque": 5,
       "dimensoes": "18cm x 10cm",
-      "linkImagens": [
-        "https://picsum.photos/200/301",
-        "https://picsum.photos/200/301"
-      ],
-      "id": "prod-002"
+      "linkImagens": ["https://picsum.photos/200/301"],
+      "id": "2"
     },
     {
-      "idArtesao": "arte2",
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
       "titulo": "Cesta de Palha de Carnaúba",
-      "descricao": "Cesta trançada à mão com fibra natural de carnaúba, ideal para organização e decoração rústica.",
+      "descricao": "Cesta trançada à mão com fibra natural.",
       "materiaPrima": "Palha de Carnaúba",
       "tecnica": "Trançado Manual",
       "regiaoProducao": "Olinda",
@@ -87,16 +71,13 @@
       "preco": 60,
       "quantidadeEstoque": 20,
       "dimensoes": "30cm x 30cm",
-      "linkImagens": [
-        "https://picsum.photos/200/302",
-        "https://picsum.photos/200/302"
-      ],
-      "id": "prod-003"
+      "linkImagens": ["https://picsum.photos/200/302"],
+      "id": "3"
     },
     {
-      "idArtesao": "arte2",
-      "titulo": "Porta-Retrato em Madeira de Demolição",
-      "descricao": "Porta-retrato sustentável produzido com madeira reaproveitada e acabamento em cera de abelha.",
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Porta-Retrato em Madeira",
+      "descricao": "Porta-retrato sustentável produzido com madeira reaproveitada.",
       "materiaPrima": "Madeira",
       "tecnica": "Marcenaria Artesanal",
       "regiaoProducao": "Recife",
@@ -104,19 +85,22 @@
       "preco": 45,
       "quantidadeEstoque": 8,
       "dimensoes": "22cm x 17cm",
-      "linkImagens": [
-        "https://picsum.photos/200/303",
-        "https://picsum.photos/200/303"
-      ],
-      "id": "prod-004"
+      "linkImagens": ["https://picsum.photos/200/303"],
+      "id": "4"
     }
   ],
   "admins": [
     {
-      "nome": "Cirio Adimilson",
+      "nome": "Cirio Adinilson",
       "email": "admin@gmail.com",
       "senha": "senha",
       "id": "wasd"
     }
-  ]
+  ],
+  "productsDestaque": [
+  {
+  "ids":["1","2"]}],
+  "productsRecomendado": [
+  {
+  "ids":["3","4"]}]
 }

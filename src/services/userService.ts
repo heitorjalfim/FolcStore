@@ -61,18 +61,12 @@ export const userService = {
         return response.data;
     },
 
-    async getProduct(tituloOrId: string | number): Promise<Product | null> {
+    async getProduct(id: string | number): Promise<Product | null> {
         try {
-            // Tenta buscar diretamente pela rota padrão de ID/slug se o backend suportar
-            const response = await apiService.get<Product>(`/products/${tituloOrId}`);
+            const response = await apiService.get<Product>(`/products/${id}`);
             return response.data;
         } catch {
-            // Fallback: se a API espera busca por parâmetro ou se falhar, buscamos todos e filtramos
-            const response = await apiService.get<Product[]>('/products');
-            const produtoEncontrado = response.data.find(
-                (p) => String(p.id) === String(tituloOrId) || p.titulo.toLowerCase() === String(tituloOrId).toLowerCase()
-            );
-            return produtoEncontrado || null;
+            return null;
         }
     },
 
@@ -81,5 +75,31 @@ export const userService = {
             params: titulo ? { titulo } : undefined,
         });
         return response.data;
+    },
+
+    async getDestaques(): Promise<Product[]> {
+        const response = await apiService.get<Array<{ ids: string[] }>>('/productsDestaque');
+        const idsDestaque = response.data.length > 0 ? response.data[0].ids : [];
+
+        const produtos = await this.getProducts();
+        return produtos.filter((p) => idsDestaque.includes(String(p.id)));
+    },
+
+    async getRecomendados(): Promise<Product[]> {
+        const response = await apiService.get<Array<{ ids: string[] }>>('/productsRecomendado');
+        const idsRecomendado = response.data.length > 0 ? response.data[0].ids : [];
+
+        const produtos = await this.getProducts();
+        return produtos.filter((p) => idsRecomendado.includes(String(p.id)));
+    },
+
+    async getArtesaoById(id: string): Promise<Artesao | null> {
+        try {
+            const response = await apiService.get<Artesao>(`/artesaos/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao buscar artesão:", error);
+            return null;
+        }
     }
 };
