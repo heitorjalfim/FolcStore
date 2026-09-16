@@ -39,6 +39,11 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 | 14/09/2026 | Gemini | Conversão dos formulários de autenticação e registro para componentes básicos do Chakra UI v3 (`Field.Root`, `Grid`, `Box`, `Button`). | Frontend, Componentização/UI | Sim | A equipe validou a estrutura visual, o uso de temas personalizados (`brand`) e o comportamento responsivo dos inputs. |
 | 14/09/2026 | Gemini | Implementação de validação de duplicidade de E-mail e CPF nos serviços de cadastro (`userService`) com tratamento de exceções via `throw new Error`. | Frontend/Backend, Validação de Dados | Sim | A equipe revisou a captura de erros no bloco `catch` dos formulários e testou as mensagens personalizadas exibidas aos usuários. |
 | 14/09/2026 | Gemini | Adaptação do cadastro de Clientes para suportar a nova estrutura complexa de dados do tipo `Endereco` (array de objetos). | Frontend, Tipagem TypeScript | Sim | A equipe validou o mapeamento correto dos inputs do formulário para o payload esperado pela API. |
+| 16/09/2026 | Gemini | Refatoração do `RootLayout` para remover o Chakra UI provisoriamente, substituindo-o por tags semânticas HTML e classes Tailwind CSS nativas. | Frontend, Layout/UI | Sim | A equipe testou o layout sem o `<Provider>` e validou o funcionamento do roteamento. |
+| 16/09/2026 | Gemini | Resolução de erro de build "Export useToast doesn't exist" e "Export Divider doesn't exist" causado pela atualização do Chakra UI v3. | Frontend, Componentização/UI | Sim | A equipe removeu os componentes obsoletos (`useToast`, `Divider`) e implementou alternativas nativas (estados locais e `<Box borderTop>`) sugeridas pela IA. |
+| 16/09/2026 | Gemini | Correção de erro de rede (AxiosError - Network Error) na busca de produtos em destaque/recomendados no json-server. | Frontend, Consumo de API | Sim | A lógica de busca foi refatorada para buscar a lista completa de produtos e filtrá-los no frontend (`userService.ts`) com base nos arrays de IDs retornados. |
+| 16/09/2026 | Gemini | Resolução do problema de renderização de informações do Artesão na página de detalhes do Produto ("Informações não disponíveis"). | Frontend/Backend (Fake API) | Sim | A IA identificou que o endpoint chamado no `userService` estava no singular (`/artesao/`) ao invés do plural esperado pelo json-server (`/artesaos/`). A equipe corrigiu a rota. |
+| 16/09/2026 | Gemini | Solução para remover um arquivo já rastreado (`running-db.json`) do histórico do Git sem deletá-lo localmente, complementando o `.gitignore`. | Configuração, Git | Sim | A equipe executou o comando `git rm --cached` e validou que o arquivo parou de ser rastreado nos próximos commits. |
 
 ---
 
@@ -96,6 +101,31 @@ Prompt ou descrição:
 Como a resposta foi utilizada:
 > depois de algumas iterações foi mantido o try catch
 
+### Prompt 7
+
+Prompt ou descrição:
+> rewrite without chakra [for the RootLayout component]
+> remove provider and the like
+
+Como a resposta foi utilizada:
+> A equipe solicitou a remoção do Chakra UI e do `<Provider>` do `RootLayout`. A IA converteu a estrutura para usar tags HTML semânticas e o sistema de utilitários do Tailwind CSS, mantendo o design original responsivo.
+
+### Prompt 8
+
+Prompt ou descrição:
+> productsDestaque and productsRecomendado are just id string
+
+Como a resposta foi utilizada:
+> A equipe informou que o banco de dados simulado retornava apenas arrays de IDs para os destaques. A IA sugeriu alterar a lógica no `userService` para buscar a lista de IDs e, em seguida, fazer um `.filter()` em todos os produtos (`/products`) carregados no frontend para preencher os componentes corretamente, resolvendo um erro de rede do Axios.
+
+### Prompt 9
+
+Prompt ou descrição:
+> why is running-db.json getting tracked on git [followed by the .gitignore file and package.json]
+
+Como a resposta foi utilizada:
+> A IA explicou o comportamento do Git (arquivos já rastreados não são ignorados automaticamente) e forneceu o comando `git rm --cached running-db.json`. A equipe aplicou a solução para limpar o cache do Git mantendo o arquivo de desenvolvimento intacto.
+
 ---
 
 ## 5. Partes do projeto que tiveram apoio de IA
@@ -104,7 +134,7 @@ Marquem os itens em que houve uso de IA.
 
 - [x] Entendimento do problema
 - [ ] Pesquisa técnica
-- [ ] Prototipação de telas
+- [x] Prototipação de telas
 - [x] Estruturação do frontend
 - [x] Componentização
 - [x] Tipagem TypeScript
