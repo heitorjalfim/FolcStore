@@ -1,42 +1,41 @@
-// Importa funções do Chakra UI para criar e configurar um sistema de design.
-// createSystem -> cria o sistema de tema do Chakra
-// defineConfig -> define a configuração personalizada
-// defaultConfig -> configuração padrão do Chakra
-import { createSystem, defineConfig, defaultConfig } from "@chakra-ui/react";
+import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
-
-// Aqui criamos a configuração personalizada do tema.
-// Essa configuração será usada para modificar ou expandir o tema padrão do Chakra.
 const config = defineConfig({
-    theme: {
-
-        // tokens são variáveis de design (design tokens).
-        // Eles representam valores reutilizáveis como cores, espaçamentos, fontes etc.
-        tokens: {
-
-            // Definimos cores personalizadas para o projeto.
-            colors: {
-
-                // "brand" é um grupo de cores da marca da aplicação.
-                // Esse padrão é comum em design systems.
-                brand: {
-
-                    // Cor principal da marca
-                    500: { value: "#1A365D" },
-
-                    // Uma variação mais escura da cor principal
-                    600: { value: "#153E75" },
-                },
-            },
+  theme: {
+    tokens: {
+      colors: {
+        brand: {
+          50: { value: "#f9f7e3" },
+          100: { value: "#eee9b8" },
+          200: { value: "#e2db8c" },
+          300: { value: "#d6cd5f" },
+          400: { value: "#cbc03c" },
+          500: { value: "#b8ad2a" },
+          600: { value: "#9c9420" },
+          700: { value: "#7a7318" },
+          800: { value: "#57530f" },
+          900: { value: "#353207" },
         },
+      },
+      fonts: {
+        heading: { value: `'Inter', system-ui, sans-serif` },
+        body: { value: `'Inter', system-ui, sans-serif` },
+      },
     },
+    semanticTokens: {
+      colors: {
+        brand: {
+          solid: { value: "{colors.brand.500}" },
+          contrast: { value: "{colors.gray.900}" },
+          fg: { value: "{colors.brand.700}" },
+          muted: { value: "{colors.brand.100}" },
+          subtle: { value: "{colors.brand.50}" },
+          emphasized: { value: "{colors.brand.600}" },
+          focusRing: { value: "{colors.brand.500}" },
+        },
+      },
+    },
+  },
 });
 
-
-// Aqui criamos o "system" do Chakra.
-// Esse system junta:
-// - a configuração padrão do Chakra (defaultConfig)
-// - com nossa configuração personalizada (config)
-
-// Esse objeto final será usado no ChakraProvider
 export const system = createSystem(defaultConfig, config);

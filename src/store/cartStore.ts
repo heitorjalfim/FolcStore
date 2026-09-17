@@ -1,36 +1,72 @@
-'use client';
+import { create } from "zustand";
+import { Product, CartItem } from "@/types/product";
 
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-
-interface CartItem {
-    id: string;
-    name: string;
-    price: number;
-    quantity: number;
+interface CartStore {
+  items: CartItem[];
+  addItem: (product: Product) => void;
+  removeItem: (productId: number) => void;
+  updateQuantity: (productId: number, quantity: number) => void;
+  clearCart: () => void;
+  totalItems: () => number;
+  totalPrice: () => number;
 }
 
-interface CartState {
-    items: CartItem[];
-    addItem: (item: Omit<CartItem, 'quantity'>) => void;
-    removeItem: (id: string) => void;
-    clearCart: () => void;
-}
+export const useCartStore = create<CartStore>((set, get) => ({
+  items: [],
 
-export const cartStore = create<CartState>()(
-    persist(
-        (set) => ({
-            items: [],
-            addItem: (newItem) => set((state) => {
-                const exists = state.items.find((i) => i.id === newItem.id);
-                if (exists) {
-                    return { items: state.items.map((i) => i.id === newItem.id ? { ...i, quantity: i.quantity + 1 } : i) };
-                }
-                return { items: [...state.items, { ...newItem, quantity: 1 }] };
-            }),
-            removeItem: (id) => set((state) => ({ items: state.items.filter((i) => i.id !== id) })),
-            clearCart: () => set({ items: [] }),
-        }),
-        { name: 'cart-storage' }
-    )
-);
+  addItem: (product: Product) => {
+    set((state) => {
+      const existing = state.items.find(
+        (item) => item.product.id === product.id
+      );
+
+      if (existing) {
+        return {
+          items: state.items.map((item) =>
+            item.product.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          ),
+        };
+      }
+
+      return {
+        items: [...state.items, { product, quantity: 1 }],
+      };
+    });
+  },
+
+  removeItem: (productId: number) => {
+    set((state) => ({
+      items: state.items.filter((item) => item.product.id !== productId),
+    }));
+  },
+
+  updateQuantity: (productId: number, quantity: number) => {
+    if (quantity <= 0) {
+      get().removeItem(productId);
+      return;
+    }
+
+    set((state) => ({
+      items: state.items.map((item) =>
+        item.product.id === productId ? { ...item, quantity } : item
+      ),
+    }));
+  },
+
+  clearCart: () => {
+    set({ items: [] });
+  },
+
+  totalItems: () => {
+    return get().items.reduce((sum, item) => sum + item.quantity, 0);
+  },
+
+  totalPrice: () => {
+    return get().items.reduce(
+      (sum, item) => sum + item.product.preco * item.quantity,
+      0
+    );
+  },
+}));
