@@ -20,11 +20,11 @@ export default function Home() {
   // Carrega todos os produtos uma vez na inicialização
   useEffect(() => {
     async function loadProducts() {
-     /* try {
+      try {
         setIsLoading(true);
         setError(null);
 
-       / const data = await productService.getAll();
+       // const data = await productService.getAll();
         setAllProducts(data);
         setDisplayedProducts(data);
       } catch (err) {
@@ -32,7 +32,7 @@ export default function Home() {
         console.error(err);
       } finally {
         setIsLoading(false);
-      }}*/
+      }
     }
 
     loadProducts();

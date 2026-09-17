@@ -32,7 +32,7 @@ export default function Home() {
         console.error(err);
       } finally {
         setIsLoading(false);
-      }}*/
+      }
     }
 
     loadProducts();
