@@ -5,9 +5,9 @@ import { Box, Container, Heading, HStack, Input, InputGroup, Button, Text, VStac
 import { LuSearch } from "react-icons/lu";
 import { Product } from "@/types/product";
 import { productService } from "@/services/productService";
-import { Header } from "../app/components/Header";
+import { Header } from "./components/Header";
 import { CategoryFilter } from "../app/components/CategoryFilter";
-import { ProductList } from "../app/components/ProductList";
+import { ProductList } from "./components/ProductList";
 
 export default function Home() {
   const [allProducts, setAllProducts] = useState<Product[]>([]); 

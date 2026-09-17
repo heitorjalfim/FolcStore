@@ -41,7 +41,7 @@ export const sessionStore = create<SessionState>()(
 
             isAdminLogged: () => get().admin !== null,
             salvarAdmin: (admin) => set({ admin }),
-            logoutAdmin: () => set({ admin: null }),
+            logoutAdmin: () => set({ artesao: null }),
 
             logoutAll: () => set({ customer: null, artesao: null, admin: null }),
         }),
