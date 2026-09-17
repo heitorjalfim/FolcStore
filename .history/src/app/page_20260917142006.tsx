@@ -5,9 +5,9 @@ import { Box, Container, Heading, HStack, Input, InputGroup, Button, Text, VStac
 import { LuSearch } from "react-icons/lu";
 import { Product } from "@/types/product";
 import { productService } from "@/services/productService";
-import { Header } from "./components/Header";
-import { CategoryFilter } from "./components/CategoryFilter";
-import { ProductList } from "./components/ProductList";
+import { Header } from "../app/components/Header";
+import { CategoryFilter } from "../app/components/CategoryFilter";
+import { ProductList } from "../app/components/ProductList";
 
 export default function Home() {
   const [allProducts, setAllProducts] = useState<Product[]>([]); 
@@ -20,7 +20,7 @@ export default function Home() {
   // Carrega todos os produtos uma vez na inicialização
   useEffect(() => {
     async function loadProducts() {
-      try {
+     try {
         setIsLoading(true);
         setError(null);
 
@@ -32,7 +32,7 @@ export default function Home() {
         console.error(err);
       } finally {
         setIsLoading(false);
-      }
+      }}
     }
 
     loadProducts();
@@ -42,7 +42,7 @@ export default function Home() {
   async function handleSearch(termOverride?: string) {
     const term = (termOverride !== undefined ? termOverride : searchInput).trim();
 
-    try {
+   /* try {
       setIsLoading(true);
       setError(null);
 
@@ -56,8 +56,8 @@ export default function Home() {
       console.error(err);
     } finally {
       setIsLoading(false);
-    }
-  }
+    }*/
+  } 
 
   // Busca automática a cada letra digitada (com debounce de 300ms)
   useEffect(() => {

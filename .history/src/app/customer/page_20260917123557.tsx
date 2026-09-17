@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { sessionStore } from '@/store/sessionStore';
-import { productService } from '@/services/productService';
+//import { productService } from '@/services/productService';
 import { Product } from '@/types/product';
 import NextLink from 'next/link';
 import { useCartStore } from '@/store/cartStore';
@@ -49,7 +49,7 @@ export default function CustomerDashboard() {
         }
     }, [mounted, isCustomerLogged, router]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         async function loadProducts() {
             try {
                 setIsLoadingProducts(true);
@@ -74,7 +74,7 @@ export default function CustomerDashboard() {
             </Flex>
         );
     }
-  
+  */
     const handleLogout = () => {
         logoutCustomer();
         router.push('/');
