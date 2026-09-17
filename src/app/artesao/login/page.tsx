@@ -66,7 +66,7 @@ export default function ArtesaoLoginPage() {
     return (
         <Flex minH="80vh" align="center" justify="center">
             <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="md">
-                <VStack spacing={6} align="stretch">
+                <VStack gap={6} align="stretch">
                     <Heading size="lg" textAlign="center" color="brand.500">
                         Login de Artesão
                     </Heading>
@@ -78,7 +78,7 @@ export default function ArtesaoLoginPage() {
                     )}
 
                     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-                        <VStack spacing={4}>
+                        <VStack gap={4}>
                             <Field.Root required>
                                 <Field.Label>E-mail</Field.Label>
                                 <Input
