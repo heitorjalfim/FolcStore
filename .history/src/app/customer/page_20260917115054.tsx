@@ -74,7 +74,7 @@ export default function CustomerDashboard() {
             </Flex>
         );
     }
-  */
+*/
     const handleLogout = () => {
         logoutCustomer();
         router.push('/');

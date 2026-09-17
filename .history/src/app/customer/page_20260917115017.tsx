@@ -49,7 +49,7 @@ export default function CustomerDashboard() {
         }
     }, [mounted, isCustomerLogged, router]);
 
-    /*useEffect(() => {
+    8/useEffect(() => {
         async function loadProducts() {
             try {
                 setIsLoadingProducts(true);
@@ -74,7 +74,7 @@ export default function CustomerDashboard() {
             </Flex>
         );
     }
-  */
+
     const handleLogout = () => {
         logoutCustomer();
         router.push('/');

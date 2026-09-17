@@ -60,7 +60,7 @@ export default function CustomerDashboard() {
             } finally {
                 setIsLoadingProducts(false);
             }
-        }
+        }*/
 
         if (isCustomerLogged()) {
             loadProducts();
@@ -74,7 +74,7 @@ export default function CustomerDashboard() {
             </Flex>
         );
     }
-  */
+
     const handleLogout = () => {
         logoutCustomer();
         router.push('/');

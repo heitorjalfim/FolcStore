@@ -294,7 +294,7 @@ export default function CustomerRegisterPage() {
               </GridItem>
 
               <GridItem colSpan={{ base: 1, md: 2 }}>
-                <VStack gap={3} mt={4}>
+                <VStack spacing={3} mt={4}>
                   <Button
                     type="submit"
                     colorPalette="brand"

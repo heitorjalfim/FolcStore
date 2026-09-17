@@ -108,7 +108,7 @@ export default function CustomerLoginPage() {
           )}
 
           <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-            <VStack gap={4}>
+            <VStack spacing={4}>
               <Field.Root required>
                 <Field.Label>E-mail</Field.Label>
                 <Input
