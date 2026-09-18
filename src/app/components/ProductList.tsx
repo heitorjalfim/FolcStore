@@ -8,9 +8,10 @@ interface ProductListProps {
   products: Product[];
   isLoading: boolean;
   error: string | null;
+  onAddToCart?: (product: Product) => void;
 }
 
-export function ProductList({ products, isLoading, error }: ProductListProps) {
+export function ProductList({ products, isLoading, error, onAddToCart }: ProductListProps) {
   if (isLoading) {
     return (
       <Center py={20}>
@@ -45,7 +46,7 @@ export function ProductList({ products, isLoading, error }: ProductListProps) {
   return (
     <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap={6}>
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
       ))}
     </SimpleGrid>
   );

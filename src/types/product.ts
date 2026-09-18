@@ -10,11 +10,10 @@ export interface Product {
     preco: number;
     quantidadeEstoque: number;
     dimensoes: string;
-    imagem: string;
     linkImagens: string[];
 }
 
 export interface CartItem {
-  product: Product;
-  quantity: number;
+    product: Product;
+    quantity: number;
 }
