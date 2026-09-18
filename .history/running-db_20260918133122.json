@@ -1,0 +1,208 @@
+{
+  "artesaos": [
+    {
+      "id": "artesao-001",
+      "nome": "Maria da Silva",
+      "cpf": "012.345.678-90",
+      "email": "artesao@gmail.com",
+      "senha": "senha",
+      "regiaoProducao": "Olinda",
+      "telefone": "81999999999",
+      "biografia": "Artesã dedicada à criação de peças únicas."
+    }
+  ],
+  "customers": [
+    {
+      "id": "1",
+      "nome": "João Cliente",
+      "email": "comprador@gmail.com",
+      "senha": "senha",
+      "cpf": "123.456.789-00",
+      "telefone": "81988887777",
+      "enderecos": [
+        {
+          "bairro": "São Thomaz",
+          "rua": "Rua da avenida",
+          "numero": "97",
+          "complemento": "casa",
+          "cidade": "Recife",
+          "estado": "PE"
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "idArtesao": "artesao-001",
+      "titulo": "Tigela de Cerâmica Girassol",
+      "descricao": "Tigela decorativa em cerâmica, pintada à mão com motivo de girassol, inspirada na tradição oleira pernambucana.",
+      "materiaPrima": "Argila",
+      "tecnica": "Cerâmica torneada e pintura à mão",
+      "regiaoProducao": "Olinda, PE",
+      "categoria": "Cerâmica",
+      "preco": 145.0,
+      "quantidadeEstoque": 12,
+      "dimensoes": "20cm x 20cm x 8cm",
+      "imagem": "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600",
+        "https://images.unsplash.com/photo-1610701596061-2f67f6a5a3f2?w=600"
+      ]
+    },
+    {
+      "id": 2,
+      "idArtesao": "artesao-002",
+      "titulo": "Rede de Algodão Zona Rural",
+      "descricao": "Rede artesanal tecida em algodão cru, feita por cooperativa de tecelãs da zona rural de Pernambuco.",
+      "materiaPrima": "Algodão",
+      "tecnica": "Tecelagem manual em tear",
+      "regiaoProducao": "Caruaru, PE",
+      "categoria": "Têxtil",
+      "preco": 220.0,
+      "quantidadeEstoque": 5,
+      "dimensoes": "300cm x 160cm",
+      "imagem": "https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600"
+      ]
+    },
+    {
+      "id": 3,
+      "idArtesao": "artesao-003",
+      "titulo": "Bolsa de Palha Bordada",
+      "descricao": "Bolsa artesanal em palha de carnaúba com bordado floral feito à mão, ideal para o dia a dia.",
+      "materiaPrima": "Palha de carnaúba",
+      "tecnica": "Trançado manual e bordado",
+      "regiaoProducao": "Recife, PE",
+      "categoria": "Acessórios",
+      "preco": 89.0,
+      "quantidadeEstoque": 20,
+      "dimensoes": "35cm x 28cm x 12cm",
+      "imagem": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600",
+        "https://images.unsplash.com/photo-1590874103400-1c6b6a1a1a2a?w=600"
+      ]
+    },
+    {
+      "id": 4,
+      "idArtesao": "artesao-004",
+      "titulo": "Renda Renascença Toalha de Mesa",
+      "descricao": "Toalha de mesa em renda renascença, técnica tradicional passada entre gerações de rendeiras nordestinas.",
+      "materiaPrima": "Linha de algodão",
+      "tecnica": "Renda renascença",
+      "regiaoProducao": "Timbaúba, PE",
+      "categoria": "Têxtil",
+      "preco": 310.0,
+      "quantidadeEstoque": 3,
+      "dimensoes": "150cm x 150cm",
+      "imagem": "https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?w=600",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?w=600"
+      ]
+    },
+    {
+      "id": 5,
+      "idArtesao": "artesao-001",
+      "titulo": "Vaso de Barro Marajoara",
+      "descricao": "Vaso decorativo em barro cozido com grafismos inspirados na arte marajoara, peça exclusiva e numerada.",
+      "materiaPrima": "Argila",
+      "tecnica": "Modelagem manual e queima em forno a lenha",
+      "regiaoProducao": "Olinda, PE",
+      "categoria": "Cerâmica",
+      "preco": 175.5,
+      "quantidadeEstoque": 8,
+      "dimensoes": "30cm x 18cm",
+      "imagem": "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=600",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=600"
+      ]
+    },
+    {
+      "id": 6,
+      "idArtesao": "artesao-005",
+      "titulo": "Colar de Sementes Regionais",
+      "descricao": "Colar artesanal feito com sementes de açaí, jarina e miçangas de vidro reciclado.",
+      "materiaPrima": "Sementes naturais e vidro reciclado",
+      "tecnica": "Fiação manual",
+      "regiaoProducao": "Garanhuns, PE",
+      "categoria": "Acessórios",
+      "preco": 65.0,
+      "quantidadeEstoque": 30,
+      "dimensoes": "45cm de comprimento",
+      "imagem": "https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=600",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=600"
+      ]
+    },
+    {
+      "id": 7,
+      "idArtesao": "artesao-006",
+      "titulo": "Escultura de Madeira Cavalo-Marinho",
+      "descricao": "Escultura entalhada em madeira de umburana, representando o Bumba Meu Boi e o Cavalo-Marinho pernambucano.",
+      "materiaPrima": "Madeira de umburana",
+      "tecnica": "Entalhe manual",
+      "regiaoProducao": "Nazaré da Mata, PE",
+      "categoria": "Escultura",
+      "preco": 260.0,
+      "quantidadeEstoque": 4,
+      "dimensoes": "40cm x 15cm x 12cm",
+      "imagem": "https://images.unsplash.com/photo-1600166898405-da9535204843?w=600",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1600166898405-da9535204843?w=600"
+      ]
+    },
+    {
+      "id": 8,
+      "idArtesao": "artesao-007",
+      "titulo": "Manta de Crochê Multicolorida",
+      "descricao": "Manta feita em crochê com fios de algodão coloridos, técnica tradicional de artesãs do agreste pernambucano.",
+      "materiaPrima": "Fio de algodão",
+      "tecnica": "Crochê manual",
+      "regiaoProducao": "Bezerros, PE",
+      "categoria": "Têxtil",
+      "preco": 190.0,
+      "quantidadeEstoque": 7,
+      "dimensoes": "180cm x 130cm",
+      "imagem": "https://images.unsplash.com/photo-1600166898405-da9535204800?w=600",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1600166898405-da9535204800?w=600"
+      ]
+    },
+    {
+      "id": 9,
+      "idArtesao": "artesao-002",
+      "titulo": "Chapéu de Palha Trançada",
+      "descricao": "Chapéu de sol confeccionado em palha trançada à mão, leve e resistente, ideal para o clima nordestino.",
+      "materiaPrima": "Palha de carnaúba",
+      "tecnica": "Trançado manual",
+      "regiaoProducao": "Caruaru, PE",
+      "categoria": "Acessórios",
+      "preco": 55.0,
+      "quantidadeEstoque": 25,
+      "dimensoes": "38cm de diâmetro",
+      "imagem": "https://images.unsplash.com/photo-1533055640609-24b498dfd74c?w=600",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1533055640609-24b498dfd74c?w=600"
+      ]
+    },
+    {
+      "id": 10,
+      "idArtesao": "artesao-008",
+      "titulo": "Jogo de Panelas de Barro",
+      "descricao": "Conjunto com 3 panelas de barro para cozinhar, tradicional na culinária nordestina, vem com colher de pau.",
+      "materiaPrima": "Argila",
+      "tecnica": "Modelagem manual e queima artesanal",
+      "regiaoProducao": "Tracunhaém, PE",
+      "categoria": "Cerâmica",
+      "preco": 210.0,
+      "quantidadeEstoque": 6,
+      "dimensoes": "Panelas de 15cm, 20cm e 25cm",
+      "imagem": "https://images.unsplash.com/photo-1584990347449-a5d9f800a783?w=600",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1584990347449-a5d9f800a783?w=600"
+      ]
+    }
+  ]
+}
