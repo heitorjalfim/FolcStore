@@ -39,6 +39,8 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 | 14/09/2026 | Gemini | Conversão dos formulários de autenticação e registro para componentes básicos do Chakra UI v3 (`Field.Root`, `Grid`, `Box`, `Button`). | Frontend, Componentização/UI | Sim | A equipe validou a estrutura visual, o uso de temas personalizados (`brand`) e o comportamento responsivo dos inputs. |
 | 14/09/2026 | Gemini | Implementação de validação de duplicidade de E-mail e CPF nos serviços de cadastro (`userService`) com tratamento de exceções via `throw new Error`. | Frontend/Backend, Validação de Dados | Sim | A equipe revisou a captura de erros no bloco `catch` dos formulários e testou as mensagens personalizadas exibidas aos usuários. |
 | 14/09/2026 | Gemini | Adaptação do cadastro de Clientes para suportar a nova estrutura complexa de dados do tipo `Endereco` (array de objetos). | Frontend, Tipagem TypeScript | Sim | A equipe validou o mapeamento correto dos inputs do formulário para o payload esperado pela API. |
+| 15/09/2026 | Gemini | Criação do Documento de Requisitos de Software | Gestão de Projeto / Documentação | Sim | A equipe validou os requisitos com as histórias de usuário criado previamente |
+| 16/09/2026 | Gemini | Criação do dos documentos de Spec-Driven Development | Gestão de Projeto / Documentação | Sim | A equipe revisou e centralizou a terminologia usada nos requerimentos |
 
 ---
 
@@ -96,6 +98,14 @@ Prompt ou descrição:
 Como a resposta foi utilizada:
 > depois de algumas iterações foi mantido o try catch
 
+### Prompt 7
+
+Prompt ou descrição:
+> Utilizando o Documento de Requisitos, faca o design.md: Deve descrever diagrama de componentes; fluxo dos dados; modelo de dados; estratégia principal e baseline; interface de integração; exemplo de requisição e resposta; tratamento de erros [...]
+
+Como a resposta foi utilizada:
+> Utilizada para gerar os arquivos em Markdown do ciclo de Spec-Driven Development (product.md, requirements.md e design.md), convertendo todos os 31 requisitos para a sintaxe formal EARS, detalhando a arquitetura técnica (diagramas, schema SQL, contratos JSON/REST e políticas de fallback) e criando a folha de rosto individual com a tabela de auditoria do uso de IA.
+
 ---
 
 ## 5. Partes do projeto que tiveram apoio de IA
@@ -119,7 +129,7 @@ Marquem os itens em que houve uso de IA.
 - [ ] Processamento assíncrono
 - [x] Cache *(Uso de LocalStorage)*
 - [ ] Testes
-- [ ] Documentação
+- [x] Documentação
 - [ ] README
 - [ ] Deploy *(Apoio inicial com comandos de inicialização Git/GitHub)*
 - [x] Correção de bugs
