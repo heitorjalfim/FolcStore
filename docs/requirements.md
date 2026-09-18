@@ -1,166 +1,385 @@
-# Requisitos do Sistema — Marketplace de Artesanato
+# Requirements — Módulo de IA de Recomendação
 
-## Requisitos Funcionais (RF)
+## Convenções deste documento
 
-### RF01 — Cadastrar Comprador
-**Como** visitante, **quero** me cadastrar como comprador, **para** adicionar itens ao carrinho e finalizar pedidos.
-* **Critério 1.1 (Event-driven):** QUANDO o visitante enviar o formulário com nome, e-mail, senha e CPF preenchidos corretamente, O MÓDULO DE AUTENTICAÇÃO DEVERÁ criar a conta de comprador e retornar o código HTTP 201.
-* **Critério 1.2 (Unwanted behavior):** SE o visitante tentar cadastrar um e-mail já existente no banco de dados, ENTÃO O MÓDULO DE AUTENTICAÇÃO DEVERÁ retornar o código de erro HTTP 409.
-
-### RF02 — Login Comprador
-**Como** comprador, **quero** realizar login no sistema, **para** acessar minha conta e acompanhar minhas compras.
-* **Critério 2.1 (Event-driven):** QUANDO o comprador fornecer e-mail e senha válidos, O MÓDULO DE AUTENTICAÇÃO DEVERÁ emitir um token JWT e redirecionar o usuário para a página de origem ou página inicial.
-* **Critério 2.2 (Unwanted behavior):** SE o comprador informar credenciais inválidas, ENTÃO O MÓDULO DE AUTENTICAÇÃO DEVERÁ retornar o código HTTP 401 mantendo uma mensagem genérica por razões de segurança.
-
-### RF03 — Buscar e Filtrar Produtos por Categoria e Região
-**Como** comprador, **quero** pesquisar produtos por categoria e região, **para** encontrar itens do meu interesse.
-* **Critério 3.1 (Event-driven):** QUANDO o comprador aplicar filtros de categoria e/ou região, O MÓDULO DE CATÁLOGO DEVERÁ retornar apenas os produtos que atendam simultaneamente aos filtros selecionados.
-* **Critério 3.2 (State-driven):** ENQUANTO não houver produtos correspondentes ao filtro aplicado, O MÓDULO DE CATÁLOGO DEVERÁ exibir uma lista vazia com mensagem informativa.
-
-### RF04 — Consultar Frete
-**Como** comprador, **quero** consultar o frete durante a compra, **para** saber o custo total e prazo do pedido.
-* **Critério 4.1 (Event-driven):** QUANDO o comprador inserir um CEP de destino válido no carrinho, O MÓDULO DE LOGÍSTICA DEVERÁ retornar as opções de frete disponíveis com prazos e valores.
-* **Critério 4.2 (Unwanted behavior):** SE o CEP informado estiver fora da área de entrega, ENTÃO O MÓDULO DE LOGÍSTICA DEVERÁ informar a indisponibilidade de entrega para a localidade.
-
-### RF05 — Adicionar Item ao Carrinho
-**Como** comprador, **quero** adicionar um produto ao carrinho, **para** prosseguir com a compra.
-* **Critério 5.1 (Event-driven):** QUANDO o comprador solicitar a adição de um produto com estoque disponível, O MÓDULO DE CARRINHO DEVERÁ incluir o item e sua quantidade no carrinho do usuário.
-* **Critério 5.2 (Unwanted behavior):** SE a quantidade solicitada for superior ao estoque disponível ou igual a zero, ENTÃO O MÓDULO DE CARRINHO DEVERÁ bloquear a adição e exibir uma mensagem de erro indicando o limite de estoque.
-
-### RF06 — Finalizar Pedido
-**Como** comprador, **quero** finalizar um pedido, **para** adquirir os produtos contidos no carrinho.
-* **Critério 6.1 (Event-driven):** QUANDO o comprador confirmar o checkout com endereço cadastrado e pagamento aprovado, O MÓDULO DE PEDIDOS DEVERÁ registrar o pedido, atualizar o estoque dos produtos e disponibilizar o comprovante.
-* **Critério 6.2 (State-driven):** ENQUANTO o comprador não possuir um endereço de entrega vinculado à conta, O MÓDULO DE PEDIDOS DEVERÁ impedir a conclusão do checkout.
-* **Critério 6.3 (Unwanted behavior):** SE o pagamento for recusado ou o carrinho estiver vazio, ENTÃO O MÓDULO DE PEDIDOS DEVERÁ interromper a finalização e notificar o usuário.
-
-### RF07 — Avaliar Compra
-**Como** comprador, **quero** avaliar minha compra, **para** compartilhar minha experiência com o vendedor e outros usuários.
-* **Critério 7.1 (Event-driven):** QUANDO o comprador enviar nota e comentário para um pedido com status "Entregue", O MÓDULO DE AVALIAÇÕES DEVERÁ registrar a avaliação no histórico da compra, no produto e no perfil do artesão.
-* **Critério 7.2 (Unwanted behavior):** SE o pedido não estiver com status "Entregue" ou já possuir avaliação anterior, ENTÃO O MÓDULO DE AVALIAÇÕES DEVERÁ rejeitar a submissão.
-
-### RF08 — Navegar na Vitrine
-**Como** comprador, **quero** navegar pela vitrine principal, **para** descobrir novos produtos e artesãos.
-* **Critério 8.1 (Event-driven):** QUANDO o usuário acessar a página inicial, O MÓDULO DE VITRINE DEVERÁ carregar a lista de produtos em destaque e as categorias cadastradas.
-
-### RF09 — Visualizar Detalhes do Produto
-**Como** comprador, **quero** visualizar as informações detalhadas de um produto, **para** compreender suas características antes da compra.
-* **Critério 9.1 (Event-driven):** QUANDO o comprador selecionar um produto ativo na vitrine, O MÓDULO DE CATÁLOGO DEVERÁ exibir fotos, descrição, técnica, matéria-prima, categoria, preço, quantidade em estoque e nome do artesão.
-* **Critério 9.2 (Unwanted behavior):** SE o produto estiver inativo ou desativado, ENTÃO O MÓDULO DE CATÁLOGO DEVERÁ retornar o código HTTP 404 informando a indisponibilidade do item.
-
-### RF10 — Visualizar Perfil do Artesão
-**Como** comprador, **quero** acessar o perfil do artesão, **para** conhecer sua trajetória e visualizar outros produtos de seu catálogo.
-* **Critério 10.1 (Event-driven):** QUANDO o comprador clicar no nome do artesão, O MÓDULO DE PERFIL DEVERÁ exibir a biografia, localização e o catálogo completo de produtos do vendedor.
-
-### RF11 — Cadastrar e Gerenciar Endereços de Entrega
-**Como** comprador, **quero** cadastrar e salvar endereços de entrega, **para** facilitar compras futuras.
-* **Critério 11.1 (Event-driven):** QUANDO o comprador salvar um novo endereço com CEP, logradouro, número, bairro, cidade e estado, O MÓDULO DE USUÁRIOS DEVERÁ vincular o endereço ao perfil do comprador.
-* **Critério 11.2 (Event-driven):** QUANDO o comprador solicitar a exclusão de um endereço salvo, O MÓDULO DE USUÁRIOS DEVERÁ remover o registro e confirmar a operação.
-
-### RF12 — Visualizar Avaliações
-**Como** comprador, **quero** ler avaliações de outros usuários, **para** obter segurança quanto à qualidade dos produtos e atendimento do artesão.
-* **Critério 12.1 (Event-driven):** QUANDO o comprador acessar a seção de avaliações na página do produto ou do artesão, O MÓDULO DE AVALIAÇÕES DEVERÁ calcular e exibir a nota média, lista de comentários e fotos associadas.
-
-### RF13 — Acessar Painel Comprador
-**Como** comprador, **quero** acessar meu painel de controle, **para** visualizar meus pedidos e histórico de compras de forma centralizada.
-* **Critério 13.1 (Event-driven):** QUANDO o comprador autenticado acessar a área "Meu Painel", O MÓDULO DE PAINEL DEVERÁ retornar o resumo de pedidos recentes, histórico de compras e notificações.
-* **Critério 13.2 (Unwanted behavior):** SE o usuário não estiver autenticado, ENTÃO O MÓDULO DE PAINEL DEVERÁ redirecioná-lo para a tela de login.
-
-### RF14 — Cadastrar Vendedor
-**Como** artesão, **quero** me cadastrar como vendedor, incluindo minha biografia, **para** anunciar meus produtos.
-* **Critério 14.1 (Event-driven):** QUANDO o visitante preencher todos os dados cadastrais obrigatórios, incluindo o nome do ateliê/artesão e a biografia, O MÓDULO DE AUTENTICAÇÃO DEVERÁ criar a conta de vendedor.
-* **Critério 14.2 (Unwanted behavior):** SE a biografia ou qualquer outro campo obrigatório estiver em branco, ENTÃO O MÓDULO DE AUTENTICAÇÃO DEVERÁ rejeitar o cadastro com o código HTTP 400.
-
-### RF15 — Login Artesão
-**Como** artesão, **quero** realizar login no sistema, **para** acessar meu painel de controle e gerenciar vendas.
-* **Critério 15.1 (Event-driven):** QUANDO o artesão informar e-mail e senha corretos, O MÓDULO DE AUTENTICAÇÃO DEVERÁ autenticar o usuário e redirecioná-lo para o painel do artesão.
-
-### RF16 — Acessar Painel Artesão
-**Como** artesão, **quero** acessar meu painel de controle, **para** gerenciar vendas e estoque.
-* **Critério 16.1 (Event-driven):** QUANDO o artesão autenticado acessar seu painel, O MÓDULO DE PAINEL DEVERÁ exibir o resumo de vendas, controle de estoque e notificações recentes.
-
-### RF17 — Adicionar Produto Único ao Marketplace
-**Como** vendedor, **quero** adicionar produtos únicos (como esculturas), **para** defini-los como itens de estoque unitário.
-* **Critério 17.1 (Event-driven):** QUANDO o artesão cadastrar um anúncio marcando a opção "item único" e informando a descrição da obra, O MÓDULO DE CATÁLOGO DEVERÁ publicar o produto fixando o estoque em exatamente 1 unidade.
-
-### RF18 — Adicionar Produto em Lote ao Marketplace
-**Como** vendedor, **quero** adicionar produtos em lote, **para** definir a quantidade disponível em estoque.
-* **Critério 18.1 (Event-driven):** QUANDO o artesão cadastrar um produto do tipo "lote" informando uma quantidade maior que zero, O MÓDULO DE CATÁLOGO DEVERÁ publicar o produto com o número exato de unidades disponíveis.
-* **Critério 18.2 (Unwanted behavior):** SE a quantidade informada para o lote for menor ou igual a zero, ENTÃO O MÓDULO DE CATÁLOGO DEVERÁ bloquear a publicação.
-
-### RF19 — Postagem Feita
-**Como** vendedor, **quero** registrar a postagem de um pedido, **para** informar o comprador e o sistema sobre o envio.
-* **Critério 19.1 (Event-driven):** QUANDO o vendedor registrar um código de rastreio válido para um pedido, O MÓDULO DE LOGÍSTICA DEVERÁ atualizar o status do pedido para "Postado" e notificar o comprador.
-
-### RF20 — Avaliar Venda
-**Como** vendedor, **quero** avaliar uma venda, **para** registrar minha experiência com o comprador.
-* **Critério 20.1 (Event-driven):** QUANDO o vendedor submeter uma avaliação sobre um pedido concluído, O MÓDULO DE AVALIAÇÕES DEVERÁ vincular a avaliação ao histórico da transação e torná-la visível à administração.
-
-### RF21 — Gerenciar Catálogo
-**Como** artesão, **quero** gerenciar as especificações e preços do meu catálogo, **para** manter meus anúncios atualizados.
-* **Critério 21.1 (Event-driven):** QUANDO o artesão alterar preço ou descrição de um produto e salvar, O MÓDULO DE CATÁLOGO DEVERÁ atualizar as informações e refleti-las imediatamente para todos os compradores.
-* **Critério 21.2 (Unwanted behavior):** SE o artesão informar um preço menor ou igual a zero ou valor não numérico, ENTÃO O MÓDULO DE CATÁLOGO DEVERÁ rejeitar a alteração.
-
-### RF22 — Visualizar Pedidos Recebidos
-**Como** artesão, **quero** visualizar os pedidos recebidos, **para** organizar a produção e envio.
-* **Critério 22.1 (Event-driven):** QUANDO o artesão consultar a lista de pedidos recebidos, O MÓDULO DE PEDIDOS DEVERÁ exibir os detalhes dos itens solicitados, comprador e endereço para envio.
-
-### RF23 — Gerenciar Perfil
-**Como** artesão, **quero** atualizar meus dados pessoais e biografia, **para** manter meu perfil atraente.
-* **Critério 23.1 (Event-driven):** QUANDO o artesão alterar sua foto de perfil ou biografia e confirmar, O MÓDULO DE PERFIL DEVERÁ atualizar os dados e refleti-los publicamente.
-* **Critério 23.2 (Unwanted behavior):** SE o campo de biografia for esvaziado, ENTÃO O MÓDULO DE PERFIL DEVERÁ impedir o salvamento.
-
-### RF24 — Login Administrador
-**Como** administrador, **quero** realizar login no sistema, **para** acessar o painel administrativo.
-* **Critério 24.1 (Event-driven):** QUANDO o usuário com perfil de administrador informar e-mail e senha corretos, O MÓDULO DE AUTENTICAÇÃO DEVERÁ liberar o acesso ao painel administrativo.
-* **Critério 24.2 (Unwanted behavior):** SE um usuário sem permissão de administrador tentar autenticar-se nessa rota, ENTÃO O MÓDULO DE AUTENTICAÇÃO DEVERÁ negar o acesso e retornar HTTP 403.
-
-### RF25 — Acessar Painel Administrativo
-**Como** administrador, **quero** acessar o painel administrativo, **para** gerenciar operações globais da plataforma.
-* **Critério 25.1 (Event-driven):** QUANDO o administrador autenticado acessar o painel administrativo, O MÓDULO ADMINISTRATIVO DEVERÁ disponibilizar ferramentas de moderação e emissão de relatórios.
-
-### RF26 — Acompanhar Status da Compra
-**Como** administrador, **quero** acompanhar o status das compras, **para** monitorar a operação do marketplace.
-* **Critério 26.1 (Event-driven):** QUANDO o administrador acessar a listagem global de transações, O MÓDULO ADMINISTRATIVO DEVERÁ exibir o status detalhado de todos os pedidos cadastrados no sistema.
-
-### RF27 — Monitorar Satisfação do Usuário
-**Como** administrador, **quero** monitorar a satisfação dos usuários, **para** identificar oportunidades de melhoria.
-* **Critério 27.1 (Event-driven):** QUANDO o administrador consultar o relatório de satisfação, O MÓDULO ADMINISTRATIVO DEVERÁ compilar as avaliações e comentários registrados por compradores e vendedores.
-
-### RF28 — Monitorar Indicadores
-**Como** administrador, **quero** monitorar indicadores de desempenho, **para** fundamentar decisões estratégicas.
-* **Critério 28.1 (Event-driven):** QUANDO o administrador selecionar um período de análise, O MÓDULO ADMINISTRATIVO DEVERÁ gerar relatórios contendo taxa de conversão, ticket médio e lista de produtos mais vendidos.
-
-### RF29 — Realizar Curadoria
-**Como** administrador, **quero** realizar a curadoria de produtos, **para** destacar artesãos e itens na vitrine.
-* **Critério 29.1 (Event-driven):** QUANDO o administrador marcar um produto elegível como "Destaque da Semana", O MÓDULO DE VITRINE DEVERÁ exibir imediatamente o item na seção principal de destaques da plataforma.
-
-### RF30 — Processar Frete
-**Como** sistema de frete, **quero** consultar os serviços de logística integrados, **para** disponibilizar opções de envio.
-* **Critério 30.1 (Event-driven):** QUANDO uma requisição de consulta de frete for recebida com um CEP válido, O MÓDULO DE LOGÍSTICA DEVERÁ calcular e retornar opções, prazos e valores de entrega.
-
-### RF31 — Recomendar Produtos (IA)
-**Como** sistema de recomendação, **quero** recomendar produtos baseados no histórico, **para** aumentar a relevância das ofertas.
-* **Critério 31.1 (Event-driven):** QUANDO um comprador com histórico de navegação acessar a home, O MÓDULO DE RECOMENDAÇÃO DEVERÁ exibir a lista "Recomendados para Você".
-* **Critério 31.2 (State-driven):** ENQUANTO o comprador não possuir histórico registrado, O MÓDULO DE RECOMENDAÇÃO DEVERÁ apresentar recomendações genéricas baseadas nos produtos mais vendidos.
+- Cada requisito é expresso como **história de usuário** no formato:
+  `Como [tipo de usuário], quero [objetivo], para [benefício esperado].`
+- Cada história possui um ou mais **critérios de aceitação em notação EARS**
+  (Easy Approach to Requirements Syntax), usando os padrões:
+  - **Ubíquo:** `O MÓDULO DE RECOMENDAÇÃO DEVERÁ [resposta verificável].`
+  - **Evento:** `QUANDO [evento], O MÓDULO DE RECOMENDAÇÃO DEVERÁ [resposta verificável].`
+  - **Estado:** `ENQUANTO [estado], O MÓDULO DE RECOMENDAÇÃO DEVERÁ [resposta verificável].`
+  - **Não desejado:** `SE [erro ou situação indesejada], ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ [resposta verificável].`
+- Critérios evitam termos não mensuráveis ("rápido", "inteligente", "adequado",
+  "fácil de usar") — toda condição de aceite é observável e testável (valor
+  numérico, contagem, presença/ausência de campo, código de retorno, etc.).
+- O identificador entre colchetes (ex.: `[RF01]`) referencia o requisito
+  correspondente no Documento de Requisitos de Software do projeto, para
+  rastreabilidade.
 
 ---
 
-## Requisitos Não Funcionais (RNF)
+## 1. Recomendações na página inicial
 
-### RNF01 — Autenticação Segura via JWT
-* **Critério N1.1:** O MÓDULO DE SEGURANÇA DEVERÁ autenticar compradores, artesãos e administradores gerando e validando tokens JWT assinados com expiração pré-definida.
+### História de usuário 1.1
+Como **comprador cadastrado**, quero **ver uma vitrine de produtos recomendados na
+página inicial**, para **descobrir peças artesanais alinhadas ao meu interesse sem
+precisar navegar por todo o catálogo**. `[RF01]`
 
-### RNF02 — Controle de Acesso Baseado em Perfis (RBAC)
-* **Critério N2.1:** O MÓDULO DE SEGURANÇA DEVERÁ interceptar todas as requisições para rotas protegidas e verificar se o perfil contido no token JWT possui autorização para a operação, retornando HTTP 401 ou 403 em caso negativo.
+**Critérios de aceitação:**
+- QUANDO um usuário autenticado com pelo menos um evento de navegação ou compra
+  registrado acessar a página inicial, O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar uma
+  lista com o número de itens solicitado pelo marketplace (parâmetro `quantidade`),
+  composta exclusivamente por produtos com status "ativo" no catálogo.
+- QUANDO o marketplace solicitar recomendações para um usuário autenticado sem
+  nenhum evento de navegação ou compra registrado, O MÓDULO DE RECOMENDAÇÃO DEVERÁ
+  aplicar a estratégia de cold start definida no projeto (seção 4 do `design.md`) e
+  retornar o número de itens solicitado.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ garantir que nenhum item retornado nas
+  recomendações da página inicial esteja indisponível (estoque zero ou status
+  "inativo") no momento da geração da resposta.
 
-### RNF03 — Padronização RESTful e Tratamento de Erros
-* **Critério N3.1:** A API DO SISTEMA DEVERÁ estruturar suas rotas segundo o padrão RESTful e retornar respostas utilizando códigos HTTP padronizados (200, 201, 400, 401, 403, 409, 500) acompanhados de payload de erro padronizado.
+### História de usuário 1.2
+Como **visitante não identificado**, quero **ver uma vitrine de produtos em
+destaque na página inicial**, para **conhecer o catálogo mesmo sem estar
+logado**. `[RF01]`
 
-### RNF04 — Validação Client-side e Usabilidade Reativa
-* **Critério N4.1:** O FRONT-END DEVERÁ validar os campos dos formulários antes do envio e atualizar componentes dinâmicos (como filtros e adição ao carrinho) sem requerer o recarregamento total da página.
+**Critérios de aceitação:**
+- QUANDO o marketplace solicitar recomendações para um visitante sem identificador
+  de usuário (sessão anônima), O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar uma lista
+  ordenada por popularidade (volume de compras nos últimos 30 dias) contendo o
+  número de itens solicitado.
+- SE a base de eventos de popularidade dos últimos 30 dias estiver vazia, ENTÃO O
+  MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar produtos ordenados por data de cadastro
+  decrescente como critério de desempate documentado.
 
-### RNF05 — Integridade Transacional e de Estoque
-* **Critério N5.1:** O BANCO DE DADOS DEVERÁ utilizar transações ACID durante a finalização do pedido para garantir que a baixa de estoque e o registro da compra ocorram de forma atômica.
+---
 
-### RNF06 — Tolerância a Falhas em Integrações Externas
-* **Critério N6.1:** SE qualquer serviço externo (como APIs de frete ou recomendação) falhar ou ultrapassar o tempo limite de 500 milissegundos, ENTÃO O SISTEMA DEVERÁ acionar a estratégia de fallback e fornecer respostas contendo dados em cache ou valores estáticos padrão.
+## 2. Recomendações na página do produto
+
+### História de usuário 2.1
+Como **comprador**, quero **ver produtos similares ao que estou visualizando**,
+para **comparar opções parecidas antes de decidir a compra**. `[RF02]`
+
+**Critérios de aceitação:**
+- QUANDO um usuário acessar a página de um produto com identificador válido no
+  catálogo, O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar uma lista de produtos
+  similares cujo `product_id` seja diferente do produto visualizado.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ calcular a similaridade entre produtos com base
+  em, no mínimo, os atributos categoria, material e faixa de preço, conforme
+  definido na seção "Estratégia principal" do `design.md`.
+- SE o produto visualizado não possuir atributos suficientes cadastrados (categoria
+  ou material ausentes) para o cálculo de similaridade, ENTÃO O MÓDULO DE
+  RECOMENDAÇÃO DEVERÁ retornar produtos da mesma categoria do artesão responsável
+  pelo item, ou lista vazia caso o artesão não possua outros produtos ativos.
+
+### História de usuário 2.2
+Como **comprador**, quero **ver sugestões de "quem viu este produto também
+comprou" e itens complementares**, para **descobrir peças relacionadas que eu não
+pesquisaria diretamente**. `[RF03]`
+
+**Critérios de aceitação:**
+- QUANDO um produto tiver ao menos um par de coocorrência registrado (produtos
+  comprados em uma mesma transação), O MÓDULO DE RECOMENDAÇÃO DEVERÁ incluir esses
+  produtos na resposta da recomendação "combine com", ordenados por frequência de
+  coocorrência decrescente.
+- QUANDO o usuário estiver na tela do carrinho de compras com um ou mais itens
+  adicionados, O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar sugestões de itens
+  complementares para cada produto presente no carrinho.
+- SE nenhum par de coocorrência existir para o produto solicitado, ENTÃO O MÓDULO
+  DE RECOMENDAÇÃO DEVERÁ retornar lista vazia para essa seção, sem gerar erro na
+  resposta.
+
+---
+
+## 3. Coleta de sinais comportamentais
+
+### História de usuário 3.1
+Como **equipe de dados**, quero **que o módulo registre os eventos de interação dos
+usuários**, para **alimentar o motor de recomendação com dados atualizados de
+comportamento**. `[RF04]`
+
+**Critérios de aceitação:**
+- QUANDO o marketplace emitir um evento de interação (visualização de produto,
+  clique, adição ao carrinho, favoritar, compra ou avaliação) para o módulo, O
+  MÓDULO DE RECOMENDAÇÃO DEVERÁ persistir o evento com identificador de usuário (ou
+  de sessão anônima), identificador de produto, tipo de evento e carimbo de data e
+  hora.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ processar o registro de eventos de forma
+  assíncrona em relação à requisição HTTP de origem, retornando confirmação de
+  recebimento em até 100 ms no percentil 95 (p95), sem aguardar o processamento
+  completo do evento.
+- SE um evento recebido não contiver identificador de produto válido no catálogo,
+  ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ rejeitar o evento e registrar a ocorrência
+  em log de erros com o motivo da rejeição.
+
+---
+
+## 4. Recomendações por categoria, técnica e região
+
+### História de usuário 4.1
+Como **comprador**, quero **filtrar recomendações por categoria de artesanato,
+técnica ou região do artesão**, para **explorar o catálogo de acordo com meu
+interesse cultural específico**. `[RF05]`
+
+**Critérios de aceitação:**
+- QUANDO o marketplace solicitar recomendações informando um filtro de categoria,
+  técnica ou região, O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar exclusivamente
+  produtos que atendam ao(s) filtro(s) informado(s).
+- SE o filtro informado não corresponder a nenhuma categoria, técnica ou região
+  cadastrada, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar lista vazia e um
+  código de resposta indicando filtro inválido, sem interromper a disponibilidade
+  do serviço.
+
+---
+
+## 5. Motor de recomendação (núcleo de IA)
+
+### História de usuário 5.1
+Como **equipe de dados**, quero **que o motor combine filtragem colaborativa e
+recomendação baseada em conteúdo**, para **gerar recomendações relevantes tanto
+para usuários com histórico quanto para itens novos**. `[RF06]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ gerar recomendações combinando um componente de
+  filtragem colaborativa e um componente baseado em atributos de conteúdo,
+  conforme os pesos configuráveis descritos na seção "Estratégia principal" do
+  `design.md`.
+- QUANDO o marketplace solicitar cinco recomendações para um usuário sem histórico
+  de eventos, O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar cinco itens elegíveis
+  utilizando a estratégia de cold start definida no projeto.
+- QUANDO um produto for cadastrado sem nenhum evento de interação associado, O
+  MÓDULO DE RECOMENDAÇÃO DEVERÁ torná-lo elegível para recomendação baseada em
+  conteúdo a partir de seus atributos cadastrais, em até 24 horas após o cadastro
+  (rastreável a `RNF06`).
+- SE o motor de recomendação não conseguir gerar recomendações por indisponibilidade
+  do serviço, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ acionar o mecanismo de fallback
+  descrito em `RNF03`, retornando produtos populares em vez de retornar erro ao
+  chamador.
+
+---
+
+## 6. Recomendações por e-mail e notificação
+
+### História de usuário 6.1
+Como **comprador**, quero **receber recomendações personalizadas por e-mail ou
+notificação**, para **ser lembrado de produtos e artesãos do meu interesse mesmo
+fora da plataforma**. `[RF07]`
+
+**Critérios de aceitação:**
+- QUANDO o job periódico de geração de recomendações por canal externo for
+  executado, O MÓDULO DE RECOMENDAÇÃO DEVERÁ gerar uma lista de recomendações para
+  cada usuário com consentimento de comunicação ativo, registrado no perfil.
+- SE o usuário tiver revogado o consentimento de comunicação por e-mail ou
+  notificação, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ excluí-lo do lote de envio
+  correspondente.
+
+---
+
+## 7. Recomendações para o artesão (vendedor)
+
+### História de usuário 7.1
+Como **artesão**, quero **receber sugestões de precificação, categorias e produtos
+com potencial de conversão**, para **tomar decisões melhor embasadas sobre meu
+catálogo**. `[RF08]`
+
+**Critérios de aceitação:**
+- QUANDO um artesão acessar o painel de vendedor, O MÓDULO DE RECOMENDAÇÃO DEVERÁ
+  disponibilizar, para cada produto ativo do artesão, uma faixa de preço de
+  referência calculada a partir de produtos de categoria e material equivalentes.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ apresentar as faixas de preço e as
+  categorias/tags mais buscadas como valores de referência, sem aplicar alteração
+  automática no preço cadastrado pelo artesão.
+
+---
+
+## 8. Configuração administrativa do motor
+
+### História de usuário 8.1
+Como **equipe de negócio**, quero **configurar pesos, regras e ativação de
+estratégias de recomendação por vitrine**, para **ajustar o comportamento do motor
+sem depender de nova implantação de código**. `[RF09]`
+
+**Critérios de aceitação:**
+- QUANDO um administrador autorizado alterar o peso de um dos componentes do motor
+  (colaborativo ou baseado em conteúdo) pelo painel administrativo, O MÓDULO DE
+  RECOMENDAÇÃO DEVERÁ aplicar o novo peso nas próximas requisições de recomendação
+  em até 5 minutos, sem necessidade de reinício do serviço.
+- SE um usuário sem perfil de permissão "administrador do módulo de recomendação"
+  tentar alterar uma configuração, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ recusar a
+  operação e retornar código de acesso não autorizado.
+
+---
+
+## 9. Explicabilidade das recomendações
+
+### História de usuário 9.1
+Como **comprador**, quero **entender por que um produto foi recomendado para
+mim**, para **confiar mais nas sugestões apresentadas**. `[RF10]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ incluir, em cada item retornado na resposta de
+  recomendação, um campo `motivo` preenchido com um dos motivos pré-definidos
+  cadastrados no catálogo de justificativas do sistema (ex.: `compra_anterior`,
+  `categoria_favorita`, `artesao_seguido`, `popular_na_categoria`).
+- SE não for possível determinar um motivo específico para um item recomendado,
+  ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ preencher o campo `motivo` com o valor
+  `tendencia_geral`, nunca deixando o campo vazio ou nulo.
+
+---
+
+## 10. Feedback sobre recomendações
+
+### História de usuário 10.1
+Como **comprador**, quero **indicar que não me interessa por uma recomendação ou
+por um artesão**, para **que as próximas sugestões sejam mais relevantes para
+mim**. `[RF11]`
+
+**Critérios de aceitação:**
+- QUANDO um usuário registrar feedback negativo explícito sobre um item ou artesão
+  (ação "não me interessa" ou "ocultar artesão"), O MÓDULO DE RECOMENDAÇÃO DEVERÁ
+  excluir esse item ou os itens desse artesão das recomendações futuras exibidas
+  para esse usuário, a partir da próxima requisição de recomendação.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ registrar todo evento de clique, ignorar ou
+  compra associado a uma recomendação exibida, vinculando-o ao identificador da
+  recomendação original para uso em retreinamento.
+
+---
+
+## 11. Diversidade de exposição de artesãos
+
+### História de usuário 11.1
+Como **equipe de negócio**, quero **que as recomendações distribuam exposição entre
+diferentes artesãos**, para **evitar concentração de visibilidade em poucos
+vendedores e cumprir o propósito social do marketplace**. `[RF12]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ garantir que, em uma lista de recomendações com
+  10 ou mais itens, no máximo 30% dos itens pertençam ao mesmo artesão, salvo
+  quando o número de artesãos elegíveis para aquele contexto for insuficiente para
+  atender ao limite (situação documentada em log).
+- ENQUANTO a regra de diversidade estiver ativada no painel administrativo, O
+  MÓDULO DE RECOMENDAÇÃO DEVERÁ aplicar o limite de concentração por artesão em
+  toda resposta de recomendação da vitrine correspondente.
+
+---
+
+## 12. Desempenho e disponibilidade
+
+### História de usuário 12.1
+Como **equipe técnica**, quero **que o módulo responda dentro de um tempo
+previsível e permaneça disponível**, para **não degradar a experiência de
+navegação do marketplace**. `[RNF01, RNF03]`
+
+**Critérios de aceitação:**
+- QUANDO o marketplace solicitar recomendações em tempo real para exibição em
+  página, O MÓDULO DE RECOMENDAÇÃO DEVERÁ responder em até 300 ms no percentil 95
+  (p95), medido em ambiente de produção.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ manter disponibilidade mensal igual ou superior a
+  99,5%, medida pela proporção de requisições respondidas com sucesso sobre o
+  total de requisições recebidas.
+- SE o componente principal do motor de recomendação não responder dentro do tempo
+  limite configurado, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar a lista de
+  fallback por popularidade em até 300 ms adicionais, evitando erro exibido ao
+  usuário final.
+
+---
+
+## 13. Escalabilidade e atualização do modelo
+
+### História de usuário 13.1
+Como **equipe técnica**, quero **que o módulo suporte crescimento do catálogo e da
+base de usuários e incorpore novos itens automaticamente**, para **que o sistema
+continue funcionando conforme o marketplace cresce**. `[RNF02, RNF06]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ executar o retreinamento do modelo em ciclo com
+  periodicidade máxima de 24 horas, registrando data e hora de início e término de
+  cada execução.
+- QUANDO um novo produto for cadastrado no catálogo, O MÓDULO DE RECOMENDAÇÃO
+  DEVERÁ torná-lo elegível para recomendação baseada em conteúdo em até 24 horas
+  após o cadastro.
+- QUANDO um novo usuário realizar seu primeiro evento de interação, O MÓDULO DE
+  RECOMENDAÇÃO DEVERÁ incorporar esse evento no cálculo de recomendações
+  personalizadas em até 24 horas.
+
+---
+
+## 14. Monitoramento e qualidade do modelo
+
+### História de usuário 14.1
+Como **equipe de dados**, quero **acompanhar métricas de desempenho e qualidade do
+motor de recomendação**, para **identificar degradação do modelo e agir antes que
+afete o negócio**. `[RNF04, RNF08]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ expor, via painel administrativo, as métricas
+  taxa de clique (CTR), taxa de conversão, cobertura do catálogo e tempo de
+  resposta, atualizadas com periodicidade máxima de 24 horas.
+- SE a taxa de clique (CTR) medida em uma janela de 7 dias cair mais de 20% em
+  relação à média das 4 semanas anteriores, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ
+  gerar um alerta automático destinado à equipe responsável, registrado com data,
+  hora e valores comparados.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ registrar, para cada execução de teste controlado
+  (A/B test) configurada, a taxa de clique e a taxa de conversão de cada grupo
+  (variante personalizada e baseline não personalizada) para consulta posterior.
+
+---
+
+## 15. Privacidade e conformidade (LGPD)
+
+### História de usuário 15.1
+Como **comprador**, quero **poder consultar, exportar ou solicitar a exclusão dos
+meus dados usados para personalização**, para **exercer meus direitos garantidos
+pela LGPD**. `[RNF05]`
+
+**Critérios de aceitação:**
+- QUANDO um usuário solicitar a exportação de seus dados de personalização, O
+  MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar todos os eventos de interação e
+  preferências vinculados ao seu identificador em formato estruturado (JSON) em
+  até 72 horas.
+- QUANDO um usuário solicitar a exclusão de seus dados de personalização, O MÓDULO
+  DE RECOMENDAÇÃO DEVERÁ remover ou anonimizar os eventos vinculados ao seu
+  identificador em até 30 dias corridos, conforme prazo definido na política de
+  privacidade do projeto.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ armazenar exclusivamente os campos de dados
+  pessoais necessários para o cálculo de recomendação, conforme lista definida na
+  seção "Segurança, privacidade e observabilidade" do `design.md`.
+
+---
+
+## 16. Acessibilidade das interfaces de recomendação
+
+### História de usuário 16.1
+Como **comprador que utiliza tecnologia assistiva**, quero **que as vitrines de
+recomendação sigam padrões de acessibilidade**, para **conseguir navegar pelas
+sugestões independentemente de limitação visual ou motora**. `[RNF07]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar, para cada item recomendado, os campos
+  `nome_produto` e `descricao_curta` preenchidos, permitindo que o front-end gere
+  texto alternativo (`alt text`) para as imagens dos produtos exibidos.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ disponibilizar a mesma informação (itens, motivo,
+  metadados) tanto para renderização em página web quanto em e-mail, sem
+  diferença de conteúdo entre os canais, de forma que o front-end de cada canal
+  possa aplicar as marcações de acessibilidade equivalentes ao WCAG 2.1 nível AA.
+
+---
+
+## 17. Segurança de acesso
+
+### História de usuário 17.1
+Como **equipe técnica**, quero **que o acesso às APIs e ao painel de configuração
+seja autenticado, autorizado e auditado**, para **evitar alterações indevidas no
+comportamento do motor de recomendação**. `[RNF10]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ exigir um token de autenticação válido em toda
+  requisição recebida em suas APIs, rejeitando requisições sem token ou com token
+  expirado.
+- QUANDO uma configuração do motor de recomendação for alterada por um usuário
+  autenticado, O MÓDULO DE RECOMENDAÇÃO DEVERÁ registrar em log de auditoria o
+  identificador do usuário, a alteração realizada e o carimbo de data e hora.
+- SE uma requisição de alteração de configuração for recebida sem permissão de
+  administrador, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ recusar a operação, retornar
+  código de acesso não autorizado e registrar a tentativa em log de auditoria.
