@@ -146,7 +146,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
             });
         }
 
-        router.push("/cart");
+        router.push("/customer/checkout");
     };
 
     const botaoDesabilitado = Boolean(esgotado || limiteAtingido || isNavigating || quantidade > estoqueRestante);
