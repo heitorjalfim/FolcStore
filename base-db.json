@@ -20,6 +20,8 @@
       "telefone": "81988887777",
       "enderecos": [
         {
+          "id": "end-1",
+          "cep": "50000-000",
           "bairro": "São Thomaz",
           "rua": "Rua da avenida",
           "numero": "97",
@@ -57,5 +59,6 @@
       "senha": "senha",
       "id": "wasd"
     }
-  ]
+  ],
+  "orders": []
 }

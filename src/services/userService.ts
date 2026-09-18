@@ -59,5 +59,15 @@ export const userService = {
 
         const response = await apiService.post<Artesao>('/artesaos', artesaoData);
         return response.data;
-    }
+    },
+
+    async getArtesaoById(id: string): Promise<Artesao> {
+        try {
+            const response = await apiService.get<Artesao>(`/artesaos/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(`Erro ao buscar artesão ${id}:`, error);
+            throw error;
+        }
+    },
 };

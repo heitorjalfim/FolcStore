@@ -20,6 +20,6 @@ Prover uma solução completa de e-commerce composta por rotas de cadastro/auten
 * Gestão simplificada de estoques unitários (obras exclusivas) e em lote.
 
 ## 6. Limites do Produto (Fora de Escopo / Won't)
-* Módulo de Recomendação por Inteligência Artificial (HU-31).
-* Integração direta de consulta automática de APIs de operadoras de frete externos (HU-04 / HU-30).
-* Avaliação individual do comprador feita pelo vendedor (HU-20).
+* Módulo de Recomendação por Inteligência Artificial (RF31).
+* Integração direta de consulta automática de APIs de operadoras de frete externos (RF04 / RF30).
+* Avaliação individual do comprador feita pelo vendedor (RF20).

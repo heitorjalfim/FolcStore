@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { sessionStore } from '@/store/sessionStore';
 import { productService } from '@/services/productService';
 import { Product } from '@/types/product';
+import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
 import NextLink from 'next/link';
 import { useCartStore } from '@/store/cartStore';
 import { CartDrawer } from '../components/CartDrawer';
@@ -175,11 +176,11 @@ export default function CustomerDashboard() {
                 ) : (
                     <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={6}>
                         {products.map((product) => (
-                            <Card.Root 
-                                key={product.id || product.titulo} 
-                                p={4} 
-                                borderWidth="1px" 
-                                borderRadius="lg" 
+                            <Card.Root
+                                key={product.id || product.titulo}
+                                p={4}
+                                borderWidth="1px"
+                                borderRadius="lg"
                                 bg="white"
                                 _hover={{ shadow: "md", borderColor: "brand.500", transform: "translateY(-2px)" }}
                                 transition="all 0.2s"
@@ -204,9 +205,9 @@ export default function CustomerDashboard() {
                                     </Text>
                                 </Box>
 
-                                <Button 
-                                    size="sm" 
-                                    colorPalette="brand" 
+                                <Button
+                                    size="sm"
+                                    colorPalette="brand"
                                     w="full"
                                     onClick={() => addItem(product)}
                                 >

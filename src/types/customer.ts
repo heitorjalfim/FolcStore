@@ -9,6 +9,8 @@ export interface Customer {
 }
 
 export interface Endereco {
+    id: string;
+    cep: string;
     bairro: string;
     rua: string;
     numero: string;
