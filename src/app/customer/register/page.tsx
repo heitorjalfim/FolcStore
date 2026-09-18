@@ -31,6 +31,7 @@ export default function CustomerRegisterPage() {
     email: "",
     senha: "",
     telefone: "",
+    cep: "",
     rua: "",
     numero: "",
     bairro: "",
@@ -67,6 +68,8 @@ export default function CustomerRegisterPage() {
       telefone: formData.telefone,
       enderecos: [
         {
+          id: crypto.randomUUID(),
+          cep: formData.cep,
           rua: formData.rua,
           numero: formData.numero,
           bairro: formData.bairro,
@@ -218,6 +221,18 @@ export default function CustomerRegisterPage() {
                 >
                   Endereço Principal
                 </Heading>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>CEP</Field.Label>
+                  <Input
+                    name="cep"
+                    value={formData.cep}
+                    onChange={handleChange}
+                    placeholder="00000-000"
+                  />
+                </Field.Root>
               </GridItem>
 
               <GridItem colSpan={{ base: 1, md: 2 }}>

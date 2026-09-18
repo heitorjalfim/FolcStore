@@ -13,7 +13,9 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
+import { sessionStore } from "@/store/sessionStore";
 
 interface CartDrawerProps {
   open: boolean;
@@ -23,6 +25,13 @@ interface CartDrawerProps {
 export function CartDrawer({ open, onClose }: CartDrawerProps) {
   const { items, removeItem, updateQuantity, clearCart, totalPrice } =
     useCartStore();
+  const router = useRouter();
+
+  const handleFinalizarCompra = () => {
+    onClose();
+    const logado = sessionStore.getState().isCustomerLogged();
+    router.push(logado ? "/customer/checkout" : "/customer/login");
+  };
 
   return (
     <Drawer.Root
@@ -118,7 +127,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
                     R$ {totalPrice().toFixed(2)}
                   </Text>
                 </HStack>
-                <Button w="100%" colorPalette="brand">
+                <Button w="100%" colorPalette="brand" onClick={handleFinalizarCompra}>
                   Finalizar Compra
                 </Button>
                 <Button w="100%" variant="ghost" colorPalette="red" size="sm" onClick={clearCart}>
