@@ -35,7 +35,7 @@
   ],
   "products": [
     {
-      "idArtesao": "1",
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
       "titulo": "Vaso de Barro Decorativo",
       "descricao": "Vaso artesanal feito com argila regional.",
       "materiaPrima": "Argila",
@@ -50,6 +50,121 @@
         "https://picsum.photos/200/300"
       ],
       "id": "posseee"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Boneco de Barro Vitalino",
+      "descricao": "Escultura figurativa inspirada no estilo tradicional pernambucano.",
+      "materiaPrima": "Argila",
+      "tecnica": "Escultura em Cerâmica",
+      "regiaoProducao": "Caruaru",
+      "categoria": "Arte Sacra e Escultura",
+      "preco": 150,
+      "quantidadeEstoque": 5,
+      "dimensoes": "30cm x 12cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-02"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Bolsa de Palha Artesanal",
+      "descricao": "Bolsa trançada à mão com palha de carnaúba, ideal para o dia a dia.",
+      "materiaPrima": "Palha de Carnaúba",
+      "tecnica": "Trançado",
+      "regiaoProducao": "Norte Pernambucano",
+      "categoria": "Acessórios",
+      "preco": 120,
+      "quantidadeEstoque": 8,
+      "dimensoes": "35cm x 25cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-03"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Renda de Bilro - Toalha de Mesa",
+      "descricao": "Toalha de mesa produzida artesanalmente com a técnica tradicional de renda de bilro.",
+      "materiaPrima": "Linha de Algodão",
+      "tecnica": "Renda de Bilro",
+      "regiaoProducao": "Nísia Floresta",
+      "categoria": "Cama, Mesa e Banho",
+      "preco": 220,
+      "quantidadeEstoque": 4,
+      "dimensoes": "120cm x 80cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-04"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Fruteira de Madeira Maciça",
+      "descricao": "Fruteira esculpida em madeira de reaproveitamento com acabamento em cera natural.",
+      "materiaPrima": "Madeira Reciclada",
+      "tecnica": "Entalhe em Madeira",
+      "regiaoProducao": "Recife",
+      "categoria": "Utilidades Domésticas",
+      "preco": 180,
+      "quantidadeEstoque": 6,
+      "dimensoes": "40cm x 20cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-05"
+    }
+  ],
+  "productSuggestions": [
+    {
+      "id": "sug-01",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Porta-copos de Madeira Entalhada",
+      "descricao": "Sugestão de um kit com 6 porta-copos com temática de cordel e madeira reaproveitada.",
+      "categoriaDesejada": "Utilidades Domésticas",
+      "status": "Pendente",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-02",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Rede de Descanso Bordada à Mão",
+      "descricao": "Gostaria de ver redes de casal com detalhes de renascença ou bordado regional na varanda.",
+      "categoriaDesejada": "Cama, Mesa e Banho",
+      "status": "Em Análise",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-03",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Abajur de Chita com Base de Cerâmica",
+      "descricao": "Luminária de mesa com cúpula forrada em tecido de chita colorida.",
+      "categoriaDesejada": "Decoração",
+      "status": "Pendente",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-04",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Carteira de Couro Bovino Estampado",
+      "descricao": "Carteira masculina e feminina em couro legítimo com entalhes inspirados no cangaço.",
+      "categoriaDesejada": "Acessórios",
+      "status": "Aprovado",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-05",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Prato de Parede em Cerâmica Vitrificada",
+      "descricao": "Prato decorativo pintado à mão com traços do barroco pernambucano.",
+      "categoriaDesejada": "Arte Sacra e Escultura",
+      "status": "Pendente",
+      "dataCriacao": "2026-09-19"
     }
   ],
   "admins": [
