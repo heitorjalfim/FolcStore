@@ -49,7 +49,7 @@ export default function FormularioAvaliacao({ onEnviar }: FormularioAvaliacaoPro
             bg="white"
             boxShadow="sm"
         >
-            <VStack spacing={4} align="stretch">
+            <VStack align="stretch" gap="{4}">
                 {erro && (
                     <Text color="red.500" fontSize="sm" fontWeight="medium">
                         {erro}
