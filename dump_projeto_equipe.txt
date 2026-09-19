@@ -1,0 +1,3996 @@
+=== REPOSITÓRIO OFICIAL DA EQUIPE (PROJETO COMPLETO) ===
+DATA DA EXTRAÇÃO: Sat, Sep 19, 2026 12:25:28 PM
+
+--- 1. RAMIFICAÇÕES DISPONÍVEIS (GIT BRANCHES) ---
+* main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/JustaTBC
+  remotes/origin/JustaTBC-patch-1
+  remotes/origin/JustaTBC-patch-2
+  remotes/origin/carrinho
+  remotes/origin/develop
+  remotes/origin/feature/adicionar-pagamento-endereco
+  remotes/origin/heitorjalfim-patch-1
+  remotes/origin/homolog
+  remotes/origin/ia-docs
+  remotes/origin/layout
+  remotes/origin/main
+  remotes/origin/produto-e-carrinho
+
+--- 2. DEPENDÊNCIAS E DESIGN SYSTEM (PACKAGE.JSON) ---
+{
+  "name": "projeto-integrador",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "produzirDB": "cp base-db.json running-db.json",
+    "api": "json-server --watch running-db.json --routes routes.json --port 3001",
+    "dev": "next dev",
+    "dev:full": "concurrently \"npm run api\" \"npm run dev\"",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^3.37.0",
+    "@emotion/react": "^11.14.0",
+    "axios": "^1.20.0",
+    "next": "16.3.4",
+    "next-themes": "^0.4.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "react-icons": "^5.7.0",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "concurrently": "^10.0.5",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.4",
+    "json-server": "^0.17.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+
+--- 3. ARQUIVOS DE CONFIGURAÇÃO VISUAL ---
+
+--- tsconfig.json ---
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
+
+--- next.config.ts ---
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;
+
+--- 4. ESTRUTURA COMPLETA DE DIRETÓRIOS ---
+.
+./AGENTS.md
+./base-db.json
+./CLAUDE.md
+./docs
+./docs/design.md
+./docs/Documento de Requisitos.docx
+./docs/product.md
+./docs/requirements.md
+./docs/uso-de-ia.md
+./dump_projeto_equipe.txt
+./eslint.config.mjs
+./extrair_projeto_equipe.sh
+./next.config.ts
+./package.json
+./package-lock.json
+./postcss.config.mjs
+./public
+./public/file.svg
+./public/globe.svg
+./public/next.svg
+./public/vercel.svg
+./public/window.svg
+./README.md
+./routes.json
+./src
+./src/app
+./src/app/admin
+./src/app/admin/login
+./src/app/admin/login/page.tsx
+./src/app/admin/page.tsx
+./src/app/artesao
+./src/app/artesao/login
+./src/app/artesao/login/page.tsx
+./src/app/artesao/page.tsx
+./src/app/artesao/register
+./src/app/artesao/register/page.tsx
+./src/app/components
+./src/app/components/AvaliacaoCard.tsx
+./src/app/components/CartDrawer.tsx
+./src/app/components/CategoryFilter.tsx
+./src/app/components/FormularioAvaliacao.tsx
+./src/app/components/HeaderCarrinho.tsx
+./src/app/components/ListaAvaliacoes.tsx
+./src/app/components/ProductCard.tsx
+./src/app/components/ProductList.tsx
+./src/app/customer
+./src/app/customer/checkout
+./src/app/customer/checkout/page.tsx
+./src/app/customer/login
+./src/app/customer/login/page.tsx
+./src/app/customer/minha-conta
+./src/app/customer/minha-conta/page.tsx
+./src/app/customer/page.tsx
+./src/app/customer/register
+./src/app/customer/register/page.tsx
+./src/app/customer/seguranca
+./src/app/customer/seguranca/page.tsx
+./src/app/globals.css
+./src/app/layout.tsx
+./src/app/page.tsx
+./src/app/product
+./src/app/product/[slug]
+./src/app/product/[slug]/page.tsx
+./src/app/provider.tsx
+./src/services
+./src/services/addressService.ts
+./src/services/apiService.ts
+./src/services/orderService.ts
+./src/services/paymentService.ts
+./src/services/productService.ts
+./src/services/userService.ts
+./src/store
+./src/store/cartStore.ts
+./src/store/sessionStore.ts
+./src/theme.ts
+./src/types
+./src/types/admin.ts
+./src/types/artesao.ts
+./src/types/customer.ts
+./src/types/index.ts
+./src/types/order.ts
+./src/types/product.ts
+./tsconfig.json
+
+--- 5. CONTEÚDO DE ARQUIVOS (CÓDIGO-FONTE E ROTAS) ---
+
+==================================================
+ARQUIVO: src/app/admin/login/page.tsx
+==================================================
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { sessionStore } from '@/store/sessionStore';
+import { userService } from '@/services/userService';
+import {
+    Box,
+    Button,
+    Flex,
+    Field,
+    Heading,
+    Input,
+    Text,
+    VStack,
+    Spinner
+} from '@chakra-ui/react';
+
+export default function AdminLoginPage() {
+    const [mounted, setMounted] = useState(false);
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+    const salvarAdmin = sessionStore((state) => state.salvarAdmin);
+    const isAdminLogged = sessionStore((state) => state.isAdminLogged)
+
+    useEffect(() => setMounted(true), []);
+
+    useEffect(() => {
+        if (isAdminLogged()) {
+            router.push('/admin')
+        }
+    }, []);
+
+    if (!mounted || isAdminLogged()) return (
+        <Flex minH="80vh" align="center" justify="center">
+            <Spinner size="xl" color="brand.500" />
+        </Flex>
+    );
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError('');
+
+        try {
+            const admin = await userService.loginAdmin(email, senha);
+
+            if (admin) {
+                salvarAdmin(admin);
+                router.push('/admin');
+            } else {
+                setError('E-mail ou senha inválidos.');
+            }
+        } catch (err) {
+            setError('Ocorreu um erro ao tentar fazer login.');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <Flex minH="80vh" align="center" justify="center">
+            <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="md">
+                <VStack spacing={6} align="stretch">
+                    <Heading size="lg" textAlign="center" color="brand.500">
+                        Login de Admin
+                    </Heading>
+
+                    {error && (
+                        <Text color="red.500" fontSize="sm" textAlign="center" fontWeight="500">
+                            {error}
+                        </Text>
+                    )}
+
+                    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                        <VStack spacing={4}>
+                            <Field.Root required>
+                                <Field.Label>E-mail</Field.Label>
+                                <Input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="seunome@email.com"
+                                    bg="white"
+                                />
+                            </Field.Root>
+
+                            <Field.Root required>
+                                <Field.Label>Senha</Field.Label>
+                                <Input
+                                    type="password"
+                                    value={senha}
+                                    onChange={(e) => setSenha(e.target.value)}
+                                    placeholder="********"
+                                    bg="white"
+                                />
+                            </Field.Root>
+
+                            <Button
+                                type="submit"
+                                colorPalette="brand"
+                                w="full"
+                                loading={isLoading}
+                                loadingText="Entrando..."
+                                mt={2}
+                            >
+                                Entrar como Admin
+                            </Button>
+                        </VStack>
+                    </form>
+                </VStack>
+            </Box>
+        </Flex>
+    )
+}
+
+==================================================
+ARQUIVO: src/app/admin/page.tsx
+==================================================
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { sessionStore } from '@/store/sessionStore';
+
+export default function AdminPage() {
+    const [mounted, setMounted] = useState(false);
+    const router = useRouter();
+
+    // Best Practice: Always use selectors to extract Zustand state to prevent unnecessary re-renders.
+    const logoutAdmin = sessionStore((state) => state.logoutAdmin);
+    const isAdminLogged = sessionStore((state) => state.isAdminLogged);
+    const admin = sessionStore((state) => state.admin);
+
+    useEffect(() => setMounted(true), []);
+
+    useEffect(() => {
+        if (mounted && !isAdminLogged()) {
+            router.push('/admin/login');
+        }
+    }, [mounted, isAdminLogged]);
+
+    if (!mounted || !isAdminLogged()) return null;
+
+    const handleLogout = () => {
+        logoutAdmin();
+        router.push('/');
+    };
+
+    return (
+        <div>
+            <h1>Dashboard Admin</h1>
+            <p>Bem-vindo, {admin?.nome}</p>
+
+            <button onClick={handleLogout}>Sair (Logout)</button>
+        </div>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/artesao/login/page.tsx
+==================================================
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { sessionStore } from '@/store/sessionStore';
+import { userService } from '@/services/userService';
+import {
+    Box,
+    Button,
+    Flex,
+    Field,
+    Heading,
+    Input,
+    Text,
+    VStack,
+    Spinner
+} from '@chakra-ui/react';
+
+export default function ArtesaoLoginPage() {
+    const [mounted, setMounted] = useState(false);
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+    const salvarArtesao = sessionStore((state) => state.salvarArtesao);
+    const isArtesaoLogged = sessionStore((state) => state.isArtesaoLogged)
+    const register = () => router.push('/artesao/register');
+
+    useEffect(() => setMounted(true), []);
+
+    useEffect(() => {
+        if (isArtesaoLogged()) {
+            router.push('/artesao')
+        }
+    }, []);
+
+    if (!mounted || isArtesaoLogged()) return (
+        <Flex minH="80vh" align="center" justify="center">
+            <Spinner size="xl" color="brand.500" />
+        </Flex>
+    );
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError('');
+
+        try {
+            const artesao = await userService.loginArtesao(email, senha);
+
+            if (artesao) {
+                salvarArtesao(artesao);
+                router.push('/artesao');
+            } else {
+                setError('E-mail ou senha inválidos.');
+            }
+        } catch (err) {
+            setError('Ocorreu um erro ao tentar fazer login.');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <Flex minH="80vh" align="center" justify="center">
+            <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="md">
+                <VStack gap={6} align="stretch">
+                    <Heading size="lg" textAlign="center" color="brand.500">
+                        Login de Artesão
+                    </Heading>
+
+                    {error && (
+                        <Text color="red.500" fontSize="sm" textAlign="center" fontWeight="500">
+                            {error}
+                        </Text>
+                    )}
+
+                    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                        <VStack gap={4}>
+                            <Field.Root required>
+                                <Field.Label>E-mail</Field.Label>
+                                <Input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="seunome@email.com"
+                                    bg="white"
+                                />
+                            </Field.Root>
+
+                            <Field.Root required>
+                                <Field.Label>Senha</Field.Label>
+                                <Input
+                                    type="password"
+                                    value={senha}
+                                    onChange={(e) => setSenha(e.target.value)}
+                                    placeholder="********"
+                                    bg="white"
+                                />
+                            </Field.Root>
+
+                            <Button
+                                type="submit"
+                                colorPalette="brand"
+                                w="full"
+                                loading={isLoading}
+                                loadingText="Entrando..."
+                                mt={2}
+                            >
+                                Entrar como Artesão
+                            </Button>
+                        </VStack>
+                    </form>
+
+                    <Button
+                        onClick={register}
+                        variant="ghost"
+                        colorPalette="brand"
+                        w="full"
+                    >
+                        Registrar como Artesão
+                    </Button>
+                </VStack>
+            </Box>
+        </Flex>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/artesao/page.tsx
+==================================================
+"use client";
+
+import AvaliacaoCard from "../components/AvaliacaoCard";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { sessionStore } from '@/store/sessionStore';
+
+// TODO: substituir esse mock pela lista de avaliações reais desse artesão,
+// buscada do backend, quando a API estiver pronta.
+export default function Artesao() {
+    const [mounted, setMounted] = useState(false);
+    const router = useRouter();
+
+    // Best Practice: Always use selectors to extract Zustand state to prevent unnecessary re-renders.
+    const logoutArtesao = sessionStore((state) => state.logoutArtesao);
+    const isArtesaoLogged = sessionStore((state) => state.isArtesaoLogged);
+    const artesao = sessionStore((state) => state.artesao);
+
+    useEffect(() => setMounted(true), []);
+
+    useEffect(() => {
+        if (mounted && !isArtesaoLogged()) {
+            router.push('/artesao/login');
+        }
+    }, [mounted, isArtesaoLogged]);
+
+    if (!mounted || !isArtesaoLogged()) return null;
+
+    const handleLogout = () => {
+        logoutArtesao();
+        router.push('/');
+    };
+
+    const avaliacoes = [
+        { nota: 5, comentario: "Peça linda, chegou rápido!", data: "10/09/2026" },
+        { nota: 4, comentario: "Muito bonita, só demorou um pouco.", data: "05/09/2026" },
+        { nota: 5, comentario: "Superou minhas expectativas.", data: "01/09/2026" },
+    ];
+
+    let conteudo;
+    if (avaliacoes.length === 0) {
+        conteudo = <p>Ainda não há avaliações para esse vendedor.</p>;
+    } else {
+        const soma = avaliacoes.reduce((total, avaliacao) => total + avaliacao.nota, 0);
+        const media = soma / avaliacoes.length;
+
+        conteudo = (
+            <div>
+                <p>Nota média: {media.toFixed(1)} / 5</p>
+                {avaliacoes.map((avaliacao, index) => (
+                    <AvaliacaoCard key={index} avaliacao={avaliacao} />
+                ))}
+            </div>
+        );
+    }
+
+    return (
+        <div>
+            <h1>Avaliações do artesão</h1>
+            {conteudo}
+        </div>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/artesao/register/page.tsx
+==================================================
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { userService } from '@/services/userService';
+import { sessionStore } from '@/store/sessionStore';
+import { Artesao } from '@/types';
+import {
+    Box,
+    Button,
+    Flex,
+    Field,
+    Heading,
+    Input,
+    Text,
+    VStack,
+    Grid,
+    GridItem,
+    Textarea
+} from '@chakra-ui/react';
+
+export default function ArtesaoRegisterPage() {
+    const router = useRouter();
+
+    const [formData, setFormData] = useState<Omit<Artesao, 'id'>>({
+        nome: '',
+        cpf: '',
+        email: '',
+        senha: '',
+        regiaoProducao: '',
+        telefone: '',
+        biografia: ''
+    });
+
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Função genérica para atualizar os campos do formulário
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const salvarArtesao = sessionStore((state) => state.salvarArtesao);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError('');
+
+        try {
+            const novoArtesao = await userService.registerArtesao(formData);
+
+            // Login imediato e redirecionamento
+            salvarArtesao(novoArtesao);
+            router.push('/artesao');
+
+        } catch (err: any) {
+            // Tratamos os erros personalizados aqui no catch
+            if (err.message === 'EMAIL_EXISTS') {
+                setError('Este e-mail já está cadastrado.');
+            } else if (err.message === 'CPF_EXISTS') {
+                setError('Este CPF já está cadastrado.');
+            } else {
+                setError('Ocorreu um erro ao tentar registrar. Verifique os dados e tente novamente.');
+                console.error(err);
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <Flex minH="80vh" align="center" justify="center" py={8}>
+            <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="2xl">
+                <VStack spacing={6} align="stretch">
+                    <Heading size="lg" textAlign="center" color="brand.500">
+                        Registro de Artesão
+                    </Heading>
+
+                    <Text textAlign="center" color="gray.600" fontSize="sm">
+                        Crie sua conta para começar a vender seus produtos artesanais.
+                    </Text>
+
+                    {error && (
+                        <Text color="red.500" fontSize="sm" textAlign="center" fontWeight="500">
+                            {error}
+                        </Text>
+                    )}
+
+                    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                        <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={4}>
+                            {/* Nome (Ocupa 2 colunas no desktop) */}
+                            <GridItem colSpan={{ base: 1, md: 2 }}>
+                                <Field.Root required>
+                                    <Field.Label>Nome Completo</Field.Label>
+                                    <Input
+                                        name="nome"
+                                        value={formData.nome}
+                                        onChange={handleChange}
+                                        placeholder="Seu nome completo"
+                                    />
+                                </Field.Root>
+                            </GridItem>
+
+                            {/* CPF */}
+                            <GridItem colSpan={1}>
+                                <Field.Root required>
+                                    <Field.Label>CPF</Field.Label>
+                                    <Input
+                                        name="cpf"
+                                        value={formData.cpf}
+                                        onChange={handleChange}
+                                        placeholder="000.000.000-00"
+                                    />
+                                </Field.Root>
+                            </GridItem>
+
+                            {/* Telefone */}
+                            <GridItem colSpan={1}>
+                                <Field.Root required>
+                                    <Field.Label>Telefone</Field.Label>
+                                    <Input
+                                        name="telefone"
+                                        value={formData.telefone}
+                                        onChange={handleChange}
+                                        placeholder="(00) 00000-0000"
+                                    />
+                                </Field.Root>
+                            </GridItem>
+
+                            {/* E-mail */}
+                            <GridItem colSpan={1}>
+                                <Field.Root required>
+                                    <Field.Label>E-mail</Field.Label>
+                                    <Input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        placeholder="artesao@email.com"
+                                    />
+                                </Field.Root>
+                            </GridItem>
+
+                            {/* Senha */}
+                            <GridItem colSpan={1}>
+                                <Field.Root required>
+                                    <Field.Label>Senha</Field.Label>
+                                    <Input
+                                        type="password"
+                                        name="senha"
+                                        value={formData.senha}
+                                        onChange={handleChange}
+                                        placeholder="********"
+                                    />
+                                </Field.Root>
+                            </GridItem>
+
+                            {/* Região de Produção (Ocupa 2 colunas) */}
+                            <GridItem colSpan={{ base: 1, md: 2 }}>
+                                <Field.Root required>
+                                    <Field.Label>Região de Produção</Field.Label>
+                                    <Input
+                                        name="regiaoProducao"
+                                        value={formData.regiaoProducao}
+                                        onChange={handleChange}
+                                        placeholder="Ex: Vale do Jequitinhonha, MG"
+                                    />
+                                </Field.Root>
+                            </GridItem>
+
+                            {/* Biografia (Ocupa 2 colunas) */}
+                            <GridItem colSpan={{ base: 1, md: 2 }}>
+                                <Field.Root required>
+                                    <Field.Label>Biografia</Field.Label>
+                                    <Textarea
+                                        name="biografia"
+                                        value={formData.biografia}
+                                        onChange={handleChange}
+                                        placeholder="Conte um pouco sobre sua história e sua arte..."
+                                        rows={4}
+                                        resize="vertical"
+                                    />
+                                </Field.Root>
+                            </GridItem>
+
+                            {/* Botões (Ocupa 2 colunas) */}
+                            <GridItem colSpan={{ base: 1, md: 2 }}>
+                                <VStack spacing={3} mt={4}>
+                                    <Button
+                                        type="submit"
+                                        colorPalette="brand"
+                                        w="full"
+                                        loading={isLoading}
+                                        loadingText="Registrando..."
+                                    >
+                                        Criar conta de Artesão
+                                    </Button>
+
+                                    <Button
+                                        variant="ghost"
+                                        colorPalette="brand"
+                                        w="full"
+                                        onClick={() => router.push('/artesao/login')}
+                                    >
+                                        Já tem uma conta? Faça login
+                                    </Button>
+                                </VStack>
+                            </GridItem>
+                        </Grid>
+                    </form>
+                </VStack>
+            </Box>
+        </Flex>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/components/AvaliacaoCard.tsx
+==================================================
+import { Box, Text } from '@chakra-ui/react';
+
+type Avaliacao = {
+    nota: number;
+    comentario: string;
+    data: string;
+};
+
+export default function AvaliacaoCard({ avaliacao }: { avaliacao: Avaliacao }) {
+    return (
+        <Box
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            p={5}
+            maxW="sm"
+            bg="white"
+            boxShadow="sm"
+        >
+            <Text fontWeight="bold" fontSize="lg" mb={2}>
+                Nota: {avaliacao.nota} / 5
+            </Text>
+            <Text color="gray.700" mb={4}>
+                {avaliacao.comentario}
+            </Text>
+            <Text fontSize="sm" color="gray.500">
+                {avaliacao.data}
+            </Text>
+        </Box>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/components/CartDrawer.tsx
+==================================================
+"use client";
+
+import { useEffect, useState } from "react";
+import {
+    Drawer,
+    Portal,
+    VStack,
+    HStack,
+    Text,
+    Button,
+    IconButton,
+    Image,
+    Separator,
+    Box,
+} from "@chakra-ui/react";
+import { FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import { useCartStore } from "@/store/cartStore";
+import { sessionStore } from "@/store/sessionStore";
+
+interface CartDrawerProps {
+    open: boolean;
+    onClose: () => void;
+}
+
+export function CartDrawer({ open, onClose }: CartDrawerProps) {
+    const [isHydrated, setIsHydrated] = useState(false);
+    const { items = [], removeItem, updateQuantity, clearCart, totalPrice } = useCartStore();
+    const router = useRouter();
+
+    useEffect(() => {
+        setIsHydrated(true);
+    }, []);
+
+    const handleFinalizarCompra = () => {
+        onClose();
+        const logado = sessionStore.getState().isCustomerLogged();
+        router.push(logado ? "/customer/checkout" : "/customer/login");
+    };
+
+    const hasItems = isHydrated && items && items.length > 0;
+
+    return (
+        <Drawer.Root
+            open={open}
+            onOpenChange={(e) => !e.open && onClose()}
+            placement="end"
+            size="md"
+        >
+            <Portal>
+                <Drawer.Backdrop />
+                <Drawer.Positioner>
+                    <Drawer.Content>
+                        <Drawer.CloseTrigger />
+                        <Drawer.Header borderBottomWidth="1px">Seu Carrinho</Drawer.Header>
+
+                        <Drawer.Body>
+                            {!hasItems ? (
+                                <VStack py={10} gap={3}>
+                                    <Text fontSize="lg" color="gray.400">
+                                        Carrinho vazio
+                                    </Text>
+                                    <Text fontSize="sm" color="gray.400">
+                                        Adicione produtos para começar.
+                                    </Text>
+                                </VStack>
+                            ) : (
+                                <VStack gap={4} py={4} align="stretch">
+                                    {items.map((item) => {
+                                        if (!item?.product) return null;
+
+                                        return (
+                                            <Box key={item.product.id}>
+                                                <HStack gap={4}>
+                                                    {item.product.linkImagens?.[0] && (
+                                                        <Image
+                                                            src={item.product.linkImagens[0]}
+                                                            alt={item.product.titulo}
+                                                            boxSize="60px"
+                                                            objectFit="cover"
+                                                            borderRadius="md"
+                                                        />
+                                                    )}
+                                                    <VStack align="start" flex={1} gap={1}>
+                                                        <Text fontWeight="semibold" fontSize="sm" lineClamp={1}>
+                                                            {item.product.titulo}
+                                                        </Text>
+                                                        <Text fontSize="sm" color="brand.600" fontWeight="bold">
+                                                            R$ {(item.product.preco * item.quantity).toFixed(2)}
+                                                        </Text>
+                                                        <HStack>
+                                                            <IconButton
+                                                                aria-label="Diminuir"
+                                                                size="xs"
+                                                                onClick={() =>
+                                                                    updateQuantity(item.product.id, item.quantity - 1)
+                                                                }
+                                                            >
+                                                                <FiMinus />
+                                                            </IconButton>
+                                                            <Text fontSize="sm" fontWeight="medium" minW="20px" textAlign="center">
+                                                                {item.quantity}
+                                                            </Text>
+                                                            <IconButton
+                                                                aria-label="Aumentar"
+                                                                size="xs"
+                                                                onClick={() =>
+                                                                    updateQuantity(item.product.id, item.quantity + 1)
+                                                                }
+                                                            >
+                                                                <FiPlus />
+                                                            </IconButton>
+                                                            <IconButton
+                                                                aria-label="Remover"
+                                                                size="xs"
+                                                                colorPalette="red"
+                                                                variant="ghost"
+                                                                onClick={() => removeItem(item.product.id)}
+                                                            >
+                                                                <FiTrash2 />
+                                                            </IconButton>
+                                                        </HStack>
+                                                    </VStack>
+                                                </HStack>
+                                                <Separator mt={4} />
+                                            </Box>
+                                        );
+                                    })}
+                                </VStack>
+                            )}
+                        </Drawer.Body>
+
+                        {hasItems && (
+                            <Drawer.Footer borderTopWidth="1px" flexDir="column" gap={3}>
+                                <HStack w="100%" justify="space-between">
+                                    <Text fontWeight="bold" fontSize="lg">
+                                        Total:
+                                    </Text>
+                                    <Text fontWeight="bold" fontSize="lg" color="brand.600">
+                                        R$ {totalPrice().toFixed(2)}
+                                    </Text>
+                                </HStack>
+                                <Button w="100%" colorPalette="brand" onClick={handleFinalizarCompra}>
+                                    Finalizar Compra
+                                </Button>
+                                <Button w="100%" variant="ghost" colorPalette="red" size="sm" onClick={clearCart}>
+                                    Limpar Carrinho
+                                </Button>
+                            </Drawer.Footer>
+                        )}
+                    </Drawer.Content>
+                </Drawer.Positioner>
+            </Portal>
+        </Drawer.Root>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/components/CategoryFilter.tsx
+==================================================
+"use client";
+
+import { HStack, Button } from "@chakra-ui/react";
+
+interface CategoryFilterProps {
+  categories: string[];
+  selected: string | null;
+  onSelect: (category: string | null) => void;
+}
+
+export function CategoryFilter({
+  categories,
+  selected,
+  onSelect,
+}: CategoryFilterProps) {
+  return (
+    <HStack gap={3} wrap="wrap" py={4}>
+      <Button
+        size="sm"
+        variant={selected === null ? "solid" : "outline"}
+        colorScheme="blue"
+        onClick={() => onSelect(null)}
+      >
+        Todos
+      </Button>
+      {categories.map((cat) => (
+        <Button
+          key={cat}
+          size="sm"
+          variant={selected === cat ? "solid" : "outline"}
+          colorPalette="brand"
+          onClick={() => onSelect(cat)}
+        >
+          {cat}
+        </Button>
+      ))}
+    </HStack>
+  );
+}
+==================================================
+ARQUIVO: src/app/components/FormularioAvaliacao.tsx
+==================================================
+"use client";
+
+import { useState } from "react";
+import { Box, Button, Text, VStack } from "@chakra-ui/react";
+
+type FormularioAvaliacaoProps = {
+    onEnviar: (avaliacao: { nota: number; comentario: string; data: string }) => void;
+};
+
+const pedidoSimulado = {
+    status: "Entregue",
+    jaAvaliado: false,
+};
+
+export default function FormularioAvaliacao({ onEnviar }: FormularioAvaliacaoProps) {
+    const [comentario, setComentario] = useState("");
+    const [nota, setNota] = useState(5);
+    const [erro, setErro] = useState("");
+
+    function enviarAvaliacao() {
+        if (pedidoSimulado.status !== "Entregue") {
+            setErro("Você só pode avaliar pedidos que já foram entregues.");
+            return;
+        }
+
+        if (pedidoSimulado.jaAvaliado) {
+            setErro("Esse pedido já foi avaliado.");
+            return;
+        }
+
+        setErro("");
+
+        const novaAvaliacao = {
+            nota: nota,
+            comentario: comentario,
+            data: new Date().toLocaleDateString("pt-BR"),
+        };
+        onEnviar(novaAvaliacao);
+        setComentario("");
+        setNota(5);
+    }
+
+    return (
+        <Box
+            borderWidth="1px"
+            borderRadius="lg"
+            p={6}
+            maxW="md"
+            bg="white"
+            boxShadow="sm"
+        >
+            <VStack spacing={4} align="stretch">
+                {erro && (
+                    <Text color="red.500" fontSize="sm" fontWeight="medium">
+                        {erro}
+                    </Text>
+                )}
+
+                <Box>
+                    <Text mb={2} fontSize="sm" fontWeight="semibold" color="gray.700">
+                        Nota
+                    </Text>
+                    {/* Usando select nativo para evitar erros de objeto do Chakra */}
+                    <select
+                        value={nota}
+                        onChange={(e) => setNota(Number(e.target.value))}
+                        style={{
+                            width: "100%",
+                            padding: "8px 12px",
+                            borderRadius: "6px",
+                            border: "1px solid #E2E8F0",
+                            backgroundColor: "white",
+                            fontSize: "14px",
+                            outline: "none"
+                        }}
+                    >
+                        <option value={1}>1 - Muito Ruim</option>
+                        <option value={2}>2 - Ruim</option>
+                        <option value={3}>3 - Regular</option>
+                        <option value={4}>4 - Bom</option>
+                        <option value={5}>5 - Excelente</option>
+                    </select>
+                </Box>
+
+                <Box>
+                    <Text mb={2} fontSize="sm" fontWeight="semibold" color="gray.700">
+                        Comentário
+                    </Text>
+                    {/* Usando textarea nativo estilizado */}
+                    <textarea
+                        value={comentario}
+                        onChange={(e) => setComentario(e.target.value)}
+                        placeholder="Escreva sua avaliação..."
+                        rows={4}
+                        style={{
+                            width: "100%",
+                            padding: "8px 12px",
+                            borderRadius: "6px",
+                            border: "1px solid #E2E8F0",
+                            backgroundColor: "white",
+                            fontSize: "14px",
+                            outline: "none",
+                            resize: "vertical"
+                        }}
+                    />
+                </Box>
+
+                <Button
+                    colorScheme="blue"
+                    onClick={enviarAvaliacao}
+                    w="full"
+                >
+                    Enviar Avaliação
+                </Button>
+            </VStack>
+        </Box>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/components/HeaderCarrinho.tsx
+==================================================
+"use client";
+
+import { Box, Container, Flex, Text, Button, Badge, useDisclosure } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { FiShoppingCart } from "react-icons/fi";
+import { useCartStore } from "@/store/cartStore";
+import { CartDrawer } from "./CartDrawer";
+
+const NAV_LINKS = [
+    { label: "Home", href: "/" },
+    { label: "Cliente", href: "/customer" },
+    { label: "Artesão", href: "/artesao" },
+    { label: "Admin", href: "/admin" },
+];
+
+export function HeaderCarrinho() {
+    const { open, onOpen, onClose } = useDisclosure();
+    const totalItems = useCartStore((state) => state.totalItems());
+
+    return (
+        <>
+            <Box
+                as="header"
+                bg="neutral.white"
+                shadow="sm"
+
+            >
+                <Container maxW="7xl">
+                    <Flex h="16" align="center" justify="space-between">
+                        {/* Logo / marca */}
+                        <Text fontSize="xl" fontWeight="bold" color="brand.500">
+                            Origem
+                        </Text>
+
+                        {/* Navegação principal */}
+                        <Flex gap={6} align="center" fontWeight="medium" color="neutral.grayText">
+                            {NAV_LINKS.map((link) => (
+                                <Text asChild key={link.href} _hover={{ color: "brand.600" }}>
+                                    <NextLink href={link.href}>{link.label}</NextLink>
+                                </Text>
+                            ))}
+                        </Flex>
+
+                        {/* Carrinho */}
+                        <Button variant="outline" colorPalette="brand" onClick={onOpen} position="relative">
+                            <FiShoppingCart />
+                            Carrinho
+                            {totalItems > 0 && (
+                                <Badge
+                                    ml={2}
+                                    colorPalette="red"
+                                    borderRadius="full"
+                                    px={2}
+                                    fontSize="xs"
+                                >
+                                    {totalItems}
+                                </Badge>
+                            )}
+                        </Button>
+                    </Flex>
+                </Container>
+            </Box>
+
+            <CartDrawer open={open} onClose={onClose} />
+        </>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/components/ListaAvaliacoes.tsx
+==================================================
+import { Box, Text, VStack } from "@chakra-ui/react";
+import AvaliacaoCard from "./AvaliacaoCard";
+
+type Avaliacao = {
+    nota: number;
+    comentario: string;
+    data: string;
+};
+
+type ListaAvaliacoesProps = {
+    avaliacoes: Avaliacao[];
+    mostrarMedia?: boolean;
+};
+
+export default function ListaAvaliacoes({ avaliacoes, mostrarMedia }: ListaAvaliacoesProps) {
+    if (avaliacoes.length === 0) {
+        return (
+            <Box p={4} textAlign="center">
+                <Text color="gray.500">Ainda não há avaliações para esse vendedor.</Text>
+            </Box>
+        );
+    }
+
+    let media = null;
+    if (mostrarMedia) {
+        const soma = avaliacoes.reduce((total, avaliacao) => total + avaliacao.nota, 0);
+        const mediaCalculada = (soma / avaliacoes.length).toFixed(1);
+        media = (
+            <Text fontSize="lg" fontWeight="bold" color="gray.800" mb={4}>
+                Nota média: {mediaCalculada} / 5
+            </Text>
+        );
+    }
+
+    return (
+        <VStack spacing={4} align="stretch" w="full">
+            {media}
+            {avaliacoes.map((avaliacao, index) => (
+                <AvaliacaoCard key={index} avaliacao={avaliacao} />
+            ))}
+        </VStack>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/components/ProductCard.tsx
+==================================================
+"use client";
+
+import {
+    Box,
+    Image,
+    Text,
+    Button,
+    VStack,
+    Badge,
+} from "@chakra-ui/react";
+import NextLink from "next/link";
+import { Product } from "@/types/product";
+import { useCartStore } from "@/store/cartStore";
+
+// Helper function to create a clean URL string from the title
+function createSlug(titulo: string) {
+    return titulo
+        .toLowerCase()
+        .normalize("NFD") // Removes accents
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-") // Replaces spaces and special chars with hyphens
+        .replace(/(^-|-$)+/g, ""); // Removes leading or trailing hyphens
+}
+
+interface ProductCardProps {
+    product: Product;
+}
+
+export function ProductCard({ product }: ProductCardProps) {
+    const addItem = useCartStore((state) => state.addItem);
+    const imageSrc = product.linkImagens?.[0] ?? "/placeholder-product.png";
+
+    // Combine the slugified title and the ID
+    const productUrl = `/product/${createSlug(product.titulo)}-${product.id}`;
+
+    return (
+        <Box
+            as={NextLink}
+            href={productUrl}
+            display="block"
+            bg="white"
+            borderRadius="lg"
+            overflow="hidden"
+            shadow="md"
+            transition="transform 0.2s"
+            _hover={{ transform: "translateY(-4px)", shadow: "lg" }}
+        >
+            <Image
+                src={imageSrc}
+                alt={product.titulo}
+                w="100%"
+                h="200px"
+                objectFit="cover"
+            />
+            <VStack p={4} align="stretch" gap={2}>
+                <Badge colorScheme="purple" alignSelf="flex-start" fontSize="xs">
+                    {product.categoria}
+                </Badge>
+                <Text fontWeight="bold" fontSize="md" lineClamp={1}>
+                    {product.titulo}
+                </Text>
+                <Text fontSize="sm" color="gray.500" lineClamp={2}>
+                    {product.descricao}
+                </Text>
+                <Text fontWeight="bold" fontSize="lg" color="brand.600">
+                    R$ {product.preco.toFixed(2)}
+                </Text>
+                <Button
+                    colorScheme="blue"
+                    size="sm"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        addItem(product);
+                    }}
+                >
+                    Adicionar ao carrinho
+                </Button>
+            </VStack>
+        </Box>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/components/ProductList.tsx
+==================================================
+"use client";
+
+import { SimpleGrid, Spinner, Center, Text, VStack } from "@chakra-ui/react";
+import { Product } from "@/types/product";
+import { ProductCard } from "./ProductCard";
+
+interface ProductListProps {
+  products: Product[];
+  isLoading: boolean;
+  error: string | null;
+  onAddToCart?: (product: Product) => void;
+}
+
+export function ProductList({ products, isLoading, error, onAddToCart }: ProductListProps) {
+  if (isLoading) {
+    return (
+      <Center py={20}>
+        <Spinner size="xl" color="brand.500" borderWidth="3px" />
+      </Center>
+    );
+  }
+
+  if (error) {
+    return (
+      <Center py={20}>
+        <VStack>
+          <Text color="red.500" fontWeight="bold">
+            Erro ao carregar produtos
+          </Text>
+          <Text color="gray.500" fontSize="sm">
+            {error}
+          </Text>
+        </VStack>
+      </Center>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <Center py={20}>
+        <Text color="gray.400">Nenhum produto encontrado.</Text>
+      </Center>
+    );
+  }
+
+  return (
+    <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap={6}>
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
+      ))}
+    </SimpleGrid>
+  );
+}
+==================================================
+ARQUIVO: src/app/customer/checkout/page.tsx
+==================================================
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import NextLink from "next/link";
+import { sessionStore } from "@/store/sessionStore";
+import { useCartStore } from "@/store/cartStore";
+import { addressService } from "@/services/addressService";
+import { orderService } from "@/services/orderService";
+import { paymentService } from "@/services/paymentService";
+import { Endereco, MetodoPagamento, Order } from "@/types";
+import {
+  Box,
+  Button,
+  Container,
+  Field,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Heading,
+  Input,
+  Separator,
+  Spinner,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { FiHome } from "react-icons/fi";
+
+const ENDERECO_VAZIO = {
+  cep: "",
+  rua: "",
+  numero: "",
+  bairro: "",
+  complemento: "",
+  cidade: "",
+  estado: "",
+};
+
+export default function CheckoutPage() {
+  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  const customer = sessionStore((state) => state.customer);
+  const isCustomerLogged = sessionStore((state) => state.isCustomerLogged);
+  const salvarCustomer = sessionStore((state) => state.salvarCustomer);
+
+  const { items, totalPrice, clearCart } = useCartStore();
+
+  const [step, setStep] = useState<"endereco" | "pagamento">("endereco");
+
+  // --- Endereço ---
+  const [enderecoSelecionadoId, setEnderecoSelecionadoId] = useState<string | null>(null);
+  const [mostrarFormNovoEndereco, setMostrarFormNovoEndereco] = useState(false);
+  const [novoEndereco, setNovoEndereco] = useState(ENDERECO_VAZIO);
+  const [isSavingEndereco, setIsSavingEndereco] = useState(false);
+  const [enderecoError, setEnderecoError] = useState("");
+
+  // --- Pagamento ---
+  const [metodo, setMetodo] = useState<MetodoPagamento>("cartao");
+  const [cartaoData, setCartaoData] = useState({
+    numero: "",
+    nomeImpresso: "",
+    validade: "",
+    cvv: "",
+  });
+
+  // --- Confirmação ---
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [confirmError, setConfirmError] = useState("");
+  const [pedidoConfirmado, setPedidoConfirmado] = useState<Order | null>(null);
+
+  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    if (!isCustomerLogged()) {
+      router.push("/customer/login");
+      return;
+    }
+    if (items.length === 0 && !pedidoConfirmado) {
+      router.push("/customer");
+    }
+  }, [mounted, isCustomerLogged, items.length, pedidoConfirmado, router]);
+
+  if (!mounted || !isCustomerLogged() || !customer) {
+    return (
+      <Flex minH="80vh" align="center" justify="center">
+        <Spinner size="xl" color="brand.500" />
+      </Flex>
+    );
+  }
+
+  const handleChangeNovoEndereco = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNovoEndereco((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleChangeCartao = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCartaoData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSalvarEndereco = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setEnderecoError("");
+    setIsSavingEndereco(true);
+    try {
+      const customerAtualizado = await addressService.addEndereco(customer, novoEndereco);
+      salvarCustomer(customerAtualizado);
+      const enderecoCriado = customerAtualizado.enderecos[customerAtualizado.enderecos.length - 1];
+      setEnderecoSelecionadoId(enderecoCriado.id);
+      setNovoEndereco(ENDERECO_VAZIO);
+      setMostrarFormNovoEndereco(false);
+    } catch (err) {
+      console.error(err);
+      setEnderecoError("Não foi possível salvar o endereço. Tente novamente.");
+    } finally {
+      setIsSavingEndereco(false);
+    }
+  };
+
+  const enderecoSelecionado: Endereco | undefined = customer.enderecos.find(
+    (e) => e.id === enderecoSelecionadoId
+  );
+
+  const handleConfirmarPedido = async () => {
+    if (!enderecoSelecionado) return;
+    setConfirmError("");
+    setIsConfirming(true);
+    try {
+      const pagamento = paymentService.processar(
+        metodo,
+        metodo === "cartao" ? cartaoData.numero : undefined
+      );
+
+      const novoPedido = await orderService.create({
+        customerId: customer.id,
+        itens: items.map((item) => ({
+          productId: item.product.id,
+          titulo: item.product.titulo,
+          precoUnitario: item.product.preco,
+          quantidade: item.quantity,
+        })),
+        total: totalPrice(),
+        enderecoEntrega: enderecoSelecionado,
+        pagamento,
+        status: "Confirmado",
+        createdAt: new Date().toISOString(),
+      });
+
+      setPedidoConfirmado(novoPedido);
+      clearCart();
+    } catch (err) {
+      console.error(err);
+      setConfirmError("Não foi possível concluir o pedido. Tente novamente.");
+    } finally {
+      setIsConfirming(false);
+    }
+  };
+
+  if (pedidoConfirmado) {
+    return (
+      <Flex minH="80vh" align="center" justify="center" p={4}>
+        <VStack
+          gap={4}
+          bg="white"
+          p={10}
+          rounded="lg"
+          shadow="sm"
+          border="1px solid"
+          borderColor="gray.200"
+          maxW="md"
+          textAlign="center"
+        >
+          <Heading size="lg" color="brand.500">
+            Pedido confirmado!
+          </Heading>
+          <Text color="gray.600">
+            Seu pedido no valor de{" "}
+            <Text as="span" fontWeight="bold">
+              R$ {pedidoConfirmado.total.toFixed(2)}
+            </Text>{" "}
+            foi registrado com sucesso.
+          </Text>
+          <Text color="gray.500" fontSize="sm">
+            Entrega em: {pedidoConfirmado.enderecoEntrega.rua},{" "}
+            {pedidoConfirmado.enderecoEntrega.numero} —{" "}
+            {pedidoConfirmado.enderecoEntrega.cidade}/{pedidoConfirmado.enderecoEntrega.estado}
+          </Text>
+          <Button colorPalette="brand" w="full" onClick={() => router.push("/customer")}>
+            Voltar para a loja
+          </Button>
+        </VStack>
+      </Flex>
+    );
+  }
+
+  return (
+    <Box minH="100vh" bg="gray.50" pb={12}>
+      <Box bg="white" shadow="sm" py={4} px={8} mb={8}>
+        <Container maxW="1200px">
+          <HStack gap={4}>
+            <NextLink href="/customer">
+              <Button variant="ghost" size="sm">
+                <HStack gap={2}>
+                  <FiHome />
+                  <Text>Painel</Text>
+                </HStack>
+              </Button>
+            </NextLink>
+            <Heading size="md" color="brand.500">
+              Finalizar Compra
+            </Heading>
+          </HStack>
+        </Container>
+      </Box>
+
+      <Container maxW="1200px">
+        <Grid templateColumns={{ base: "1fr", lg: "2fr 1fr" }} gap={8}>
+          <GridItem>
+            <Box bg="white" p={6} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200">
+              <Text color="gray.500" fontSize="sm" mb={4}>
+                {step === "endereco" ? "Passo 1 de 2" : "Passo 2 de 2"}
+              </Text>
+
+              {step === "endereco" && (
+                <VStack align="stretch" gap={5}>
+                  <Heading size="md">Endereço de Entrega</Heading>
+
+                  {customer.enderecos.length === 0 && (
+                    <Text color="gray.500" fontSize="sm">
+                      Você ainda não tem endereços salvos. Cadastre um endereço para continuar.
+                    </Text>
+                  )}
+
+                  {customer.enderecos.length > 0 && (
+                    <VStack align="stretch" gap={3}>
+                      {customer.enderecos.map((endereco) => (
+                        <Box
+                          key={endereco.id}
+                          p={4}
+                          borderWidth="2px"
+                          borderRadius="md"
+                          borderColor={enderecoSelecionadoId === endereco.id ? "brand.500" : "gray.200"}
+                          bg={enderecoSelecionadoId === endereco.id ? "brand.50" : "white"}
+                          cursor="pointer"
+                          onClick={() => setEnderecoSelecionadoId(endereco.id)}
+                        >
+                          <Text fontWeight="semibold">
+                            {endereco.rua}, {endereco.numero}
+                            {endereco.complemento ? ` - ${endereco.complemento}` : ""}
+                          </Text>
+                          <Text fontSize="sm" color="gray.600">
+                            {endereco.bairro} — {endereco.cidade}/{endereco.estado} — CEP {endereco.cep}
+                          </Text>
+                        </Box>
+                      ))}
+                    </VStack>
+                  )}
+
+                  {!mostrarFormNovoEndereco && (
+                    <Button
+                      variant="outline"
+                      colorPalette="brand"
+                      alignSelf="start"
+                      onClick={() => setMostrarFormNovoEndereco(true)}
+                    >
+                      + Adicionar novo endereço
+                    </Button>
+                  )}
+
+                  {mostrarFormNovoEndereco && (
+                    <Box borderTopWidth="1px" borderColor="gray.100" pt={5}>
+                      {enderecoError && (
+                        <Text color="red.500" fontSize="sm" mb={3}>
+                          {enderecoError}
+                        </Text>
+                      )}
+                      <form onSubmit={handleSalvarEndereco}>
+                        <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={4}>
+                          <GridItem colSpan={1}>
+                            <Field.Root required>
+                              <Field.Label>CEP</Field.Label>
+                              <Input
+                                name="cep"
+                                value={novoEndereco.cep}
+                                onChange={handleChangeNovoEndereco}
+                                placeholder="00000-000"
+                              />
+                            </Field.Root>
+                          </GridItem>
+                          <GridItem colSpan={1}>
+                            <Field.Root required>
+                              <Field.Label>Estado (UF)</Field.Label>
+                              <Input
+                                name="estado"
+                                value={novoEndereco.estado}
+                                onChange={handleChangeNovoEndereco}
+                                placeholder="Ex: PE"
+                                maxLength={2}
+                              />
+                            </Field.Root>
+                          </GridItem>
+                          <GridItem colSpan={{ base: 1, md: 2 }}>
+                            <Field.Root required>
+                              <Field.Label>Rua / Logradouro</Field.Label>
+                              <Input
+                                name="rua"
+                                value={novoEndereco.rua}
+                                onChange={handleChangeNovoEndereco}
+                                placeholder="Ex: Rua das Flores"
+                              />
+                            </Field.Root>
+                          </GridItem>
+                          <GridItem colSpan={1}>
+                            <Field.Root required>
+                              <Field.Label>Número</Field.Label>
+                              <Input
+                                name="numero"
+                                value={novoEndereco.numero}
+                                onChange={handleChangeNovoEndereco}
+                                placeholder="123"
+                              />
+                            </Field.Root>
+                          </GridItem>
+                          <GridItem colSpan={1}>
+                            <Field.Root required>
+                              <Field.Label>Bairro</Field.Label>
+                              <Input
+                                name="bairro"
+                                value={novoEndereco.bairro}
+                                onChange={handleChangeNovoEndereco}
+                                placeholder="Ex: Centro"
+                              />
+                            </Field.Root>
+                          </GridItem>
+                          <GridItem colSpan={1}>
+                            <Field.Root>
+                              <Field.Label>Complemento (Opcional)</Field.Label>
+                              <Input
+                                name="complemento"
+                                value={novoEndereco.complemento}
+                                onChange={handleChangeNovoEndereco}
+                                placeholder="Apto 101"
+                              />
+                            </Field.Root>
+                          </GridItem>
+                          <GridItem colSpan={1}>
+                            <Field.Root required>
+                              <Field.Label>Cidade</Field.Label>
+                              <Input
+                                name="cidade"
+                                value={novoEndereco.cidade}
+                                onChange={handleChangeNovoEndereco}
+                                placeholder="Ex: Recife"
+                              />
+                            </Field.Root>
+                          </GridItem>
+                        </Grid>
+
+                        <HStack gap={3} mt={4}>
+                          <Button
+                            type="submit"
+                            colorPalette="brand"
+                            loading={isSavingEndereco}
+                            loadingText="Salvando..."
+                          >
+                            Salvar endereço
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            onClick={() => setMostrarFormNovoEndereco(false)}
+                          >
+                            Cancelar
+                          </Button>
+                        </HStack>
+                      </form>
+                    </Box>
+                  )}
+
+                  <Separator />
+
+                  <Button
+                    colorPalette="brand"
+                    alignSelf="end"
+                    disabled={!enderecoSelecionadoId}
+                    onClick={() => setStep("pagamento")}
+                  >
+                    Continuar para pagamento
+                  </Button>
+                </VStack>
+              )}
+
+              {step === "pagamento" && (
+                <VStack align="stretch" gap={5}>
+                  <Heading size="md">Pagamento</Heading>
+
+                  <HStack gap={3}>
+                    <Button
+                      variant={metodo === "cartao" ? "solid" : "outline"}
+                      colorPalette="brand"
+                      onClick={() => setMetodo("cartao")}
+                    >
+                      Cartão de Crédito
+                    </Button>
+                    <Button
+                      variant={metodo === "pix" ? "solid" : "outline"}
+                      colorPalette="brand"
+                      onClick={() => setMetodo("pix")}
+                    >
+                      Pix
+                    </Button>
+                  </HStack>
+
+                  {metodo === "cartao" && (
+                    <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={4}>
+                      <GridItem colSpan={{ base: 1, md: 2 }}>
+                        <Field.Root required>
+                          <Field.Label>Número do Cartão</Field.Label>
+                          <Input
+                            name="numero"
+                            value={cartaoData.numero}
+                            onChange={handleChangeCartao}
+                            placeholder="0000 0000 0000 0000"
+                            maxLength={19}
+                          />
+                        </Field.Root>
+                      </GridItem>
+                      <GridItem colSpan={{ base: 1, md: 2 }}>
+                        <Field.Root required>
+                          <Field.Label>Nome impresso no cartão</Field.Label>
+                          <Input
+                            name="nomeImpresso"
+                            value={cartaoData.nomeImpresso}
+                            onChange={handleChangeCartao}
+                            placeholder="Como está no cartão"
+                          />
+                        </Field.Root>
+                      </GridItem>
+                      <GridItem colSpan={1}>
+                        <Field.Root required>
+                          <Field.Label>Validade</Field.Label>
+                          <Input
+                            name="validade"
+                            value={cartaoData.validade}
+                            onChange={handleChangeCartao}
+                            placeholder="MM/AA"
+                            maxLength={5}
+                          />
+                        </Field.Root>
+                      </GridItem>
+                      <GridItem colSpan={1}>
+                        <Field.Root required>
+                          <Field.Label>CVV</Field.Label>
+                          <Input
+                            name="cvv"
+                            value={cartaoData.cvv}
+                            onChange={handleChangeCartao}
+                            placeholder="123"
+                            maxLength={4}
+                          />
+                        </Field.Root>
+                      </GridItem>
+                    </Grid>
+                  )}
+
+                  {metodo === "pix" && (
+                    <Box bg="gray.50" p={4} rounded="md" border="1px dashed" borderColor="gray.300">
+                      <Text fontSize="sm" color="gray.600">
+                        Pagamento via Pix simulado — ao confirmar o pedido, o pagamento será
+                        considerado aprovado automaticamente.
+                      </Text>
+                    </Box>
+                  )}
+
+                  {confirmError && (
+                    <Text color="red.500" fontSize="sm">
+                      {confirmError}
+                    </Text>
+                  )}
+
+                  <HStack justify="space-between">
+                    <Button variant="ghost" onClick={() => setStep("endereco")}>
+                      Voltar
+                    </Button>
+                    <Button
+                      colorPalette="brand"
+                      loading={isConfirming}
+                      loadingText="Confirmando..."
+                      onClick={handleConfirmarPedido}
+                    >
+                      Confirmar Pedido
+                    </Button>
+                  </HStack>
+                </VStack>
+              )}
+            </Box>
+          </GridItem>
+
+          <GridItem>
+            <Box bg="white" p={6} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200">
+              <Heading size="sm" mb={4}>
+                Resumo do Pedido
+              </Heading>
+              <VStack align="stretch" gap={3}>
+                {items.map((item) => (
+                  <HStack key={item.product.id} justify="space-between">
+                    <Text fontSize="sm" lineClamp={1}>
+                      {item.product.titulo} x{item.quantity}
+                    </Text>
+                    <Text fontSize="sm" fontWeight="semibold">
+                      R$ {(item.product.preco * item.quantity).toFixed(2)}
+                    </Text>
+                  </HStack>
+                ))}
+              </VStack>
+              <Separator my={4} />
+              <HStack justify="space-between">
+                <Text fontWeight="bold">Total</Text>
+                <Text fontWeight="bold" color="brand.600">
+                  R$ {totalPrice().toFixed(2)}
+                </Text>
+              </HStack>
+            </Box>
+          </GridItem>
+        </Grid>
+      </Container>
+    </Box>
+  );
+}
+
+==================================================
+ARQUIVO: src/app/customer/login/page.tsx
+==================================================
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { sessionStore } from "@/store/sessionStore";
+import { userService } from "@/services/userService";
+import NextLink from 'next/link';
+import {
+  Box,
+  Button,
+  Flex,
+  Field,
+  Heading,
+  Input,
+  Text,
+  VStack,
+  Spinner,
+  IconButton
+} from "@chakra-ui/react";
+import { LuHouse } from 'react-icons/lu';
+
+export default function CustomerLoginPage() {
+  const [mounted, setMounted] = useState(false);
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const salvarCustomer = sessionStore((state) => state.salvarCustomer);
+  const isCustomerLogged = sessionStore((state) => state.isCustomerLogged);
+  const register = () => router.push("/customer/register");
+
+  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (isCustomerLogged()) {
+      router.push("/customer");
+    }
+  }, []);
+
+  if (!mounted || isCustomerLogged())
+    return (
+      <Flex minH="80vh" align="center" justify="center">
+        <Spinner size="xl" color="brand.500" />
+      </Flex>
+    );
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const customer = await userService.loginCustomer(email, senha);
+
+      if (customer) {
+        salvarCustomer(customer);
+        router.push("/customer");
+      } else {
+        setError("E-mail ou senha inválidos.");
+      }
+    } catch (err) {
+      setError("Ocorreu um erro ao tentar fazer login.");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Flex minH="80vh" align="center" justify="center">
+      <Box
+        bg="white"
+        p={8}
+        rounded="lg"
+        shadow="sm"
+        border="1px solid"
+        borderColor="gray.200"
+        w="full"
+        maxW="md"
+      >
+        <VStack gap={6} align="stretch">
+          <Flex justify="center" mb={-2}>
+            <NextLink href="/">
+              <IconButton
+                aria-label="Voltar para a página inicial"
+                variant="ghost"
+                size="lg"
+                borderRadius="full"
+              >
+                <LuHouse size={24} />
+              </IconButton>
+            </NextLink>
+          </Flex>
+          <Heading size="lg" textAlign="center" color="brand.500">
+            Login de Cliente
+          </Heading>
+
+          {error && (
+            <Text
+              color="red.500"
+              fontSize="sm"
+              textAlign="center"
+              fontWeight="500"
+            >
+              {error}
+            </Text>
+          )}
+
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <VStack gap={4}>
+              <Field.Root required>
+                <Field.Label>E-mail</Field.Label>
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="seunome@email.com"
+                  bg="white"
+                />
+              </Field.Root>
+
+              <Field.Root required>
+                <Field.Label>Senha</Field.Label>
+                <Input
+                  type="password"
+                  value={senha}
+                  onChange={(e) => setSenha(e.target.value)}
+                  placeholder="********"
+                  bg="white"
+                />
+              </Field.Root>
+
+              <Button
+                type="submit"
+                colorPalette="brand"
+                w="full"
+                loading={isLoading}
+                loadingText="Entrando..."
+                mt={2}
+              >
+                Entrar como Cliente
+              </Button>
+            </VStack>
+          </form>
+
+          <Button
+            onClick={register}
+            variant="ghost"
+            colorPalette="brand"
+            w="full"
+          >
+            Registrar como Cliente
+          </Button>
+        </VStack>
+      </Box>
+    </Flex>
+  );
+}
+==================================================
+ARQUIVO: src/app/customer/minha-conta/page.tsx
+==================================================
+'use client';
+
+import { Box, Container, Heading, SimpleGrid, Card, Text, VStack, HStack, Icon, Spinner, Flex, Button } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { sessionStore } from '@/store/sessionStore';
+import NextLink from 'next/link';
+import { FiBox, FiMapPin, FiLock, FiArrowLeft } from 'react-icons/fi';
+
+export default function CustomerAccountHubPage() {
+    const [mounted, setMounted] = useState(false);
+    const router = useRouter();
+    const isCustomerLogged = sessionStore((state) => state.isCustomerLogged);
+    const customer = sessionStore((state) => state.customer);
+
+    useEffect(() => setMounted(true), []);
+
+    useEffect(() => {
+        if (mounted && !isCustomerLogged()) {
+            router.push('/customer/login');
+        }
+    }, [mounted, isCustomerLogged, router]);
+
+    if (!mounted || !isCustomerLogged()) {
+        return (
+            <Flex minH="80vh" align="center" justify="center">
+                <Spinner size="xl" color="brand.500" />
+            </Flex>
+        );
+    }
+
+    // As três opções principais que você pediu
+    const accountSections = [
+        {
+            title: "Seus pedidos",
+            description: "Rastrear, devolver ou ver histórico de compras",
+            icon: FiBox,
+            href: "/customer/pedidos"
+        },
+        {
+            title: "Seus endereços",
+            description: "Alterar ou adicionar endereços para entrega",
+            icon: FiMapPin,
+            href: "/customer/enderecos"
+        },
+        {
+            title: "Acesso e segurança",
+            description: "Gerenciar senha, e-mail e dados pessoais",
+            icon: FiLock,
+            href: "/customer/seguranca"
+        }
+    ];
+
+    return (
+        <Box minH="100vh" bg="gray.50" py={8}>
+            <Container maxW="1100px">
+                {/* Botão de voltar para a vitrine */}
+                <NextLink href="/customer">
+                    <Button variant="ghost" size="sm" mb={6}>
+                        <HStack gap={2}>
+                            <FiArrowLeft />
+                            <Text>Voltar para a Loja</Text>
+                        </HStack>
+                    </Button>
+                </NextLink>
+
+                <VStack align="start" mb={8} gap={1}>
+                    <Heading size="xl">Sua Conta</Heading>
+                    <Text color="gray.600">Olá, <b>{customer?.nome}</b> ({customer?.email})</Text>
+                </VStack>
+                
+                {/* Grid estilo Amazon com as seções */}
+                <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
+                    {accountSections.map((section, index) => (
+                        <NextLink key={index} href={section.href} passHref style={{ textDecoration: 'none' }}>
+                            <Card.Root 
+                                p={6} 
+                                borderWidth="1px" 
+                                borderRadius="lg" 
+                                bg="white"
+                                height="100%"
+                                _hover={{ shadow: "md", borderColor: "brand.500", transform: "translateY(-2px)" }}
+                                transition="all 0.2s"
+                                cursor="pointer"
+                            >
+                                <HStack align="flex-start" gap={4}>
+                                    <Box p={3} bg="brand.50" color="brand.500" borderRadius="md">
+                                        <Icon as={section.icon} boxSize={6} />
+                                    </Box>
+                                    <VStack align="start" gap={1}>
+                                        <Text fontWeight="bold" fontSize="lg" color="gray.800">
+                                            {section.title}
+                                        </Text>
+                                        <Text color="gray.500" fontSize="sm">
+                                            {section.description}
+                                        </Text>
+                                    </VStack>
+                                </HStack>
+                            </Card.Root>
+                        </NextLink>
+                    ))}
+                </SimpleGrid>
+            </Container>
+        </Box>
+    );
+}
+==================================================
+ARQUIVO: src/app/customer/page.tsx
+==================================================
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { sessionStore } from '@/store/sessionStore';
+import { productService } from '@/services/productService';
+import { Product } from '@/types/product';
+import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
+import NextLink from 'next/link';
+import { useCartStore } from '@/store/cartStore';
+import { CartDrawer } from '../components/CartDrawer';
+import {
+    Box,
+    Button,
+    Container,
+    Flex,
+    Heading,
+    Text,
+    VStack,
+    HStack,
+    Spinner,
+    Image,
+    SimpleGrid,
+    Card,
+    Badge
+} from '@chakra-ui/react';
+import { FiHome, FiLogOut, FiShoppingCart, FiUser } from 'react-icons/fi';
+
+export default function CustomerDashboard() {
+    const [mounted, setMounted] = useState(false);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    const router = useRouter();
+
+    // Funções corretas vindas do seu sessionStore.ts
+    const logoutCustomer = sessionStore((state) => state.logoutCustomer);
+    const isCustomerLogged = sessionStore((state) => state.isCustomerLogged);
+    const customer = sessionStore((state) => state.customer);
+
+    const addItem = useCartStore((state) => state.addItem);
+    const totalItems = useCartStore((state) => state.totalItems)();
+
+    useEffect(() => setMounted(true), []);
+
+    useEffect(() => {
+        if (mounted && !isCustomerLogged()) {
+            router.push('/customer/login');
+        }
+    }, [mounted, isCustomerLogged, router]);
+
+    useEffect(() => {
+        async function loadProducts() {
+            try {
+                setIsLoadingProducts(true);
+                const data = await productService.getAll();
+                setProducts(data);
+            } catch (err) {
+                console.error("Erro ao carregar produtos da API:", err);
+            } finally {
+                setIsLoadingProducts(false);
+            }
+        }
+
+        if (isCustomerLogged()) {
+            loadProducts();
+        }
+    }, [isCustomerLogged]);
+
+    if (!mounted || !isCustomerLogged()) {
+        return (
+            <Flex minH="80vh" align="center" justify="center">
+                <Spinner size="xl" color="brand.500" />
+            </Flex>
+        );
+    }
+
+    const handleLogout = () => {
+        logoutCustomer();
+        router.push('/');
+    };
+
+    const handleCardClick = (productId: string | number) => {
+        router.push(`/artesao/produto/${productId}`);
+    };
+
+    return (
+        <Box minH="100vh" bg="gray.50" pb={12}>
+            {/* Header */}
+            <Box bg="white" shadow="sm" py={4} px={8} mb={8}>
+                <Container maxW="1200px">
+                    <Flex justify="space-between" align="center">
+                        <HStack gap={4}>
+                            <NextLink href="/">
+                                <Button variant="ghost" size="sm">
+                                    <HStack gap={2}>
+                                        <FiHome />
+                                        <Text>Home</Text>
+                                    </HStack>
+                                </Button>
+                            </NextLink>
+                            <Heading size="md" color="brand.500">
+                                Vitrine
+                            </Heading>
+                        </HStack>
+
+                        <HStack gap={3}>
+                            {/* Botão que direciona para a central "Sua Conta" */}
+                            <NextLink href="/customer/minha-conta">
+                                <Button variant="outline" size="sm">
+                                    <HStack gap={2}>
+                                        <FiUser />
+                                        <Text>Sua Conta</Text>
+                                    </HStack>
+                                </Button>
+                            </NextLink>
+
+                            <Button 
+                                variant="outline" 
+                                size="sm" 
+                                onClick={() => setIsCartOpen(true)}
+                            >
+                                <HStack gap={2}>
+                                    <FiShoppingCart />
+                                    <Text>Carrinho</Text>
+                                    {totalItems > 0 && (
+                                        <Badge colorPalette="brand" borderRadius="full">
+                                            {totalItems}
+                                        </Badge>
+                                    )}
+                                </HStack>
+                            </Button>
+
+                            <Button
+                                colorScheme="red"
+                                variant="outline"
+                                size="sm"
+                                onClick={handleLogout}
+                            >
+                                <HStack gap={2}>
+                                    <FiLogOut />
+                                    <Text>Sair</Text>
+                                </HStack>
+                            </Button>
+                        </HStack>
+                    </Flex>
+                </Container>
+            </Box>
+
+            <Container maxW="1200px">
+                {/* Perfil do Cliente */}
+                <Box
+                    bg="white"
+                    p={6}
+                    rounded="lg"
+                    shadow="sm"
+                    mb={8}
+                    border="1px solid"
+                    borderColor="gray.200"
+                >
+                    <VStack align="start" gap={2}>
+                        <Heading size="lg">Olá, {customer?.nome || 'Comprador(a)'}!</Heading>
+                        <Text color="gray.600">E-mail: <b>{customer?.email}</b></Text>
+                        <Text color="gray.500" fontSize="sm">
+                            Explore e adicione as melhores peças do artesanato pernambucano ao seu carrinho.
+                        </Text>
+                    </VStack>
+                </Box>
+
+                {/* Listagem de Produtos */}
+                {isLoadingProducts ? (
+                    <Flex justify="center" py={10}>
+                        <Spinner size="lg" color="brand.500" />
+                    </Flex>
+                ) : (
+                    <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={6}>
+                        {products.map((product) => (
+                            <Card.Root
+                                key={product.id || product.titulo}
+                                p={4}
+                                borderWidth="1px"
+                                borderRadius="lg"
+                                bg="white"
+                                _hover={{ shadow: "md", borderColor: "brand.500", transform: "translateY(-2px)" }}
+                                transition="all 0.2s"
+                            >
+                                <Box cursor="pointer" onClick={() => handleCardClick(product.id)}>
+                                    <Image
+                                        src={
+                                            product.imagem ||
+                                            "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400"
+                                        }
+                                        alt={product.titulo}
+                                        borderRadius="md"
+                                        h="180px"
+                                        objectFit="cover"
+                                        mb={3}
+                                    />
+                                    <Text fontWeight="bold" fontSize="md">
+                                        {product.titulo}
+                                    </Text>
+                                    <Text color="brand.600" fontWeight="semibold" mt={1} mb={4}>
+                                        R$ {Number(product.preco || 0).toFixed(2)}
+                                    </Text>
+                                </Box>
+
+                                <Button
+                                    size="sm"
+                                    colorPalette="brand"
+                                    w="full"
+                                    onClick={() => addItem(product)}
+                                >
+                                    Adicionar ao Carrinho
+                                </Button>
+                            </Card.Root>
+                        ))}
+                    </SimpleGrid>
+                )}
+            </Container>
+
+            {/* Drawer do Carrinho */}
+            <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} />
+        </Box>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/customer/register/page.tsx
+==================================================
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { userService } from "@/services/userService";
+import { sessionStore } from "@/store/sessionStore";
+import NextLink from 'next/link';
+import { Customer } from "@/types";
+import {
+  Box,
+  Button,
+  Flex,
+  Field,
+  Heading,
+  Input,
+  Text,
+  VStack,
+  Grid,
+  GridItem,
+  IconButton
+} from "@chakra-ui/react";
+import { LuHouse } from 'react-icons/lu';
+
+
+export default function CustomerRegisterPage() {
+  const router = useRouter();
+
+  const [formData, setFormData] = useState({
+    nome: "",
+    cpf: "",
+    email: "",
+    senha: "",
+    telefone: "",
+    cep: "",
+    rua: "",
+    numero: "",
+    bairro: "",
+    complemento: "",
+    cidade: "",
+    estado: "",
+  });
+
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Função genérica para atualizar os campos do formulário
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const salvarCustomer = sessionStore((state) => state.salvarCustomer);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    // Transformamos os dados simples do form no formato exato que a interface Customer exige
+    const customerPayload: Omit<Customer, "id"> = {
+      nome: formData.nome,
+      cpf: formData.cpf,
+      email: formData.email,
+      senha: formData.senha,
+      telefone: formData.telefone,
+      enderecos: [
+        {
+          id: crypto.randomUUID(),
+          cep: formData.cep,
+          rua: formData.rua,
+          numero: formData.numero,
+          bairro: formData.bairro,
+          complemento: formData.complemento,
+          cidade: formData.cidade,
+          estado: formData.estado,
+        },
+      ],
+    };
+
+    try {
+      const novoCustomer = await userService.registerCustomer(customerPayload);
+      salvarCustomer(novoCustomer);
+      router.push("/customer");
+    } catch (err: any) {
+      if (err.message === "EMAIL_EXISTS") {
+        setError("Este e-mail já está cadastrado.");
+      } else if (err.message === "CPF_EXISTS") {
+        setError("Este CPF já está cadastrado.");
+      } else {
+        setError(
+          "Ocorreu um erro ao tentar registrar. Verifique os dados e tente novamente.",
+        );
+        console.error(err);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Flex minH="80vh" align="center" justify="center" py={8}>
+      <Box
+        bg="white"
+        p={8}
+        rounded="lg"
+        shadow="sm"
+        border="1px solid"
+        borderColor="gray.200"
+        w="full"
+        maxW="2xl"
+      >
+        <VStack gap={6} align="stretch">
+          <Flex justify="center" mb={-2}>
+            <NextLink href="/">
+              <IconButton
+                aria-label="Voltar para a página inicial"
+                variant="ghost"
+                size="lg"
+                borderRadius="full"
+              >
+                <LuHouse size={24} />
+              </IconButton>
+            </NextLink>
+          </Flex>
+          <Heading size="lg" textAlign="center" color="brand.500">
+            Registro de Comprador
+          </Heading>
+
+          <Text textAlign="center" color="gray.600" fontSize="sm">
+            Crie sua conta para começar a comprar produtos artesanais.
+          </Text>
+
+          {error && (
+            <Text
+              color="red.500"
+              fontSize="sm"
+              textAlign="center"
+              fontWeight="500"
+            >
+              {error}
+            </Text>
+          )}
+
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <Grid
+              templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
+              gap={4}
+            >
+              <GridItem colSpan={{ base: 1, md: 2 }}>
+                <Field.Root required>
+                  <Field.Label>Nome Completo</Field.Label>
+                  <Input
+                    name="nome"
+                    value={formData.nome}
+                    onChange={handleChange}
+                    placeholder="Seu nome completo"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>CPF</Field.Label>
+                  <Input
+                    name="cpf"
+                    value={formData.cpf}
+                    onChange={handleChange}
+                    placeholder="000.000.000-00"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>Telefone</Field.Label>
+                  <Input
+                    name="telefone"
+                    value={formData.telefone}
+                    onChange={handleChange}
+                    placeholder="(00) 00000-0000"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>E-mail</Field.Label>
+                  <Input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="seu@email.com"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>Senha</Field.Label>
+                  <Input
+                    type="password"
+                    name="senha"
+                    value={formData.senha}
+                    onChange={handleChange}
+                    placeholder="********"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={{ base: 1, md: 2 }} mt={2}>
+                <Heading
+                  size="sm"
+                  color="gray.700"
+                  borderBottom="1px solid"
+                  borderColor="gray.100"
+                  pb={2}
+                >
+                  Endereço Principal
+                </Heading>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>CEP</Field.Label>
+                  <Input
+                    name="cep"
+                    value={formData.cep}
+                    onChange={handleChange}
+                    placeholder="00000-000"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={{ base: 1, md: 2 }}>
+                <Field.Root required>
+                  <Field.Label>Rua / Logradouro</Field.Label>
+                  <Input
+                    name="rua"
+                    value={formData.rua}
+                    onChange={handleChange}
+                    placeholder="Ex: Rua das Flores"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>Número</Field.Label>
+                  <Input
+                    name="numero"
+                    value={formData.numero}
+                    onChange={handleChange}
+                    placeholder="123"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>Bairro</Field.Label>
+                  <Input
+                    name="bairro"
+                    value={formData.bairro}
+                    onChange={handleChange}
+                    placeholder="Ex: Centro"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <Field.Root>
+                  <Field.Label>Complemento (Opcional)</Field.Label>
+                  <Input
+                    name="complemento"
+                    value={formData.complemento}
+                    onChange={handleChange}
+                    placeholder="Apto 101, Bloco B"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>Cidade</Field.Label>
+                  <Input
+                    name="cidade"
+                    value={formData.cidade}
+                    onChange={handleChange}
+                    placeholder="Ex: São Paulo"
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={{ base: 1, md: 2 }}>
+                <Field.Root required>
+                  <Field.Label>Estado (UF)</Field.Label>
+                  <Input
+                    name="estado"
+                    value={formData.estado}
+                    onChange={handleChange}
+                    placeholder="Ex: SP"
+                    maxLength={2}
+                  />
+                </Field.Root>
+              </GridItem>
+
+              <GridItem colSpan={{ base: 1, md: 2 }}>
+                <VStack gap={3} mt={4}>
+                  <Button
+                    type="submit"
+                    colorPalette="brand"
+                    w="full"
+                    loading={isLoading}
+                    loadingText="Registrando..."
+                  >
+                    Criar conta de Comprador
+                  </Button>
+
+                  <Button
+                    variant="ghost"
+                    colorPalette="brand"
+                    w="full"
+                    onClick={() => router.push("/customer/login")}
+                  >
+                    Já tem uma conta? Faça login
+                  </Button>
+                </VStack>
+              </GridItem>
+            </Grid>
+          </form>
+        </VStack>
+      </Box>
+    </Flex>
+  );
+}
+==================================================
+ARQUIVO: src/app/customer/seguranca/page.tsx
+==================================================
+'use client';
+
+import { Box, Container, Heading, Text, Button, VStack, HStack, Card, Spinner, Flex, Stack, Separator, Input } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { sessionStore } from '@/store/sessionStore';
+import NextLink from 'next/link';
+import { FiArrowLeft } from 'react-icons/fi';
+
+export default function CustomerSecurityPage() {
+    const [mounted, setMounted] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [customerData, setCustomerData] = useState<any>(null);
+    
+    // Estados para controlar qual campo está em modo de edição
+    const [editingField, setEditingField] = useState<string | null>(null);
+    const [tempValue, setTempValue] = useState('');
+
+    const router = useRouter();
+    const isCustomerLogged = sessionStore((state) => state.isCustomerLogged);
+    const customerSession = sessionStore((state) => state.customer);
+
+    useEffect(() => setMounted(true), []);
+
+    useEffect(() => {
+        if (mounted && !isCustomerLogged()) {
+            router.push('/customer/login');
+            return;
+        }
+
+        if (mounted && isCustomerLogged()) {
+            setCustomerData(customerSession);
+            setIsLoading(false);
+        }
+    }, [mounted, isCustomerLogged, customerSession, router]);
+
+    useEffect(() => setMounted(true), []);
+
+    if (!mounted) {
+        return null; // Evita renderizar HTML divergente entre servidor e cliente
+    }
+
+    if (!isCustomerLogged()) {
+        router.push('/customer/login');
+        return null;
+    }
+
+    const handleEditClick = (field: string, currentValue: string) => {
+        setEditingField(field);
+        setTempValue(currentValue);
+    };
+
+    const handleSave = (field: string) => {
+        // Atualiza o estado local do cliente (pode ser integrado com a API futuramente)
+        const updated = { ...customerData, [field]: tempValue };
+        setCustomerData(updated);
+        // Atualiza também na sessionStore se necessário
+        sessionStore.setState({ customer: updated });
+        setEditingField(null);
+    };
+
+    return (
+        <Box minH="100vh" bg="gray.50" py={8}>
+            <Container maxW="900px">
+             
+                <HStack color="gray.600" fontSize="sm" mb={4} gap={2}>
+                    <NextLink href="/customer/minha-conta">
+                        <Text _hover={{ textDecoration: 'underline' }} color="brand.600">Sua conta</Text>
+                    </NextLink>
+                    <Text>&rsaquo;</Text>
+                    <Text color="gray.800" fontWeight="semibold">Acesso e Segurança</Text>
+                </HStack>
+
+                <Heading size="xl" mb={6}>Acesso e Segurança</Heading>
+
+             
+                <Card.Root borderWidth="1px" borderRadius="lg" bg="white" shadow="sm" overflow="hidden">
+                    <Stack gap={0}>
+                        
+                        {/* Nome */}
+                        <Box p={5}>
+                            <Flex justify="space-between" align="center">
+                                <VStack align="start" gap={1} w="70%">
+                                    <Text fontWeight="bold" fontSize="sm" color="gray.800">Nome:</Text>
+                                    {editingField === 'nome' ? (
+                                        <HStack w="full" mt={1}>
+                                            <Input size="sm" value={tempValue} onChange={(e) => setTempValue(e.target.value)} />
+                                            <Button size="sm" colorPalette="brand" onClick={() => handleSave('nome')}>Salvar</Button>
+                                            <Button size="sm" variant="ghost" onClick={() => setEditingField(null)}>Cancelar</Button>
+                                        </HStack>
+                                    ) : (
+                                        <Text fontSize="md" color="gray.700">{customerData?.nome || 'Não informado'}</Text>
+                                    )}
+                                </VStack>
+                                {editingField !== 'nome' && (
+                                    <Button variant="outline" size="sm" borderRadius="full" px={6} onClick={() => handleEditClick('nome', customerData?.nome)}>
+                                        Editar
+                                    </Button>
+                                )}
+                            </Flex>
+                        </Box>
+
+                        <Separator />
+
+                        <Box p={5}>
+                            <Flex justify="space-between" align="center">
+                                <VStack align="start" gap={1} w="70%">
+                                    <Text fontWeight="bold" fontSize="sm" color="gray.800">E-mail:</Text>
+                                    {editingField === 'email' ? (
+                                        <HStack w="full" mt={1}>
+                                            <Input size="sm" value={tempValue} onChange={(e) => setTempValue(e.target.value)} />
+                                            <Button size="sm" colorPalette="brand" onClick={() => handleSave('email')}>Salvar</Button>
+                                            <Button size="sm" variant="ghost" onClick={() => setEditingField(null)}>Cancelar</Button>
+                                        </HStack>
+                                    ) : (
+                                        <Text fontSize="md" color="gray.700">{customerData?.email || 'Não informado'}</Text>
+                                    )}
+                                </VStack>
+                                {editingField !== 'email' && (
+                                    <Button variant="outline" size="sm" borderRadius="full" px={6} onClick={() => handleEditClick('email', customerData?.email)}>
+                                        Editar
+                                    </Button>
+                                )}
+                            </Flex>
+                        </Box>
+
+                        <Separator />
+
+                        
+                        <Box p={5}>
+                            <Flex justify="space-between" align="center">
+                                <VStack align="start" gap={1} maxW="70%">
+                                    <Text fontWeight="bold" fontSize="sm" color="gray.800">Número de celular principal:</Text>
+                                    {editingField === 'telefone' ? (
+                                        <HStack w="full" mt={1}>
+                                            <Input size="sm" value={tempValue} onChange={(e) => setTempValue(e.target.value)} />
+                                            <Button size="sm" colorPalette="brand" onClick={() => handleSave('telefone')}>Salvar</Button>
+                                            <Button size="sm" variant="ghost" onClick={() => setEditingField(null)}>Cancelar</Button>
+                                        </HStack>
+                                    ) : (
+                                        <>
+                                            <Text fontSize="md" color="gray.700">{customerData?.telefone || 'Não informado'}</Text>
+                                            <Text fontSize="xs" color="gray.500">
+                                                Faça login rapidamente, recupere senhas com facilidade e receba notificações de segurança com esse número de celular.
+                                            </Text>
+                                        </>
+                                    )}
+                                </VStack>
+                                {editingField !== 'telefone' && (
+                                    <Button variant="outline" size="sm" borderRadius="full" px={6} onClick={() => handleEditClick('telefone', customerData?.telefone)}>
+                                        Editar
+                                    </Button>
+                                )}
+                            </Flex>
+                        </Box>
+
+                        <Separator />
+
+                        <Box p={5}>
+                            <Flex justify="space-between" align="center">
+                                <VStack align="start" gap={1} w="70%">
+                                    <Text fontWeight="bold" fontSize="sm" color="gray.800">Senha:</Text>
+                                    {editingField === 'senha' ? (
+                                        <VStack w="full" mt={1} align="stretch" gap={2}>
+                                            <Input size="sm" type="password" placeholder="Nova senha" value={tempValue} onChange={(e) => setTempValue(e.target.value)} />
+                                            <HStack>
+                                                <Button size="sm" colorPalette="brand" onClick={() => handleSave('senha')}>Salvar</Button>
+                                                <Button size="sm" variant="ghost" onClick={() => setEditingField(null)}>Cancelar</Button>
+                                            </HStack>
+                                        </VStack>
+                                    ) : (
+                                        <Text fontSize="md" color="gray.700" letterSpacing="widest">********</Text>
+                                    )}
+                                </VStack>
+                                {editingField !== 'senha' && (
+                                    <Button variant="outline" size="sm" borderRadius="full" px={6} onClick={() => handleEditClick('senha', '')}>
+                                        Editar
+                                    </Button>
+                                )}
+                            </Flex>
+                        </Box>
+
+                        <Separator />
+
+                       
+                        <Box p={5}>
+                            <Flex justify="space-between" align="center">
+                                <VStack align="start" gap={1}>
+                                    <Text fontWeight="bold" fontSize="sm" color="gray.800">CPF:</Text>
+                                    <Text fontSize="md" color="gray.700" letterSpacing="widest">***.***.***-**</Text>
+                                </VStack>
+                                <Button variant="outline" size="sm" borderRadius="full" px={4} colorPalette="gray">
+                                    Confirme as Informações pessoais
+                                </Button>
+                            </Flex>
+                        </Box>
+
+                    </Stack>
+                </Card.Root>
+
+                
+                <Box mt={6}>
+                    <NextLink href="/customer/minha-conta">
+                        <Button variant="ghost" size="sm">
+                            <HStack gap={2}>
+                                <FiArrowLeft />
+                                <Text>Voltar para Sua Conta</Text>
+                            </HStack>
+                        </Button>
+                    </NextLink>
+                </Box>
+            </Container>
+        </Box>
+    );
+}
+==================================================
+ARQUIVO: src/app/layout.tsx
+==================================================
+import { Provider } from "./provider";
+
+export const metadata = {
+    title: "Mini Loja",
+    description: "Uma mini loja de produtos artesanais.",
+};
+
+export default function RootLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <html lang="pt-BR">
+            <body suppressHydrationWarning={true}>
+                <Provider>{children}</Provider>
+            </body>
+        </html>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/page.tsx
+==================================================
+"use client";
+
+import { useEffect, useState } from "react";
+import { Box, Container, Heading, HStack, Input, InputGroup, Button, Text, VStack } from "@chakra-ui/react";
+import { LuSearch } from "react-icons/lu";
+import { Product } from "@/types/product";
+import { productService } from "@/services/productService";
+import { useCartStore } from "@/store/cartStore";
+import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
+import { CategoryFilter } from "./components/CategoryFilter";
+import { ProductList } from "./components/ProductList";
+
+export default function Home() {
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
+    const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [searchInput, setSearchInput] = useState("");
+
+    // Carrinho (zustand)
+    const addItem = useCartStore((state) => state.addItem);
+
+    function handleAddToCart(product: Product) {
+        addItem(product);
+    }
+
+    // Carrega todos os produtos uma vez na inicialização
+    useEffect(() => {
+        async function loadProducts() {
+            try {
+                setIsLoading(true);
+                setError(null);
+
+                const data = await productService.getAll();
+                setAllProducts(data);
+                setDisplayedProducts(data);
+            } catch (err) {
+                setError("Não foi possível carregar os produtos. Verifique se a API está rodando.");
+                console.error(err);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        loadProducts();
+    }, []);
+
+    // Função centralizada de busca (pode ser chamada de forma imediata)
+    async function handleSearch(termOverride?: string) {
+        const term = (termOverride !== undefined ? termOverride : searchInput).trim();
+
+        try {
+            setIsLoading(true);
+            setError(null);
+
+            const data = term
+                ? await productService.searchByText(term)
+                : await productService.getAll();
+
+            setDisplayedProducts(data);
+        } catch (err) {
+            setError("Não foi possível buscar os produtos. Verifique se a API está rodando.");
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    // Busca automática a cada letra digitada (com debounce de 300ms)
+    useEffect(() => {
+        if (allProducts.length === 0 && !isLoading) return;
+
+        const delayDebounceFn = setTimeout(() => {
+            handleSearch();
+        }, 300);
+
+        return () => clearTimeout(delayDebounceFn);
+    }, [searchInput]);
+
+    const categories = Array.from(new Set(allProducts.map((p) => p.categoria))).sort();
+
+    const filteredProducts = selectedCategory
+        ? displayedProducts.filter((p) => p.categoria === selectedCategory)
+        : displayedProducts;
+
+    return (
+        <Box minH="100vh">
+            <HeaderCarrinho />
+            <Container maxW="1200px" py={8}>
+                <VStack align="stretch" gap={6}>
+                    <Box>
+                        <Heading size="lg" mb={1}>
+                            Nossos Produtos
+                        </Heading>
+                        <Text color="gray.500">
+                            Encontre o que procura na nossa loja
+                        </Text>
+                    </Box>
+
+                    <HStack
+                        gap={0}
+                        bg="accent.cream"
+                        borderRadius="full"
+                        p={1.5}
+                        maxW="650px"
+                        borderWidth="1px"
+                        borderColor="neutral.border"
+                    >
+                        <InputGroup startElement={<LuSearch color="var(--chakra-colors-neutral-muted)" />} flex={1}>
+                            <Input
+                                placeholder="Search crafts, artisans, city or material"
+                                value={searchInput}
+                                onChange={(e) => setSearchInput(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        handleSearch(); // Busca imediata ao apertar Enter
+                                    }
+                                }}
+                                variant="subtle"
+                                bg="transparent"
+                                border="none"
+                                _focus={{ boxShadow: "none" }}
+                            />
+                        </InputGroup>
+
+                        {/* Botão funcional que dispara a busca imediatamente ao ser clicado */}
+                        <Button
+                            colorPalette="brand"
+                            borderRadius="full"
+                            px={8}
+                            onClick={() => handleSearch()}
+                            loading={isLoading}
+                        >
+                            Search
+                        </Button>
+                    </HStack>
+
+                    <CategoryFilter
+                        categories={categories}
+                        selected={selectedCategory}
+                        onSelect={setSelectedCategory}
+                    />
+
+                    <ProductList
+                        products={filteredProducts}
+                        isLoading={isLoading}
+                        error={error}
+                        onAddToCart={handleAddToCart}
+                    />
+                </VStack>
+            </Container>
+        </Box>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/product/[slug]/page.tsx
+==================================================
+"use client";
+
+import { useEffect, useState, use } from "react";
+import { Box, Heading, Text, VStack, HStack, Button, Image } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { userService } from "@/services/userService";
+import { productService } from "@/services/productService";
+import { useCartStore } from "@/store/cartStore";
+import { Product, Artesao } from "@/types";
+import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
+
+
+
+type ProductWithImages = Product & {
+    linkImagens?: string[] | string;
+};
+
+type PageProps = {
+    params: Promise<{
+        slug: string;
+    }>;
+};
+
+export default function DetalheProdutoPage({ params }: PageProps) {
+    const resolvedParams = use(params);
+
+    const rawUrlParam = decodeURIComponent(resolvedParams.slug);
+    const urlParts = rawUrlParam.split("-");
+    const productId = urlParts[urlParts.length - 1];
+
+    const [produto, setProduto] = useState<ProductWithImages | null>(null);
+
+    const [artesao, setArtesao] = useState<Artesao | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [quantidade, setQuantidade] = useState(1);
+    const [erroEstoque, setErroEstoque] = useState(false);
+    const [isNavigating, setIsNavigating] = useState(false);
+
+    const router = useRouter();
+
+    const addItem = useCartStore((state) => state.addItem);
+    const cartItems = useCartStore((state: any) => state.items || []);
+
+    useEffect(() => {
+        async function fetchDados() {
+            setLoading(true);
+
+            try {
+                const produtoRes = await productService.getById(productId);
+                setProduto(produtoRes);
+
+                // DEBUG: Verifique exatamente o que está vindo no produto
+                console.log("Dados do Produto:", produtoRes);
+
+                if (produtoRes && produtoRes.idArtesao) {
+                    try {
+                        const artesaoRes = await userService.getArtesaoById(produtoRes.idArtesao);
+
+                        // DEBUG: Verifique se o artesão foi encontrado
+                        console.log("Dados do Artesão:", artesaoRes);
+
+                        setArtesao(artesaoRes);
+                    } catch (artesaoError) {
+                        // AGORA VOCÊ VERÁ O ERRO NO CONSOLE
+                        console.error("Erro ao buscar o artesão:", artesaoError);
+                    }
+                } else {
+                    console.warn("O produto não possui um campo 'idArtesao'.");
+                }
+            } catch (error) {
+                console.error("Erro ao carregar os dados do produto:", error);
+                setProduto(null);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchDados();
+    }, [productId]);
+
+    if (loading) {
+        return (
+            <Box maxW="7xl" mx="auto" py={8} px={4}>
+                <Text color="gray.500">Carregando produto...</Text>
+            </Box>
+        );
+    }
+
+    if (!produto) {
+        return (
+            <Box maxW="7xl" mx="auto" py={8} px={4}>
+                <VStack spacing={4} align="start">
+                    <Heading as="h1" size="lg" color="red.500">
+                        Produto não encontrado
+                    </Heading>
+                    <Text color="gray.600">Não foi possível localizar este produto pelo ID fornecido.</Text>
+                </VStack>
+            </Box>
+        );
+    }
+
+    const primeiraImagem = produto.linkImagens[0];
+
+    const estoqueDisponivel = produto.quantidadeEstoque ?? 0;
+
+    const quantidadeNoCarrinho = cartItems.reduce((total: number, item: any) => {
+        if (String(item.id) === String(produto.id)) {
+            return total + (item.quantity || 1);
+        }
+        return total;
+    }, 0);
+
+    const estoqueRestante = estoqueDisponivel - quantidadeNoCarrinho;
+    const esgotado = estoqueDisponivel < 1 || estoqueRestante < 1;
+    const limiteAtingido = quantidade > estoqueRestante || estoqueRestante < 1;
+
+    if (quantidade > estoqueRestante && estoqueRestante > 0) {
+        setQuantidade(estoqueRestante);
+    }
+
+    const handleIncrement = () => {
+        if (quantidade < estoqueRestante) {
+            setQuantidade((prev) => prev + 1);
+        }
+    };
+
+    const handleDecrement = () => {
+        if (quantidade > 1) {
+            setQuantidade((prev) => prev - 1);
+        }
+    };
+
+    const handleAddToCart = () => {
+        if (esgotado || limiteAtingido || quantidade > estoqueRestante || isNavigating) {
+            return;
+        }
+
+        setIsNavigating(true);
+
+        for (let i = 0; i < quantidade; i++) {
+            addItem({
+                id: String(produto.id),
+                name: produto.titulo,
+                price: produto.preco,
+            });
+        }
+
+        router.push("/customer/checkout");
+    };
+
+    const botaoDesabilitado = Boolean(esgotado || limiteAtingido || isNavigating || quantidade > estoqueRestante);
+
+    return (
+        <Box minH="100vh">
+            <HeaderCarrinho />
+            <Box maxW="7xl" mx="auto" py={8} px={4}>
+                <VStack spacing={6} align="start" w="full">
+                    <Heading as="h1" size="xl" color="gray.800">
+                        {produto.titulo}
+                    </Heading>
+
+                    <Box mt={4} p={6} borderWidth="1px" borderRadius="lg" bg="white" w="full" boxShadow="sm">
+                        {primeiraImagem && (
+                            <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="gray.100">
+                                <Image
+                                    src={primeiraImagem}
+                                    alt={produto.titulo}
+                                    objectFit="cover"
+                                    w="full"
+                                    h="300px"
+                                />
+                            </Box>
+                        )}
+
+                        <Text fontSize="2xl" fontWeight="bold" color="green.600" mb={2}>
+                            R$ {produto.preco.toFixed(2)}
+                        </Text>
+
+                        <Text fontSize="sm" color={esgotado ? "red.500" : "gray.600"} mb={1}>
+                            {esgotado ? "Produto Esgotado" : `Estoque total: ${estoqueDisponivel}`}
+                        </Text>
+
+                        <Text color="gray.700" mb={6} mt={3}>
+                            {produto.descricao}
+                        </Text>
+
+                        {!esgotado && quantidadeNoCarrinho > 0 && !isNavigating && (
+                            <Text fontSize="sm" color="orange.500" mb={4} fontWeight="medium">
+                                Você já tem esse item no seu carrinho. (Total {quantidadeNoCarrinho})
+                            </Text>
+                        )}
+
+                        {!esgotado && estoqueRestante > 0 && (
+                            <HStack spacing={4} mb={6} align="center">
+                                <Text fontWeight="medium">Quantidade:</Text>
+                                <HStack>
+                                    <Button
+                                        size="sm"
+                                        onClick={handleDecrement}
+                                        disabled={quantidade <= 1 || isNavigating}
+                                    >
+                                        -
+                                    </Button>
+                                    <Text px={2} fontWeight="bold">{quantidade}</Text>
+                                    <Button
+                                        size="sm"
+                                        onClick={handleIncrement}
+                                        disabled={quantidade >= estoqueRestante || isNavigating}
+                                    >
+                                        +
+                                    </Button>
+                                </HStack>
+                            </HStack>
+                        )}
+
+                        {erroEstoque && !isNavigating && (
+                            <Text color="red.500" fontSize="sm" mb={4}>
+                                A quantidade selecionada excede o estoque disponível.
+                            </Text>
+                        )}
+
+                        <Button
+                            size="lg"
+                            bg="blue.500"
+                            color="white"
+                            _hover={{ bg: "blue.600" }}
+                            onClick={handleAddToCart}
+                            disabled={botaoDesabilitado}
+                            loading={isNavigating}
+                            mb={6}
+                        >
+                            {esgotado || estoqueRestante < 1
+                                ? "Indisponível"
+                                : limiteAtingido
+                                    ? "Limite do estoque no carrinho"
+                                    : "Adicionar ao Carrinho"}
+                        </Button>
+
+                        <Box pt={6} borderTop="1px solid" borderColor="gray.200" w="full">
+                            {artesao ? (
+                                <Box bg="gray.50" p={4} borderRadius="md" borderWidth="1px" borderColor="gray.200" w="full">
+                                    <Text fontSize="sm" fontWeight="bold" color="gray.500" textTransform="uppercase" mb={1}>
+                                        Criado por
+                                    </Text>
+                                    <Heading as="h3" size="md" color="gray.800" mb={2}>
+                                        {artesao.nome}
+                                    </Heading>
+                                    <Text fontSize="sm" color="gray.600" mb={4}>
+                                        Região de Produção: {artesao.regiaoProducao}
+                                    </Text>
+                                    <Button
+                                        as={Link}
+                                        href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}
+                                        size="sm"
+                                        variant="outline"
+                                    >
+                                        Ver Perfil do Artesão
+                                    </Button>
+                                </Box>
+                            ) : (
+                                <Text fontSize="sm" color="gray.500">Informações do artesão não disponíveis.</Text>
+                            )}
+                        </Box>
+                    </Box>
+                </VStack>
+            </Box>
+        </Box>
+    );
+}
+
+==================================================
+ARQUIVO: src/app/provider.tsx
+==================================================
+"use client";
+
+import { ChakraProvider } from "@chakra-ui/react";
+
+import { system } from "../theme";
+
+interface ProviderProps {
+  children: React.ReactNode;
+}
+
+export function Provider({ children }: ProviderProps) {
+  return <ChakraProvider value={system}>{children}</ChakraProvider>;
+}
+==================================================
+ARQUIVO: src/services/addressService.ts
+==================================================
+import { apiService } from './apiService';
+import { Customer, Endereco } from '@/types';
+
+export const addressService = {
+    async addEndereco(customer: Customer, endereco: Omit<Endereco, 'id'>): Promise<Customer> {
+        try {
+            const novoEndereco: Endereco = { ...endereco, id: crypto.randomUUID() };
+            const enderecos = [...customer.enderecos, novoEndereco];
+            const response = await apiService.patch<Customer>(`/customers/${customer.id}`, { enderecos });
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao adicionar endereço:", error);
+            throw error;
+        }
+    },
+};
+
+==================================================
+ARQUIVO: src/services/apiService.ts
+==================================================
+import axios from 'axios';
+
+export const apiService = axios.create({
+    baseURL: 'http://localhost:3001',
+    timeout: 10000,
+});
+
+==================================================
+ARQUIVO: src/services/orderService.ts
+==================================================
+import { apiService } from './apiService';
+import { Order } from '@/types';
+
+export const orderService = {
+    async create(order: Omit<Order, 'id'>): Promise<Order> {
+        try {
+            const payload: Order = { ...order, id: crypto.randomUUID() };
+            const response = await apiService.post<Order>('/orders', payload);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao criar pedido:", error);
+            throw error;
+        }
+    },
+};
+
+==================================================
+ARQUIVO: src/services/paymentService.ts
+==================================================
+import { MetodoPagamento, Pagamento } from '@/types';
+
+export const paymentService = {
+    processar(metodo: MetodoPagamento, numeroCartao?: string): Pagamento {
+        return {
+            metodo,
+            status: "aprovado",
+            cartaoMascarado: numeroCartao
+                ? `**** **** **** ${numeroCartao.slice(-4)}`
+                : undefined,
+        };
+    },
+};
+
+==================================================
+ARQUIVO: src/services/productService.ts
+==================================================
+import { apiService } from './apiService';
+import { Product } from "@/types/product";
+
+export const productService = {
+    async getAll(): Promise<Product[]> {
+        try {
+            const response = await apiService.get<Product[]>("/products");
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao buscar produtos:", error);
+            throw error;
+        }
+    },
+
+    async getByCategory(categoria: string): Promise<Product[]> {
+        try {
+            const response = await apiService.get<Product[]>("/products", {
+                params: { categoria },
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Erro ao buscar produtos da categoria "${categoria}":`, error);
+            throw error;
+        }
+    },
+
+    async getById(id: string): Promise<Product> {
+        try {
+            const response = await apiService.get<Product>(`/products/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(`Erro ao buscar produto ${id}:`, error);
+            throw error;
+        }
+    },
+
+    // Busca combinada: aceita qualquer combinação de categoria, técnica e região.
+    // Os filtros omitidos (undefined) não são enviados na query.
+    async search(
+        filters: Partial<Pick<Product, "categoria" | "tecnica" | "regiaoProducao">>
+    ): Promise<Product[]> {
+        try {
+            const response = await apiService.get<Product[]>("/products", {
+                params: filters,
+            });
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao buscar produtos com filtros:", filters, error);
+            throw error;
+        }
+    },
+
+    // Busca por texto livre: usa o parâmetro "q" do json-server, que procura
+    // o termo em TODOS os campos do produto (título, descrição, técnica, etc.)
+    async searchByText(query: string): Promise<Product[]> {
+        try {
+            const response = await apiService.get<Product[]>("/products", {
+                params: { q: query },
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Erro ao buscar produtos com o termo "${query}":`, error);
+            throw error;
+        }
+    },
+
+    async getByArtesao(idArtesao: string): Promise<Product[]> {
+        try {
+            const response = await apiService.get<Product[]>("/products", {
+                params: { idArtesao },
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Erro ao buscar produtos do artesão ${idArtesao}:`, error);
+            throw error;
+        }
+    },
+};
+
+==================================================
+ARQUIVO: src/services/userService.ts
+==================================================
+import { apiService } from './apiService';
+import { Customer, Artesao, Admin } from '@/types';
+
+export const userService = {
+    async loginCustomer(email: string, senha: string): Promise<Customer | null> {
+        const response = await apiService.get<Customer[]>('/customers', {
+            params: { email, senha },
+        });
+        return response.data.length > 0 ? response.data[0] : null;
+    },
+
+    async loginArtesao(email: string, senha: string): Promise<Artesao | null> {
+        const response = await apiService.get<Artesao[]>('/artesaos', {
+            params: { email, senha },
+        });
+        return response.data.length > 0 ? response.data[0] : null;
+    },
+
+    async loginAdmin(email: string, senha: string): Promise<Admin | null> {
+        const response = await apiService.get<Admin[]>('/admins', {
+            params: { email, senha },
+        });
+        return response.data.length > 0 ? response.data[0] : null;
+    },
+
+    async registerCustomer(customerData: Omit<Customer, 'id'>): Promise<Customer> {
+        const existingEmail = await apiService.get<Customer[]>('/customers', {
+            params: { email: customerData.email },
+        });
+        if (existingEmail.data.length > 0) {
+            throw new Error('EMAIL_EXISTS');
+        }
+
+        const existingCpf = await apiService.get<Customer[]>('/customers', {
+            params: { cpf: customerData.cpf },
+        });
+        if (existingCpf.data.length > 0) {
+            throw new Error('CPF_EXISTS');
+        }
+
+        const response = await apiService.post<Customer>('/customers', customerData);
+        return response.data;
+    },
+
+    async registerArtesao(artesaoData: Omit<Artesao, 'id'>): Promise<Artesao> {
+        const existingEmail = await apiService.get<Artesao[]>('/artesaos', {
+            params: { email: artesaoData.email },
+        });
+        if (existingEmail.data.length > 0) {
+            throw new Error('EMAIL_EXISTS');
+        }
+
+        const existingCpf = await apiService.get<Artesao[]>('/artesaos', {
+            params: { cpf: artesaoData.cpf },
+        });
+        if (existingCpf.data.length > 0) {
+            throw new Error('CPF_EXISTS');
+        }
+
+        const response = await apiService.post<Artesao>('/artesaos', artesaoData);
+        return response.data;
+    },
+
+    async getArtesaoById(id: string): Promise<Artesao> {
+        try {
+            const response = await apiService.get<Artesao>(`/artesaos/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(`Erro ao buscar artesão ${id}:`, error);
+            throw error;
+        }
+    },
+};
+
+==================================================
+ARQUIVO: src/store/cartStore.ts
+==================================================
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { Product, CartItem } from "@/types/product";
+
+interface CartStore {
+  items: CartItem[];
+  addItem: (product: Product) => void;
+  removeItem: (productId: number) => void;
+  updateQuantity: (productId: number, quantity: number) => void;
+  clearCart: () => void;
+  totalItems: () => number;
+  totalPrice: () => number;
+}
+
+export const useCartStore = create<CartStore>()(
+  persist(
+    (set, get) => ({
+      items: [],
+
+      addItem: (product: Product) => {
+        set((state) => {
+          const existing = state.items.find(
+            (item) => item.product.id === product.id
+          );
+
+          if (existing) {
+            return {
+              items: state.items.map((item) =>
+                item.product.id === product.id
+                  ? { ...item, quantity: item.quantity + 1 }
+                  : item
+              ),
+            };
+          }
+
+          return {
+            items: [...state.items, { product, quantity: 1 }],
+          };
+        });
+      },
+
+      removeItem: (productId: number) => {
+        set((state) => ({
+          items: state.items.filter((item) => item.product.id !== productId),
+        }));
+      },
+
+      updateQuantity: (productId: number, quantity: number) => {
+        if (quantity <= 0) {
+          get().removeItem(productId);
+          return;
+        }
+
+        set((state) => ({
+          items: state.items.map((item) =>
+            item.product.id === productId ? { ...item, quantity } : item
+          ),
+        }));
+      },
+
+      clearCart: () => {
+        set({ items: [] });
+      },
+
+      totalItems: () => {
+        return get().items.reduce((sum, item) => sum + item.quantity, 0);
+      },
+
+      totalPrice: () => {
+        return get().items.reduce(
+          (sum, item) => sum + item.product.preco * item.quantity,
+          0
+        );
+      },
+    }),
+    {
+      name: "cart-storage", // localStorage key
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ items: state.items }), // only persist items, not the action functions
+    }
+  )
+);
+==================================================
+ARQUIVO: src/store/sessionStore.ts
+==================================================
+'use client';
+
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { Artesao, Customer, Admin } from '@/types';
+
+interface SessionState {
+    customer: Customer | null;
+    artesao: Artesao | null;
+    admin: Admin | null;
+
+    isCustomerLogged: () => boolean;
+    salvarCustomer: (customer: Customer) => void;
+    logoutCustomer: () => void;
+
+    isArtesaoLogged: () => boolean;
+    salvarArtesao: (artesao: Artesao) => void;
+    logoutArtesao: () => void;
+
+    isAdminLogged: () => boolean;
+    salvarAdmin: (admin: Admin) => void;
+    logoutAdmin: () => void;
+
+    logoutAll: () => void;
+}
+
+export const sessionStore = create<SessionState>()(
+    persist(
+        (set, get) => ({
+            customer: null,
+            artesao: null,
+            admin: null,
+
+            isCustomerLogged: () => get().customer !== null,
+            salvarCustomer: (customer) => set({ customer }),
+            logoutCustomer: () => set({ customer: null }),
+
+            isArtesaoLogged: () => get().artesao !== null,
+            salvarArtesao: (artesao) => set({ artesao }),
+            logoutArtesao: () => set({ artesao: null }),
+
+            isAdminLogged: () => get().admin !== null,
+            salvarAdmin: (admin) => set({ admin }),
+            logoutAdmin: () => set({ admin: null }),
+
+            logoutAll: () => set({ customer: null, artesao: null, admin: null }),
+        }),
+        {
+            name: 'session-storage',
+        }
+    )
+);
+==================================================
+ARQUIVO: src/theme.ts
+==================================================
+import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+
+const config = defineConfig({
+  theme: {
+    tokens: {
+      colors: {
+        brand: {
+          50: { value: "#f9f7e3" },
+          100: { value: "#eee9b8" },
+          200: { value: "#e2db8c" },
+          300: { value: "#d6cd5f" },
+          400: { value: "#cbc03c" },
+          500: { value: "#b8ad2a" },
+          600: { value: "#9c9420" },
+          700: { value: "#7a7318" },
+          800: { value: "#57530f" },
+          900: { value: "#353207" },
+        },
+      },
+      fonts: {
+        heading: { value: `'Inter', system-ui, sans-serif` },
+        body: { value: `'Inter', system-ui, sans-serif` },
+      },
+    },
+    semanticTokens: {
+      colors: {
+        brand: {
+          solid: { value: "{colors.brand.500}" },
+          contrast: { value: "{colors.gray.900}" },
+          fg: { value: "{colors.brand.700}" },
+          muted: { value: "{colors.brand.100}" },
+          subtle: { value: "{colors.brand.50}" },
+          emphasized: { value: "{colors.brand.600}" },
+          focusRing: { value: "{colors.brand.500}" },
+        },
+      },
+    },
+  },
+});
+
+export const system = createSystem(defaultConfig, config);
+==================================================
+ARQUIVO: src/types/admin.ts
+==================================================
+export interface Admin {
+    nome: string,
+    email: string,
+    senha: string
+}
+
+==================================================
+ARQUIVO: src/types/artesao.ts
+==================================================
+export interface Artesao {
+    id: string;
+    nome: string;
+    cpf: string;
+    email: string;
+    senha: string;
+    regiaoProducao: string;
+    telefone: string;
+    biografia: string;
+}
+
+==================================================
+ARQUIVO: src/types/customer.ts
+==================================================
+export interface Customer {
+    id: string;
+    nome: string;
+    email: string;
+    senha: string;
+    cpf: string;
+    telefone: string;
+    enderecos: Endereco[];
+}
+
+export interface Endereco {
+    id: string;
+    cep: string;
+    bairro: string;
+    rua: string;
+    numero: string;
+    complemento: string;
+    cidade: string;
+    estado: string;
+}
+
+==================================================
+ARQUIVO: src/types/index.ts
+==================================================
+export * from './artesao';
+export * from './customer';
+export * from './product';
+export * from './admin';
+export * from './order'
+
+export interface RootData {
+    artesaos: Artesao[];
+    customers: Customer[];
+    products: Product[];
+    admin: Admin[];
+}
+
+==================================================
+ARQUIVO: src/types/order.ts
+==================================================
+import { Endereco } from "./customer";
+
+export type MetodoPagamento = "cartao" | "pix";
+
+export interface Pagamento {
+    metodo: MetodoPagamento;
+    status: "aprovado";
+    cartaoMascarado?: string;
+}
+
+export interface OrderItem {
+    productId: number;
+    titulo: string;
+    precoUnitario: number;
+    quantidade: number;
+}
+
+export interface Order {
+    id: string;
+    customerId: string;
+    itens: OrderItem[];
+    total: number;
+    enderecoEntrega: Endereco;
+    pagamento: Pagamento;
+    status: "Confirmado";
+    createdAt: string;
+}
+
+==================================================
+ARQUIVO: src/types/product.ts
+==================================================
+export interface Product {
+    id: number;
+    idArtesao: string;
+    titulo: string;
+    descricao: string;
+    materiaPrima: string;
+    tecnica: string;
+    regiaoProducao: string;
+    categoria: string;
+    preco: number;
+    quantidadeEstoque: number;
+    dimensoes: string;
+    linkImagens: string[];
+}
+
+export interface CartItem {
+    product: Product;
+    quantity: number;
+}

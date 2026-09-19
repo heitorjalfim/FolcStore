@@ -33,7 +33,7 @@ export default function ListaAvaliacoes({ avaliacoes, mostrarMedia }: ListaAvali
     }
 
     return (
-        <VStack spacing={4} align="stretch" w="full">
+        <VStack align="stretch" gap="{4}" w="full">
             {media}
             {avaliacoes.map((avaliacao, index) => (
                 <AvaliacaoCard key={index} avaliacao={avaliacao} />

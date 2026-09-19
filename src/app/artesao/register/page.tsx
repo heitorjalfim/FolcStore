@@ -76,7 +76,7 @@ export default function ArtesaoRegisterPage() {
     return (
         <Flex minH="80vh" align="center" justify="center" py={8}>
             <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="2xl">
-                <VStack spacing={6} align="stretch">
+                <VStack align="stretch" gap="{6}">
                     <Heading size="lg" textAlign="center" color="brand.500">
                         Registro de Artesão
                     </Heading>
@@ -190,7 +190,7 @@ export default function ArtesaoRegisterPage() {
 
                             {/* Botões (Ocupa 2 colunas) */}
                             <GridItem colSpan={{ base: 1, md: 2 }}>
-                                <VStack spacing={3} mt={4}>
+                                <VStack gap="{3}" mt="{4}">
                                     <Button
                                         type="submit"
                                         colorPalette="brand"
