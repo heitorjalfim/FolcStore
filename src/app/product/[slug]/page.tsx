@@ -3,18 +3,12 @@
 import { useEffect, useState, use } from "react";
 import { Box, Heading, Text, VStack, HStack, Button, Image } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import NextLink from "next/link";
 import { userService } from "@/services/userService";
 import { productService } from "@/services/productService";
 import { useCartStore } from "@/store/cartStore";
-import { Product, Artesao } from "@/types";
+import { Product, Artesao, CartItem } from "@/types";
 import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
-
-
-
-type ProductWithImages = Product & {
-    linkImagens?: string[] | string;
-};
 
 type PageProps = {
     params: Promise<{
@@ -29,47 +23,33 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     const urlParts = rawUrlParam.split("-");
     const productId = urlParts[urlParts.length - 1];
 
-    const [produto, setProduto] = useState<ProductWithImages | null>(null);
-
+    const [produto, setProduto] = useState<Product | null>(null);
     const [artesao, setArtesao] = useState<Artesao | null>(null);
     const [loading, setLoading] = useState(true);
     const [quantidade, setQuantidade] = useState(1);
-    const [erroEstoque, setErroEstoque] = useState(false);
     const [isNavigating, setIsNavigating] = useState(false);
 
     const router = useRouter();
-
     const addItem = useCartStore((state) => state.addItem);
-    const cartItems = useCartStore((state: any) => state.items || []);
+    const cartItems = useCartStore((state) => state.items);
 
     useEffect(() => {
         async function fetchDados() {
             setLoading(true);
-
             try {
-                const produtoRes = await productService.getById(productId);
+                const produtoRes = await productService.getById(Number(productId) || productId);
                 setProduto(produtoRes);
-
-                // DEBUG: Verifique exatamente o que está vindo no produto
-                console.log("Dados do Produto:", produtoRes);
 
                 if (produtoRes && produtoRes.idArtesao) {
                     try {
                         const artesaoRes = await userService.getArtesaoById(produtoRes.idArtesao);
-
-                        // DEBUG: Verifique se o artesão foi encontrado
-                        console.log("Dados do Artesão:", artesaoRes);
-
                         setArtesao(artesaoRes);
                     } catch (artesaoError) {
-                        // AGORA VOCÊ VERÁ O ERRO NO CONSOLE
                         console.error("Erro ao buscar o artesão:", artesaoError);
                     }
-                } else {
-                    console.warn("O produto não possui um campo 'idArtesao'.");
                 }
             } catch (error) {
-                console.error("Erro ao carregar os dados do produto:", error);
+                console.error("Erro ao carregar dados do produto:", error);
                 setProduto(null);
             } finally {
                 setLoading(false);
@@ -90,7 +70,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     if (!produto) {
         return (
             <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <VStack spacing={4} align="start">
+                <VStack gap={4} align="start">
                     <Heading as="h1" size="lg" color="red.500">
                         Produto não encontrado
                     </Heading>
@@ -100,12 +80,12 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         );
     }
 
-    const primeiraImagem = produto.linkImagens[0];
-
+    const primeiraImagem = produto.linkImagens?.[0] || produto.imagem;
     const estoqueDisponivel = produto.quantidadeEstoque ?? 0;
 
-    const quantidadeNoCarrinho = cartItems.reduce((total: number, item: any) => {
-        if (String(item.id) === String(produto.id)) {
+    // Redução fortemente tipada com CartItem, sem nenhum any
+    const quantidadeNoCarrinho = cartItems.reduce((total: number, item: CartItem) => {
+        if (Number(item?.product?.id) === Number(produto.id)) {
             return total + (item.quantity || 1);
         }
         return total;
@@ -114,10 +94,6 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     const estoqueRestante = estoqueDisponivel - quantidadeNoCarrinho;
     const esgotado = estoqueDisponivel < 1 || estoqueRestante < 1;
     const limiteAtingido = quantidade > estoqueRestante || estoqueRestante < 1;
-
-    if (quantidade > estoqueRestante && estoqueRestante > 0) {
-        setQuantidade(estoqueRestante);
-    }
 
     const handleIncrement = () => {
         if (quantidade < estoqueRestante) {
@@ -132,30 +108,22 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     };
 
     const handleAddToCart = () => {
-        if (esgotado || limiteAtingido || quantidade > estoqueRestante || isNavigating) {
-            return;
-        }
+        if (esgotado || limiteAtingido || isNavigating) return;
 
         setIsNavigating(true);
-
         for (let i = 0; i < quantidade; i++) {
-            addItem({
-                id: String(produto.id),
-                name: produto.titulo,
-                price: produto.preco,
-            });
+            addItem(produto);
         }
-
         router.push("/customer/checkout");
     };
 
-    const botaoDesabilitado = Boolean(esgotado || limiteAtingido || isNavigating || quantidade > estoqueRestante);
+    const botaoDesabilitado = Boolean(esgotado || limiteAtingido || isNavigating);
 
     return (
         <Box minH="100vh">
             <HeaderCarrinho />
             <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <VStack spacing={6} align="start" w="full">
+                <VStack gap={6} align="start" w="full">
                     <Heading as="h1" size="xl" color="gray.800">
                         {produto.titulo}
                     </Heading>
@@ -174,7 +142,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                         )}
 
                         <Text fontSize="2xl" fontWeight="bold" color="green.600" mb={2}>
-                            R$ {produto.preco.toFixed(2)}
+                            R$ {Number(produto.preco).toFixed(2)}
                         </Text>
 
                         <Text fontSize="sm" color={esgotado ? "red.500" : "gray.600"} mb={1}>
@@ -192,7 +160,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                         )}
 
                         {!esgotado && estoqueRestante > 0 && (
-                            <HStack spacing={4} mb={6} align="center">
+                            <HStack gap={4} mb={6} align="center">
                                 <Text fontWeight="medium">Quantidade:</Text>
                                 <HStack>
                                     <Button
@@ -212,12 +180,6 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                     </Button>
                                 </HStack>
                             </HStack>
-                        )}
-
-                        {erroEstoque && !isNavigating && (
-                            <Text color="red.500" fontSize="sm" mb={4}>
-                                A quantidade selecionada excede o estoque disponível.
-                            </Text>
                         )}
 
                         <Button
@@ -249,14 +211,11 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                     <Text fontSize="sm" color="gray.600" mb={4}>
                                         Região de Produção: {artesao.regiaoProducao}
                                     </Text>
-                                    <Button
-                                        as={Link}
-                                        href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}
-                                        size="sm"
-                                        variant="outline"
-                                    >
-                                        Ver Perfil do Artesão
-                                    </Button>
+                                    <NextLink href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}>
+                                        <Button size="sm" variant="outline">
+                                            Ver Perfil do Artesão
+                                        </Button>
+                                    </NextLink>
                                 </Box>
                             ) : (
                                 <Text fontSize="sm" color="gray.500">Informações do artesão não disponíveis.</Text>

@@ -65,7 +65,7 @@ export default function AdminLoginPage() {
     return (
         <Flex minH="80vh" align="center" justify="center">
             <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="md">
-                <VStack spacing={6} align="stretch">
+                <VStack align="stretch" gap="{6}">
                     <Heading size="lg" textAlign="center" color="brand.500">
                         Login de Admin
                     </Heading>
@@ -77,7 +77,7 @@ export default function AdminLoginPage() {
                     )}
 
                     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-                        <VStack spacing={4}>
+                        <VStack gap="{4}">
                             <Field.Root required>
                                 <Field.Label>E-mail</Field.Label>
                                 <Input
