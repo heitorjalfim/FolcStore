@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { sessionStore } from '@/store/sessionStore';
 import { userService } from '@/services/userService';
+import NextLink from 'next/link';
 import {
     Box,
     Button,
@@ -13,8 +14,10 @@ import {
     Input,
     Text,
     VStack,
-    Spinner
+    Spinner,
+    IconButton
 } from '@chakra-ui/react';
+import { LuHouse } from 'react-icons/lu';
 
 export default function ArtesaoLoginPage() {
     const [mounted, setMounted] = useState(false);
@@ -67,6 +70,18 @@ export default function ArtesaoLoginPage() {
         <Flex minH="80vh" align="center" justify="center">
             <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="md">
                 <VStack gap={6} align="stretch">
+                    <Flex justify="center" mb={-2}>
+                                <NextLink href="/">
+                                  <IconButton
+                                    aria-label="Voltar para a página inicial"
+                                    variant="ghost"
+                                    size="lg"
+                                    borderRadius="full"
+                                  >
+                                    <LuHouse size={24} />
+                                  </IconButton>
+                                </NextLink>
+                              </Flex>
                     <Heading size="lg" textAlign="center" color="brand.500">
                         Login de Artesão
                     </Heading>

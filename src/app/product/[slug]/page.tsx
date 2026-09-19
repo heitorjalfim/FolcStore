@@ -90,7 +90,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     if (!produto) {
         return (
             <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <VStack spacing={4} align="start">
+                <VStack gap={4} align="start">
                     <Heading as="h1" size="lg" color="red.500">
                         Produto não encontrado
                     </Heading>
@@ -155,7 +155,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         <Box minH="100vh">
             <HeaderCarrinho />
             <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <VStack spacing={6} align="start" w="full">
+                <VStack gap={6} align="start" w="full">
                     <Heading as="h1" size="xl" color="gray.800">
                         {produto.titulo}
                     </Heading>
@@ -192,7 +192,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                         )}
 
                         {!esgotado && estoqueRestante > 0 && (
-                            <HStack spacing={4} mb={6} align="center">
+                            <HStack gap={4} mb={6} align="center">
                                 <Text fontWeight="medium">Quantidade:</Text>
                                 <HStack>
                                     <Button

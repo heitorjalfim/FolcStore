@@ -7,6 +7,27 @@ import { sessionStore } from '@/store/sessionStore';
 import NextLink from 'next/link';
 import { FiBox, FiMapPin, FiLock, FiArrowLeft } from 'react-icons/fi';
 
+const accountSections = [
+    {
+        title: "Seus pedidos",
+        description: "Rastrear, devolver ou ver histórico de compras",
+        icon: FiBox,
+        href: "/customer/pedidos"
+    },
+    {
+        title: "Seus endereços",
+        description: "Ver endereços salvos ou adicionar novos para entrega",
+        icon: FiMapPin,
+        href: "/customer/enderecos"
+    },
+    {
+        title: "Acesso e segurança",
+        description: "Gerenciar senha, e-mail e dados pessoais",
+        icon: FiLock,
+        href: "/customer/seguranca"
+    }
+];
+
 export default function CustomerAccountHubPage() {
     const [mounted, setMounted] = useState(false);
     const router = useRouter();
@@ -29,28 +50,6 @@ export default function CustomerAccountHubPage() {
         );
     }
 
-    // As três opções principais que você pediu
-    const accountSections = [
-        {
-            title: "Seus pedidos",
-            description: "Rastrear, devolver ou ver histórico de compras",
-            icon: FiBox,
-            href: "/customer/pedidos"
-        },
-        {
-            title: "Seus endereços",
-            description: "Alterar ou adicionar endereços para entrega",
-            icon: FiMapPin,
-            href: "/customer/enderecos"
-        },
-        {
-            title: "Acesso e segurança",
-            description: "Gerenciar senha, e-mail e dados pessoais",
-            icon: FiLock,
-            href: "/customer/seguranca"
-        }
-    ];
-
     return (
         <Box minH="100vh" bg="gray.50" py={8}>
             <Container maxW="1100px">
@@ -68,15 +67,15 @@ export default function CustomerAccountHubPage() {
                     <Heading size="xl">Sua Conta</Heading>
                     <Text color="gray.600">Olá, <b>{customer?.nome}</b> ({customer?.email})</Text>
                 </VStack>
-                
-                {/* Grid estilo Amazon com as seções */}
+
+                {/* Grid com as seções da conta */}
                 <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
-                    {accountSections.map((section, index) => (
-                        <NextLink key={index} href={section.href} passHref style={{ textDecoration: 'none' }}>
-                            <Card.Root 
-                                p={6} 
-                                borderWidth="1px" 
-                                borderRadius="lg" 
+                    {accountSections.map((section) => (
+                        <NextLink key={section.href} href={section.href} style={{ textDecoration: 'none' }}>
+                            <Card.Root
+                                p={6}
+                                borderWidth="1px"
+                                borderRadius="lg"
                                 bg="white"
                                 height="100%"
                                 _hover={{ shadow: "md", borderColor: "brand.500", transform: "translateY(-2px)" }}
