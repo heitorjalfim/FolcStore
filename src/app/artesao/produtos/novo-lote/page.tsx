@@ -21,7 +21,7 @@ import {
   HStack,
   Card,
 } from '@chakra-ui/react';
-import { FiArrowLeft, FiCheck, FiEye, FiTruck, FiShield } from 'react-icons/fi';
+import { FiArrowLeft, FiCheck, FiEye, FiTruck, FiShield, FiAlertCircle } from 'react-icons/fi';
 import { productService } from '@/services/productService';
 import { sessionStore } from '@/store/sessionStore';
 import { CriarProdutoDTO } from '@/types/product';
@@ -52,29 +52,47 @@ export default function NovoProdutoLotePage() {
   const [profundidade, setProfundidade] = useState('');
   const [peso, setPeso] = useState('');
 
-  const [erroValidacao, setErroValidacao] = useState<string | null>(null);
+  // Estados de validação granular (PI4-93, PI4-94, PI4-95)
+  const [erros, setErros] = useState<Record<string, string>>({});
   const [carregando, setCarregando] = useState(false);
+
+  const validarFormulario = () => {
+    const novosErros: Record<string, string> = {};
+
+    if (!titulo.trim()) {
+      novosErros.titulo = 'O título do lote é obrigatório.';
+    }
+
+    if (!descricao.trim()) {
+      novosErros.descricao = 'A história e significado cultural são obrigatórios.';
+    }
+
+    // PI4-95: Validação de preço
+    const precoNum = parseFloat(preco.replace(',', '.'));
+    if (!preco || isNaN(precoNum) || precoNum <= 0) {
+      novosErros.preco = 'Informe um preço válido maior que zero (R$ > 0,00).';
+    }
+
+    // PI4-93: Validação de estoque inicial (inteiro >= 1)
+    const estoqueNum = Number(quantidadeEstoque);
+    if (!quantidadeEstoque || isNaN(estoqueNum) || estoqueNum < 1 || !Number.isInteger(estoqueNum)) {
+      novosErros.quantidadeEstoque = 'O estoque de lote deve ser um número inteiro de no mínimo 1 peça.';
+    }
+
+    // PI4-94: Validação de prazo de produção (inteiro >= 0)
+    const prazoNum = Number(prazoProducao);
+    if (prazoProducao === '' || isNaN(prazoNum) || prazoNum < 0 || !Number.isInteger(prazoNum)) {
+      novosErros.prazoProducao = 'O prazo de produção deve ser de 0 (pronta entrega) ou mais dias úteis.';
+    }
+
+    setErros(novosErros);
+    return Object.keys(novosErros).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErroValidacao(null);
 
-    if (!titulo.trim()) {
-      setErroValidacao('O título do lote é obrigatório.');
-      return;
-    }
-    if (!descricao.trim()) {
-      setErroValidacao('A história e significado cultural são obrigatórios.');
-      return;
-    }
-    const precoNum = parseFloat(preco.replace(',', '.'));
-    if (!preco || isNaN(precoNum) || precoNum <= 0) {
-      setErroValidacao('Informe um preço unitário válido.');
-      return;
-    }
-    const estoqueNum = parseInt(quantidadeEstoque, 10);
-    if (!quantidadeEstoque || isNaN(estoqueNum) || estoqueNum < 1) {
-      setErroValidacao('Para lotes, o estoque inicial deve ser de pelo menos 1 peça.');
+    if (!validarFormulario()) {
       return;
     }
 
@@ -82,19 +100,21 @@ export default function NovoProdutoLotePage() {
       setCarregando(true);
 
       const listaImagens = [urlFotoPrincipal.trim(), fotoAdicional1.trim()].filter(Boolean);
+      const skuFinal = sku.trim() || `LOT-${Date.now().toString().slice(-4)}`;
 
+      // PI4-95: Contrato estrito com tipo: 'lote'
       const payload: CriarProdutoDTO = {
-        sku: sku.trim() || `LOT-${Date.now().toString().slice(-4)}`,
+        sku: skuFinal,
         titulo: titulo.trim(),
         descricao: descricao.trim(),
         materiaPrima: materiaPrima.trim() || 'Argila regional cozida',
         tecnica: tecnica.trim() || 'Torno cerâmico e queima a lenha',
         regiaoProducao: regiaoProducao.trim() || artesao?.regiaoProducao || 'Caruaru, PE',
         categoria,
-        preco: precoNum,
+        preco: parseFloat(preco.replace(',', '.')),
         tipo: 'lote',
-        quantidadeEstoque: estoqueNum,
-        prazoProducao: parseInt(prazoProducao, 10) || 0,
+        quantidadeEstoque: parseInt(quantidadeEstoque, 10),
+        prazoProducao: parseInt(prazoProducao, 10),
         idArtesao: artesao?.id || 'e1eK141d4u70m471c4m3n73',
         nomeArtesao: nomeArtesao.trim() || artesao?.nome || 'Severino Vitalino',
         dimensoes: {
@@ -111,8 +131,8 @@ export default function NovoProdutoLotePage() {
       await productService.create(payload);
       router.push('/artesao/produtos');
     } catch (err) {
-      console.error(err);
-      setErroValidacao('Falha ao registrar lote na API. Verifique se o servidor está ativo.');
+      console.error('Erro ao cadastrar lote:', err);
+      setErros({ api: 'Falha ao registrar lote na API. Verifique a conexão com o servidor local.' });
     } finally {
       setCarregando(false);
     }
@@ -132,11 +152,13 @@ export default function NovoProdutoLotePage() {
           </NextLink>
 
           <Badge colorPalette="brand" size="lg" px={3} py={1}>
-            HU-89: Cadastro em Lote
+            HU-89 (PI4-92 a PI4-95): Cadastro em Lote
           </Badge>
         </HStack>
 
         <Grid templateColumns={{ base: '1fr', lg: '240px 1fr 300px' }} gap={6} alignItems="start">
+          
+          {/* Stepper lateral */}
           <Box bg="white" p={5} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
             <Text fontWeight="bold" fontSize="sm" color="gray.900" mb={1}>
               Cadastro em Lote
@@ -168,7 +190,7 @@ export default function NovoProdutoLotePage() {
                 <Box p={1} bg="gray.100" borderRadius="full">
                   <FiCheck size={14} />
                 </Box>
-                <Text>4. Materiais & Medidas</Text>
+                <Text>4. Materiais & Dimensões</Text>
               </HStack>
               <HStack gap={2.5} color="gray.500">
                 <Box p={1} bg="gray.100" borderRadius="full">
@@ -179,22 +201,25 @@ export default function NovoProdutoLotePage() {
             </VStack>
           </Box>
 
+          {/* Formulário Central */}
           <Box as="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={6}>
-            {erroValidacao && (
+            {erros.api && (
               <Box bg="red.50" borderColor="red.200" borderWidth="1px" p={4} borderRadius="lg">
-                <Text color="red.600" fontSize="sm" fontWeight="semibold">
-                  {erroValidacao}
-                </Text>
+                <HStack gap={2} color="red.600">
+                  <FiAlertCircle />
+                  <Text fontSize="sm" fontWeight="semibold">{erros.api}</Text>
+                </HStack>
               </Box>
             )}
 
+            {/* 1. Informações Básicas */}
             <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
               <Heading size="sm" mb={4} color="gray.800">
                 1. Informações Básicas
               </Heading>
 
               <VStack gap={4} align="stretch">
-                <Field.Root required>
+                <Field.Root invalid={!!erros.titulo} required>
                   <Field.Label>Título do Lote de Produtos</Field.Label>
                   <Input
                     value={titulo}
@@ -202,6 +227,9 @@ export default function NovoProdutoLotePage() {
                     placeholder="Ex: Tigela Cerâmica Vitrificada Massapê"
                     bg="white"
                   />
+                  {erros.titulo && (
+                    <Text color="red.500" fontSize="2xs" mt={1}>{erros.titulo}</Text>
+                  )}
                 </Field.Root>
 
                 <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={4}>
@@ -254,6 +282,7 @@ export default function NovoProdutoLotePage() {
               </VStack>
             </Box>
 
+            {/* 2. Fotos da Peça */}
             <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
               <Heading size="sm" mb={4} color="gray.800">
                 2. Imagens da Peça
@@ -281,6 +310,7 @@ export default function NovoProdutoLotePage() {
               </VStack>
             </Box>
 
+            {/* 3. História Cultural & Descrição */}
             <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
               <Heading size="sm" mb={1} color="gray.800">
                 3. História e Significado Cultural *
@@ -288,7 +318,7 @@ export default function NovoProdutoLotePage() {
               <Text fontSize="xs" color="gray.500" mb={4}>
                 Descreva a narrativa, técnica e tradição transmitida através desta produção.
               </Text>
-              <Field.Root required>
+              <Field.Root invalid={!!erros.descricao} required>
                 <Textarea
                   rows={4}
                   value={descricao}
@@ -296,9 +326,13 @@ export default function NovoProdutoLotePage() {
                   placeholder="Linha de utensílios utilitários inspirados nos traços artesanais de Caruaru..."
                   bg="white"
                 />
+                {erros.descricao && (
+                  <Text color="red.500" fontSize="2xs" mt={1}>{erros.descricao}</Text>
+                )}
               </Field.Root>
             </Box>
 
+            {/* 4. Materiais e Dimensões */}
             <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
               <Heading size="sm" mb={4} color="gray.800">
                 4. Especificações Técnicas
@@ -384,13 +418,15 @@ export default function NovoProdutoLotePage() {
               </Field.Root>
             </Box>
 
+            {/* 5. Preço, Estoque & Produção (PI4-93, PI4-94, PI4-95) */}
             <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
               <Heading size="sm" mb={4} color="gray.800">
                 5. Preço, Estoque & Produção
               </Heading>
 
               <Grid templateColumns={{ base: '1fr', md: 'repeat(4, 1fr)' }} gap={4}>
-                <Field.Root required>
+                {/* PI4-95: Preço */}
+                <Field.Root invalid={!!erros.preco} required>
                   <Field.Label>Preço Unitário (R$)</Field.Label>
                   <Input
                     value={preco}
@@ -399,35 +435,49 @@ export default function NovoProdutoLotePage() {
                     fontWeight="bold"
                     bg="white"
                   />
+                  {erros.preco && (
+                    <Text color="red.500" fontSize="2xs" mt={1}>{erros.preco}</Text>
+                  )}
                 </Field.Root>
 
-                <Field.Root required>
+                {/* PI4-93: Estoque inicial em Lote */}
+                <Field.Root invalid={!!erros.quantidadeEstoque} required>
                   <Field.Label>Estoque Inicial</Field.Label>
                   <Input
                     type="number"
                     min="1"
+                    step="1"
                     value={quantidadeEstoque}
                     onChange={(e) => setQuantidadeEstoque(e.target.value)}
                     placeholder="25"
                     fontWeight="bold"
                     bg="white"
                   />
+                  {erros.quantidadeEstoque && (
+                    <Text color="red.500" fontSize="2xs" mt={1}>{erros.quantidadeEstoque}</Text>
+                  )}
                 </Field.Root>
 
-                <Field.Root required>
+                {/* PI4-94: Prazo de produção */}
+                <Field.Root invalid={!!erros.prazoProducao} required>
                   <Field.Label>Prazo Produção (dias)</Field.Label>
                   <Input
                     type="number"
                     min="0"
+                    step="1"
                     value={prazoProducao}
                     onChange={(e) => setPrazoProducao(e.target.value)}
                     placeholder="7"
                     bg="white"
                   />
+                  {erros.prazoProducao && (
+                    <Text color="red.500" fontSize="2xs" mt={1}>{erros.prazoProducao}</Text>
+                  )}
                 </Field.Root>
 
+                {/* SKU */}
                 <Field.Root>
-                  <Field.Label>SKU</Field.Label>
+                  <Field.Label>SKU (Opcional)</Field.Label>
                   <Input
                     value={sku}
                     onChange={(e) => setSku(e.target.value)}
@@ -452,6 +502,7 @@ export default function NovoProdutoLotePage() {
             </Flex>
           </Box>
 
+          {/* Coluna Direita: Live Preview Reativo (PI4-94) */}
           <Box position="sticky" top="20px">
             <Card.Root bg="white" p={4} borderRadius="xl" borderWidth="1px" borderColor="gray.200" shadow="sm">
               <HStack justify="space-between" mb={3}>
@@ -493,18 +544,19 @@ export default function NovoProdutoLotePage() {
                 </Badge>
               </HStack>
 
+              {/* PI4-94: Reatividade do prazo */}
               <VStack align="start" gap={2} pt={4} mt={3} borderTopWidth="1px" borderColor="gray.100" fontSize="2xs" color="gray.500">
                 <HStack gap={2}>
                   <FiTruck color="#C25E2E" />
                   <Text>
-                    {prazoProducao === '0' || prazoProducao === ''
-                      ? 'Pronta entrega'
-                      : `Produção: ${prazoProducao} dias úteis`}
+                    {prazoProducao === '0'
+                      ? 'Pronta entrega: enviado em até 24h úteis'
+                      : `Prazo de produção e postagem: ${prazoProducao || 0} dias úteis`}
                   </Text>
                 </HStack>
                 <HStack gap={2}>
                   <FiShield color="#38A169" />
-                  <Text>Autenticidade artesanal de Pernambuco.</Text>
+                  <Text>Garantia de autenticidade artesanal de Pernambuco.</Text>
                 </HStack>
               </VStack>
             </Card.Root>
