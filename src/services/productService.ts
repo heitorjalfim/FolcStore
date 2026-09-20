@@ -1,10 +1,10 @@
 import { apiService } from './apiService';
-import { Product, CriarProductDTO, AtualizarProductDTO } from '@/types/product';
+import { Produto, CriarProdutoDTO, AtualizarProdutoDTO } from '@/types/product';
 
 export const productService = {
-  async getAll(): Promise<Product[]> {
+  async getAll(): Promise<Produto[]> {
     try {
-      const response = await apiService.get<Product[]>('/products');
+      const response = await apiService.get<Produto[]>('/products');
       return response.data;
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
@@ -12,21 +12,9 @@ export const productService = {
     }
   },
 
-  async getByCategory(categoria: string): Promise<Product[]> {
+  async getById(id: string | number): Promise<Produto> {
     try {
-      const response = await apiService.get<Product[]>('/products', {
-        params: { categoria },
-      });
-      return response.data;
-    } catch (error) {
-      console.error(`Erro ao buscar produtos da categoria "${categoria}":`, error);
-      throw error;
-    }
-  },
-
-  async getById(id: string | number): Promise<Product> {
-    try {
-      const response = await apiService.get<Product>(`/products/${id}`);
+      const response = await apiService.get<Produto>(`/products/${id}`);
       return response.data;
     } catch (error) {
       console.error(`Erro ao buscar produto ${id}:`, error);
@@ -34,35 +22,9 @@ export const productService = {
     }
   },
 
-  async search(
-    filters: Partial<Pick<Product, 'categoria' | 'tecnica' | 'regiaoProducao'>>
-  ): Promise<Product[]> {
+  async getByArtesao(idArtesao: string): Promise<Produto[]> {
     try {
-      const response = await apiService.get<Product[]>('/products', {
-        params: filters,
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Erro ao buscar produtos com filtros:', filters, error);
-      throw error;
-    }
-  },
-
-  async searchByText(query: string): Promise<Product[]> {
-    try {
-      const response = await apiService.get<Product[]>('/products', {
-        params: { q: query },
-      });
-      return response.data;
-    } catch (error) {
-      console.error(`Erro ao buscar produtos com o termo "${query}":`, error);
-      throw error;
-    }
-  },
-
-  async getByArtesao(idArtesao: string): Promise<Product[]> {
-    try {
-      const response = await apiService.get<Product[]>('/products', {
+      const response = await apiService.get<Produto[]>('/products', {
         params: { idArtesao },
       });
       return response.data;
@@ -72,24 +34,34 @@ export const productService = {
     }
   },
 
-  // --- MÉTODOS CRUD (HU-67 a HU-69) ---
-
-  async create(payload: CriarProductDTO): Promise<Product> {
+  async create(payload: CriarProdutoDTO): Promise<Produto> {
     try {
-      const response = await apiService.post<Product>('/products', payload);
+      const idGerado = payload.id || `prod-${Date.now().toString().slice(-4)}`;
+      const skuGerado = payload.sku || (payload.tipo === 'unico' ? `UNI-${Date.now().toString().slice(-4)}` : `LOT-${Date.now().toString().slice(-4)}`);
+      
+      const dadosCompletos: Produto = {
+        ...payload,
+        id: idGerado,
+        sku: skuGerado,
+        linkImagens: payload.galeriaImagens?.length ? payload.galeriaImagens : ['https://picsum.photos/400/400'],
+        imagem: payload.galeriaImagens?.[0] || 'https://picsum.photos/400/400',
+        dataCriacao: new Date().toISOString(),
+      };
+
+      const response = await apiService.post<Produto>('/products', dadosCompletos);
       return response.data;
     } catch (error) {
-      console.error('Erro ao criar produto na API:', error);
+      console.error('Erro ao cadastrar produto:', error);
       throw error;
     }
   },
 
-  async update(id: string | number, payload: AtualizarProductDTO): Promise<Product> {
+  async update(id: string | number, payload: AtualizarProdutoDTO): Promise<Produto> {
     try {
-      const response = await apiService.patch<Product>(`/products/${id}`, payload);
+      const response = await apiService.patch<Produto>(`/products/${id}`, payload);
       return response.data;
     } catch (error) {
-      console.error(`Erro ao atualizar parcialmente o produto ${id}:`, error);
+      console.error(`Erro ao atualizar produto ${id}:`, error);
       throw error;
     }
   },
@@ -98,7 +70,19 @@ export const productService = {
     try {
       await apiService.delete(`/products/${id}`);
     } catch (error) {
-      console.error(`Erro ao remover produto ${id}:`, error);
+      console.error(`Erro ao deletar produto ${id}:`, error);
+      throw error;
+    }
+  },
+
+  async searchByText(query: string): Promise<Produto[]> {
+    try {
+      const response = await apiService.get<Produto[]>('/products', {
+        params: { q: query },
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao buscar produtos com o termo "${query}":`, error);
       throw error;
     }
   },
