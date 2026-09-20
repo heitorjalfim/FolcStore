@@ -1,23 +1,1506 @@
-=== REPOSITÓRIO OFICIAL DA EQUIPE (PROJETO COMPLETO) ===
-DATA DA EXTRAÇÃO: Sat, Sep 19, 2026 12:25:28 PM
+=== REPOSITÓRIO DA EQUIPE (COMPLETO) ===
+DATA DA EXTRAÇÃO: Sun, Sep 20, 2026  6:49:30 PM
 
---- 1. RAMIFICAÇÕES DISPONÍVEIS (GIT BRANCHES) ---
-* main
-  remotes/origin/HEAD -> origin/main
-  remotes/origin/JustaTBC
-  remotes/origin/JustaTBC-patch-1
-  remotes/origin/JustaTBC-patch-2
-  remotes/origin/carrinho
-  remotes/origin/develop
-  remotes/origin/feature/adicionar-pagamento-endereco
-  remotes/origin/heitorjalfim-patch-1
-  remotes/origin/homolog
-  remotes/origin/ia-docs
-  remotes/origin/layout
-  remotes/origin/main
-  remotes/origin/produto-e-carrinho
+--- 1. GIT STATUS E BRANCH ATUAL ---
+ M dump_projeto_equipe.txt
+?? extrair_projeto_equipe.sh
+feature/PI4-88-cadastro-peca-unica
 
---- 2. DEPENDÊNCIAS E DESIGN SYSTEM (PACKAGE.JSON) ---
+--- 2. ÁRVORE COMPLETA DE PASTAS E ARQUIVOS ---
+.
+./AGENTS.md
+./base-db.json
+./CLAUDE.md
+./docs
+./docs/design.md
+./docs/Documento de Requisitos.docx
+./docs/product.md
+./docs/requirements.md
+./docs/uso-de-ia.md
+./eslint.config.mjs
+./extrair_projeto_equipe.sh
+./next.config.ts
+./next-env.d.ts
+./package.json
+./postcss.config.mjs
+./public
+./public/file.svg
+./public/globe.svg
+./public/next.svg
+./public/vercel.svg
+./public/window.svg
+./README.md
+./routes.json
+./src
+./src/app
+./src/app/admin
+./src/app/admin/login
+./src/app/admin/login/page.tsx
+./src/app/admin/page.tsx
+./src/app/artesao
+./src/app/artesao/login
+./src/app/artesao/login/page.tsx
+./src/app/artesao/page.tsx
+./src/app/artesao/register
+./src/app/artesao/register/page.tsx
+./src/app/components
+./src/app/components/AvaliacaoCard.tsx
+./src/app/components/CartDrawer.tsx
+./src/app/components/CategoryFilter.tsx
+./src/app/components/EnderecoManager.tsx
+./src/app/components/FormularioAvaliacao.tsx
+./src/app/components/HeaderCarrinho.tsx
+./src/app/components/ListaAvaliacoes.tsx
+./src/app/components/ProductCard.tsx
+./src/app/components/ProductList.tsx
+./src/app/customer
+./src/app/customer/checkout
+./src/app/customer/checkout/page.tsx
+./src/app/customer/enderecos
+./src/app/customer/enderecos/page.tsx
+./src/app/customer/login
+./src/app/customer/login/page.tsx
+./src/app/customer/minha-conta
+./src/app/customer/minha-conta/page.tsx
+./src/app/customer/page.tsx
+./src/app/customer/register
+./src/app/customer/register/page.tsx
+./src/app/customer/seguranca
+./src/app/customer/seguranca/page.tsx
+./src/app/globals.css
+./src/app/layout.tsx
+./src/app/page.tsx
+./src/app/product
+./src/app/product/[slug]
+./src/app/product/[slug]/page.tsx
+./src/app/provider.tsx
+./src/services
+./src/services/addressService.ts
+./src/services/apiService.ts
+./src/services/orderService.ts
+./src/services/paymentService.ts
+./src/services/productService.ts
+./src/services/userService.ts
+./src/store
+./src/store/cartStore.ts
+./src/store/sessionStore.ts
+./src/theme.ts
+./src/types
+./src/types/admin.ts
+./src/types/artesao.ts
+./src/types/customer.ts
+./src/types/index.ts
+./src/types/order.ts
+./src/types/product.ts
+./tsconfig.json
+
+--- 3. CONTEÚDO INTEGRAL DE TODOS OS ARQUIVOS DO PROJETO ---
+==================================================
+ARQUIVO: ./AGENTS.md
+==================================================
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
+
+==================================================
+ARQUIVO: ./base-db.json
+==================================================
+{
+  "artesaos": [
+    {
+      "nome": "Maria da Silva",
+      "cpf": "012.345.678-90",
+      "email": "artesao@gmail.com",
+      "senha": "senha",
+      "regiaoProducao": "Olinda",
+      "telefone": "81999999999",
+      "biografia": "Claro! Aqui vai uma versão curta e profissional: Biografia de artesão [Nome do artesão] é um artesão dedicado à criação de peças únicas, feitas à mão com criatividade, cuidado e atenção aos detalhes. Seu trabalho valoriza a tradição artesanal e transforma materiais em objetos que carregam personalidade, beleza e significado. Se quiser, posso adaptar para um artesão de madeira, cerâmica, palha, couro, tecido ou outro material, deixando a biografia mais pessoal.",
+      "id": "e1eK141d4u70m471c4m3n73"
+    }
+  ],
+  "customers": [
+    {
+      "nome": "João Cliente",
+      "email": "comprador@gmail.com",
+      "senha": "senha",
+      "cpf": "123.456.789-00",
+      "telefone": "81988887777",
+      "enderecos": [
+        {
+          "id": "end-1",
+          "cep": "50000-000",
+          "bairro": "São Thomaz",
+          "rua": "Rua da avenida",
+          "numero": "97",
+          "complemento": "casa",
+          "cidade": "Recife",
+          "estado": "PE"
+        }
+      ],
+      "id": "3s3mp3B0t4n0F1nnn"
+    }
+  ],
+  "products": [
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Vaso de Barro Decorativo",
+      "descricao": "Vaso artesanal feito com argila regional.",
+      "materiaPrima": "Argila",
+      "tecnica": "Modelagem Manual",
+      "regiaoProducao": "Alto do Moura",
+      "categoria": "Decoração",
+      "preco": 95,
+      "quantidadeEstoque": 12,
+      "dimensoes": "20cm x 15cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "posseee"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Boneco de Barro Vitalino",
+      "descricao": "Escultura figurativa inspirada no estilo tradicional pernambucano.",
+      "materiaPrima": "Argila",
+      "tecnica": "Escultura em Cerâmica",
+      "regiaoProducao": "Caruaru",
+      "categoria": "Arte Sacra e Escultura",
+      "preco": 150,
+      "quantidadeEstoque": 5,
+      "dimensoes": "30cm x 12cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-02"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Bolsa de Palha Artesanal",
+      "descricao": "Bolsa trançada à mão com palha de carnaúba, ideal para o dia a dia.",
+      "materiaPrima": "Palha de Carnaúba",
+      "tecnica": "Trançado",
+      "regiaoProducao": "Norte Pernambucano",
+      "categoria": "Acessórios",
+      "preco": 120,
+      "quantidadeEstoque": 8,
+      "dimensoes": "35cm x 25cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-03"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Renda de Bilro - Toalha de Mesa",
+      "descricao": "Toalha de mesa produzida artesanalmente com a técnica tradicional de renda de bilro.",
+      "materiaPrima": "Linha de Algodão",
+      "tecnica": "Renda de Bilro",
+      "regiaoProducao": "Nísia Floresta",
+      "categoria": "Cama, Mesa e Banho",
+      "preco": 220,
+      "quantidadeEstoque": 4,
+      "dimensoes": "120cm x 80cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-04"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Fruteira de Madeira Maciça",
+      "descricao": "Fruteira esculpida em madeira de reaproveitamento com acabamento em cera natural.",
+      "materiaPrima": "Madeira Reciclada",
+      "tecnica": "Entalhe em Madeira",
+      "regiaoProducao": "Recife",
+      "categoria": "Utilidades Domésticas",
+      "preco": 180,
+      "quantidadeEstoque": 6,
+      "dimensoes": "40cm x 20cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-05"
+    }
+  ],
+  "productSuggestions": [
+    {
+      "id": "sug-01",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Porta-copos de Madeira Entalhada",
+      "descricao": "Sugestão de um kit com 6 porta-copos com temática de cordel e madeira reaproveitada.",
+      "categoriaDesejada": "Utilidades Domésticas",
+      "status": "Pendente",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-02",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Rede de Descanso Bordada à Mão",
+      "descricao": "Gostaria de ver redes de casal com detalhes de renascença ou bordado regional na varanda.",
+      "categoriaDesejada": "Cama, Mesa e Banho",
+      "status": "Em Análise",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-03",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Abajur de Chita com Base de Cerâmica",
+      "descricao": "Luminária de mesa com cúpula forrada em tecido de chita colorida.",
+      "categoriaDesejada": "Decoração",
+      "status": "Pendente",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-04",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Carteira de Couro Bovino Estampado",
+      "descricao": "Carteira masculina e feminina em couro legítimo com entalhes inspirados no cangaço.",
+      "categoriaDesejada": "Acessórios",
+      "status": "Aprovado",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-05",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Prato de Parede em Cerâmica Vitrificada",
+      "descricao": "Prato decorativo pintado à mão com traços do barroco pernambucano.",
+      "categoriaDesejada": "Arte Sacra e Escultura",
+      "status": "Pendente",
+      "dataCriacao": "2026-09-19"
+    }
+  ],
+  "admins": [
+    {
+      "nome": "Cirio Adinilson",
+      "email": "admin@gmail.com",
+      "senha": "senha",
+      "id": "wasd"
+    }
+  ],
+  "orders": []
+}
+==================================================
+ARQUIVO: ./CLAUDE.md
+==================================================
+@AGENTS.md
+
+==================================================
+ARQUIVO: ./docs/design.md
+==================================================
+# Design — Módulo de IA de Recomendação
+
+Este documento descreve o desenho técnico do Módulo de IA de Recomendação do
+Marketplace de Artesanato. Ele é a referência de implementação para os requisitos
+descritos em `requirements.md` e para o contexto de produto descrito em
+`product.md`.
+
+---
+
+## 1. Diagrama de componentes
+
+```mermaid
+flowchart TB
+    subgraph Sistema Principal do Marketplace
+        WEB[Front-end Web / App]
+        CATALOGO[(Catálogo de Produtos)]
+        PERFIL[(Perfil do Usuário)]
+        PEDIDOS[(Carrinho / Pedidos)]
+        NOTIF[Serviço de Notificações / E-mail]
+        ADMIN[Painel Administrativo]
+    end
+
+    subgraph Módulo de IA de Recomendação
+        API[API de Recomendação\n/REST]
+        EVENTS[Serviço de Ingestão de Eventos]
+        QUEUE[[Fila de Eventos]]
+        FEATURESTORE[(Feature Store)]
+        MODELSTORE[(Model Store / Registro de Modelos)]
+        TRAINER[Job de Treinamento\ne Retreinamento]
+        SERVING[Serviço de Inferência\n(Serving)]
+        FALLBACK[Serviço de Fallback\n(Popularidade)]
+        CONFIG[(Configurações do Motor)]
+        MONITOR[Monitoramento e Métricas]
+        AUDIT[(Log de Auditoria)]
+    end
+
+    WEB -->|solicita recomendações| API
+    WEB -->|envia eventos de interação| EVENTS
+    PEDIDOS -->|evento de compra| EVENTS
+    EVENTS --> QUEUE
+    QUEUE --> FEATURESTORE
+    FEATURESTORE --> TRAINER
+    CATALOGO -->|atributos de produto| FEATURESTORE
+    PERFIL -->|dados de perfil e consentimento| FEATURESTORE
+    TRAINER -->|publica novo modelo| MODELSTORE
+    MODELSTORE --> SERVING
+    API --> SERVING
+    SERVING -->|indisponível / timeout| FALLBACK
+    API --> FALLBACK
+    ADMIN -->|lê/grava pesos e regras| CONFIG
+    CONFIG --> SERVING
+    CONFIG --> API
+    API --> AUDIT
+    SERVING --> MONITOR
+    API --> MONITOR
+    TRAINER --> MONITOR
+    MONITOR -->|alertas| ADMIN
+    API -->|recomendações personalizadas| NOTIF
+```
+
+**Papel de cada componente:**
+
+| Componente | Responsabilidade |
+|---|---|
+| **API de Recomendação** | Ponto único de entrada síncrono (REST) para o sistema principal solicitar recomendações e configurações. |
+| **Serviço de Ingestão de Eventos** | Recebe eventos de interação (visualização, clique, carrinho, compra, favorito, avaliação) e os publica na fila. |
+| **Fila de Eventos** | Desacopla a ingestão do processamento, garantindo resposta rápida ao chamador (RNF01, RF04). |
+| **Feature Store** | Armazena features de usuário, produto e interação, consumidas tanto pelo treinamento quanto pela inferência. |
+| **Model Store** | Versiona os modelos treinados e mantém o modelo ativo em produção. |
+| **Job de Treinamento** | Executa o retreinamento periódico (RNF06) e publica novas versões do modelo. |
+| **Serviço de Inferência (Serving)** | Calcula recomendações em tempo real combinando os componentes colaborativo e de conteúdo (RF06). |
+| **Serviço de Fallback** | Retorna recomendações por popularidade quando o Serving está indisponível ou expira o tempo limite (RNF03). |
+| **Configurações do Motor** | Armazena pesos, regras de diversidade e ativação de estratégias por vitrine, editáveis via painel (RF09). |
+| **Monitoramento e Métricas** | Coleta CTR, conversão, cobertura, tempo de resposta e dispara alertas (RNF04). |
+| **Log de Auditoria** | Registra alterações de configuração e tentativas de acesso não autorizado (RNF10). |
+
+---
+
+## 2. Fluxo dos dados
+
+### 2.1 Fluxo de coleta (assíncrono)
+
+1. O front-end ou o serviço de pedidos emite um evento de interação para o
+   **Serviço de Ingestão de Eventos**.
+2. O evento é validado (produto existente, tipo de evento reconhecido) e publicado
+   na **Fila de Eventos**.
+3. Um consumidor processa a fila e atualiza a **Feature Store** (contadores de
+   interação, últimos produtos vistos, coocorrências de compra).
+4. Eventos rejeitados (produto inexistente, payload inválido) são registrados em
+   log de erros e não bloqueiam o restante do lote.
+
+### 2.2 Fluxo de recomendação em tempo real (síncrono)
+
+1. O sistema principal chama `POST /v1/recommendations` informando contexto
+   (usuário, tela, produto de referência, filtros).
+2. A **API** consulta as **Configurações do Motor** vigentes (pesos, regras de
+   diversidade, estratégias ativas por vitrine).
+3. A API delega o cálculo ao **Serviço de Inferência**, que consulta a
+   **Feature Store** e o **Model Store** para gerar a lista ordenada de
+   recomendações.
+4. A API aplica as regras de pós-processamento (diversidade de artesãos, filtros
+   solicitados, exclusão de itens indisponíveis, motivo de recomendação).
+5. Se o Serving não responder dentro do tempo limite configurado, a API aciona o
+   **Serviço de Fallback** (popularidade) e retorna a resposta dentro do prazo
+   total acordado.
+6. A resposta é enviada ao chamador e um evento de "impressão" (recomendação
+   exibida) é publicado de volta na Fila de Eventos, para uso em métricas e
+   retreinamento.
+
+### 2.3 Fluxo de treinamento (batch)
+
+1. O **Job de Treinamento** é executado em ciclo (mínimo diário).
+2. Lê a **Feature Store** consolidada (eventos, atributos de produto, perfil).
+3. Treina/atualiza os componentes colaborativo e de conteúdo.
+4. Avalia o novo modelo contra métricas mínimas de qualidade (comparação com a
+   versão em produção).
+5. Se aprovado, publica o novo modelo no **Model Store** e promove-o para produção;
+   caso contrário, mantém a versão anterior ativa e registra o motivo da reprovação
+   no **Monitoramento**.
+
+---
+
+## 3. Modelo de dados
+
+### 3.1 Entidades principais
+
+**`user_profile`** (referenciada da Feature Store; dados sensíveis minimizados)
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `user_id` | string (UUID) | Identificador do usuário no marketplace. |
+| `consentimento_comunicacao` | boolean | Se o usuário aceita receber recomendações por e-mail/notificação. |
+| `categorias_preferidas` | array\<string\> | Derivado de interações, não input manual. |
+| `artesaos_seguidos` | array\<string\> | IDs de artesãos seguidos pelo usuário. |
+| `artesaos_ocultados` | array\<string\> | IDs de artesãos ocultados via feedback negativo (RF11). |
+| `atualizado_em` | timestamp | Última atualização do perfil de recomendação. |
+
+**`product_features`**
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `product_id` | string (UUID) | Identificador do produto. |
+| `categoria` | string | Categoria do artesanato. |
+| `tecnica` | string | Técnica de produção. |
+| `material` | string | Material predominante. |
+| `preco` | decimal | Preço atual do produto. |
+| `artesao_id` | string (UUID) | Identificador do artesão/vendedor. |
+| `regiao_artesao` | string | Região/estado do artesão. |
+| `status` | enum (`ativo`, `inativo`) | Disponibilidade do produto para recomendação. |
+| `popularidade_30d` | integer | Contagem de compras nos últimos 30 dias. |
+
+**`interaction_event`**
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `event_id` | string (UUID) | Identificador único do evento. |
+| `user_id` | string (nullable) | Nulo para sessão anônima; nesse caso `session_id` é obrigatório. |
+| `session_id` | string | Identificador de sessão (usuários anônimos ou autenticados). |
+| `product_id` | string (UUID) | Produto associado ao evento. |
+| `tipo_evento` | enum | `visualizacao`, `clique`, `carrinho`, `favorito`, `compra`, `avaliacao`, `impressao_recomendacao`, `feedback_negativo`. |
+| `recommendation_id` | string (nullable) | Vincula o evento a uma recomendação exibida anteriormente (RF11). |
+| `criado_em` | timestamp | Data e hora do evento. |
+
+**`recommendation_config`**
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `vitrine` | enum | `home`, `produto`, `carrinho`, `email`. |
+| `peso_colaborativo` | decimal (0–1) | Peso do componente colaborativo no motor híbrido. |
+| `peso_conteudo` | decimal (0–1) | Peso do componente baseado em conteúdo. |
+| `diversidade_ativa` | boolean | Ativa/desativa a regra de diversidade por artesão (RF12). |
+| `limite_por_artesao` | decimal (0–1) | Percentual máximo de itens por artesão em uma lista. |
+| `atualizado_por` | string | Identificador do administrador que fez a última alteração. |
+| `atualizado_em` | timestamp | Data e hora da última alteração. |
+
+**`audit_log`**
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `log_id` | string (UUID) | Identificador do registro de auditoria. |
+| `user_id` | string | Usuário que realizou a ação. |
+| `acao` | string | Descrição da alteração realizada. |
+| `resultado` | enum | `sucesso`, `negado`. |
+| `criado_em` | timestamp | Data e hora do evento de auditoria. |
+
+### 3.2 Relacionamentos
+
+- `interaction_event.product_id` → `product_features.product_id`
+- `interaction_event.user_id` → `user_profile.user_id`
+- `product_features.artesao_id` referencia o cadastro de artesão no sistema
+  principal (fora do módulo).
+- `recommendation_config` é lido por `Serving` e por `API` a cada requisição
+  (com cache local de curta duração para atender o requisito de desempenho).
+
+---
+
+## 4. Estratégia principal e baseline
+
+### 4.1 Estratégia principal (modelo híbrido)
+
+O motor combina dois componentes, cujo peso relativo é configurável por vitrine
+(`recommendation_config`):
+
+1. **Componente colaborativo:** baseado em fatoração de matriz (ex.:
+   *matrix factorization* / ALS) sobre a matriz usuário × produto construída a
+   partir de `interaction_event`, ponderando tipos de evento de forma diferente
+   (ex.: compra > carrinho > clique > visualização).
+2. **Componente baseado em conteúdo:** similaridade entre produtos calculada sobre
+   vetores de atributos estruturados (`categoria`, `tecnica`, `material`, faixa de
+   `preco`), usando similaridade de cosseno sobre vetores one-hot/embeddings de
+   atributos.
+
+O score final de um item para um usuário é uma combinação ponderada:
+
+```
+score_final = (peso_colaborativo × score_colaborativo)
+            + (peso_conteudo × score_conteudo)
+```
+
+Após o cálculo do score, é aplicado um **pós-processamento** com as regras de
+negócio: exclusão de itens indisponíveis, exclusão de artesãos ocultados pelo
+usuário (RF11), limite de diversidade por artesão (RF12) e atribuição do campo
+`motivo` (RF10).
+
+### 4.2 Estratégia de cold start
+
+| Situação | Estratégia aplicada |
+|---|---|
+| Usuário novo/anônimo sem eventos | Recomendação por popularidade (`popularidade_30d`) na vitrine solicitada, com filtros de categoria/região se informados. |
+| Produto novo sem eventos de interação | Elegível apenas pelo componente de conteúdo, comparado a produtos com atributos semelhantes, até acumular eventos suficientes (limiar mínimo configurável) para entrar no componente colaborativo. |
+| Vitrine sem dados suficientes para nenhuma estratégia | Fallback por popularidade geral da plataforma; se também vazio, ordenação por data de cadastro decrescente. |
+
+### 4.3 Baseline para avaliação
+
+Para fins de teste A/B (RNF08) e monitoramento de degradação (RNF04), a
+**baseline de comparação** é a vitrine **não personalizada**: produtos ordenados
+por popularidade geral, sem uso do modelo híbrido. Toda melhoria de CTR e
+conversão reportada nas métricas é medida em relação a essa baseline.
+
+---
+
+## 5. Interface de integração
+
+### 5.1 `POST /v1/recommendations`
+
+Endpoint síncrono usado pelo sistema principal para obter recomendações
+personalizadas para uma vitrine específica.
+
+**Campos de entrada (request body, JSON):**
+
+| Campo | Tipo | Obrigatório | Descrição |
+|---|---|---|---|
+| `vitrine` | string (enum) | Sim | Uma de `home`, `produto`, `carrinho`, `email`. |
+| `usuario_id` | string (UUID) | Não | Ausente para sessão anônima. |
+| `sessao_id` | string | Sim (se `usuario_id` ausente) | Identificador de sessão anônima. |
+| `produto_referencia_id` | string (UUID) | Condicional | Obrigatório quando `vitrine = produto`. |
+| `produtos_carrinho` | array\<string\> | Condicional | Obrigatório quando `vitrine = carrinho`. |
+| `quantidade` | integer | Sim | Número de itens desejados (mínimo 1, máximo 50). |
+| `filtros` | objeto | Não | `{ "categoria": string, "tecnica": string, "regiao": string }`. |
+
+**Campos de saída (response body, JSON, HTTP 200):**
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `recommendation_id` | string (UUID) | Identificador único da resposta, usado para rastrear feedback e impressões. |
+| `origem` | string (enum) | `motor_hibrido`, `cold_start_popularidade` ou `fallback`. |
+| `itens` | array de objetos | Lista de recomendações. |
+| `itens[].product_id` | string (UUID) | Identificador do produto recomendado. |
+| `itens[].nome_produto` | string | Nome do produto (para acessibilidade, RNF07). |
+| `itens[].descricao_curta` | string | Descrição curta (para acessibilidade, RNF07). |
+| `itens[].motivo` | string (enum) | Justificativa da recomendação (RF10). |
+| `itens[].score` | decimal | Score interno do item (uso técnico/depuração). |
+| `gerado_em` | timestamp | Data e hora de geração da resposta. |
+
+**Códigos de erro possíveis:**
+
+| Código HTTP | Situação | Corpo da resposta |
+|---|---|---|
+| `400` | Campo obrigatório ausente ou inválido (ex.: `vitrine` fora do enum, `quantidade` fora do intervalo). | `{ "erro": "requisicao_invalida", "detalhe": "..." }` |
+| `401` | Token de autenticação ausente ou expirado. | `{ "erro": "nao_autenticado" }` |
+| `403` | Token válido, mas sem permissão para o recurso solicitado. | `{ "erro": "nao_autorizado" }` |
+| `404` | `produto_referencia_id` informado não existe no catálogo. | `{ "erro": "produto_nao_encontrado" }` |
+| `422` | Filtro informado não corresponde a nenhuma categoria/técnica/região cadastrada. | `{ "erro": "filtro_sem_resultado", "itens": [] }` |
+| `503` | Serviço de Inferência indisponível **e** fallback também indisponível (cenário raro). | `{ "erro": "servico_indisponivel" }` |
+
+### 5.2 Exemplo de requisição e resposta
+
+**Requisição:**
+
+```http
+POST /v1/recommendations HTTP/1.1
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "vitrine": "produto",
+  "usuario_id": "3f2a1c9e-1234-4a3b-9c21-abc123456789",
+  "produto_referencia_id": "9b7e2d10-aaaa-4bbb-8ccc-0987654321ab",
+  "quantidade": 5
+}
+```
+
+**Resposta (HTTP 200):**
+
+```json
+{
+  "recommendation_id": "7c1e4f2a-55dd-4a11-9c0e-1122334455ff",
+  "origem": "motor_hibrido",
+  "gerado_em": "2026-09-18T14:32:10Z",
+  "itens": [
+    {
+      "product_id": "1a2b3c4d-0000-4444-8888-abcdefabcdef",
+      "nome_produto": "Cesto de fibra natural trançado",
+      "descricao_curta": "Cesto artesanal em fibra natural, técnica de trançado manual.",
+      "motivo": "categoria_favorita",
+      "score": 0.874
+    },
+    {
+      "product_id": "2b3c4d5e-1111-5555-9999-bcdefabcdef1",
+      "nome_produto": "Vaso de cerâmica pintado à mão",
+      "descricao_curta": "Vaso em cerâmica com pintura artesanal exclusiva.",
+      "motivo": "artesao_seguido",
+      "score": 0.812
+    }
+  ]
+}
+```
+
+**Resposta de erro (HTTP 422 — filtro sem resultado):**
+
+```json
+{
+  "erro": "filtro_sem_resultado",
+  "itens": []
+}
+```
+
+### 5.3 `POST /v1/events`
+
+Endpoint assíncrono (aceita e enfileira) usado para registrar eventos de
+interação (RF04).
+
+**Campos de entrada:**
+
+| Campo | Tipo | Obrigatório | Descrição |
+|---|---|---|---|
+| `tipo_evento` | string (enum) | Sim | `visualizacao`, `clique`, `carrinho`, `favorito`, `compra`, `avaliacao`, `feedback_negativo`. |
+| `usuario_id` | string (UUID) | Não | Ausente para sessão anônima. |
+| `sessao_id` | string | Sim (se `usuario_id` ausente) | — |
+| `product_id` | string (UUID) | Sim | — |
+| `recommendation_id` | string (UUID) | Não | Preenchido quando o evento decorre de uma recomendação exibida. |
+
+**Saída (HTTP 202 — aceito para processamento assíncrono):**
+
+```json
+{ "event_id": "e5f6a7b8-2222-4444-8888-a1b2c3d4e5f6", "status": "enfileirado" }
+```
+
+**Erros possíveis:** `400` (produto inexistente ou tipo de evento inválido),
+`401` (não autenticado).
+
+---
+
+## 6. Tratamento de erros e estratégia de contingência
+
+| Cenário | Comportamento esperado |
+|---|---|
+| Serviço de Inferência não responde dentro do tempo limite | API aciona o Serviço de Fallback (popularidade) e retorna resposta com `origem = "fallback"`, dentro do prazo total definido em RNF01/RNF03. |
+| Model Store sem modelo ativo publicado | Serving opera apenas com o componente de conteúdo (regra de cold start) até que um modelo válido seja publicado. |
+| Fila de eventos indisponível | Serviço de Ingestão retorna erro `503` ao chamador; eventos não são perdidos silenciosamente — o chamador deve reenviar conforme política de retry do sistema principal. |
+| Evento com `product_id` inexistente | Evento é rejeitado na ingestão, registrado em log de erros, não interrompe o processamento dos demais eventos do lote. |
+| Configuração inconsistente (soma de pesos ≠ 1) | Alteração é recusada pelo endpoint de configuração antes de ser persistida, retornando erro de validação ao painel administrativo. |
+| Falha total (Serving e Fallback indisponíveis) | API retorna `503`; o sistema principal deve exibir vitrine estática pré-definida (comportamento do front-end, fora do escopo deste módulo). |
+| Pico de tráfego acima da capacidade da fila | Novas mensagens de evento são aceitas com backpressure controlado; eventos excedentes são descartados com contagem registrada em métricas (não bloqueiam a API de recomendação síncrona). |
+
+---
+
+## 7. Segurança, privacidade e observabilidade
+
+### 7.1 Segurança
+
+- Toda chamada às APIs (`/v1/recommendations`, `/v1/events`, endpoints de
+  configuração) exige token de autenticação (Bearer token / OAuth2 client
+  credentials) emitido pelo sistema principal.
+- Endpoints de configuração (`/v1/config`) exigem perfil de permissão
+  `admin_recomendacao`, validado a cada requisição.
+- Toda alteração de configuração é registrada em `audit_log`, incluindo
+  tentativas negadas por falta de permissão.
+- Comunicação entre o sistema principal e o módulo ocorre exclusivamente via
+  HTTPS/TLS.
+
+### 7.2 Privacidade (LGPD)
+
+- A Feature Store armazena o mínimo necessário de dados pessoais: identificador
+  do usuário, eventos de interação e preferências derivadas — não armazena dados
+  cadastrais completos (nome, e-mail, endereço), que permanecem apenas no
+  sistema principal.
+- Endpoint dedicado (`GET /v1/users/{id}/data` e `DELETE /v1/users/{id}/data`)
+  atende às solicitações de exportação e exclusão de dados de personalização
+  (RNF05), com prazos de 72 horas e 30 dias corridos, respectivamente.
+- Eventos de usuários anônimos são vinculados a `sessao_id`, nunca a
+  identificadores pessoais diretos, e possuem expiração automática (política de
+  retenção a definir com a equipe jurídica/compliance).
+
+### 7.3 Observabilidade
+
+- **Métricas de negócio:** CTR, taxa de conversão, cobertura do catálogo,
+  diversidade de artesãos exposta — agregadas diariamente e expostas no painel
+  administrativo (RNF04).
+- **Métricas técnicas:** tempo de resposta (p50/p95/p99), taxa de erro por
+  endpoint, taxa de uso do fallback, tamanho da fila de eventos.
+- **Alertas automáticos:** disparados quando CTR cai mais de 20% em 7 dias
+  (RNF04), quando a taxa de uso do fallback ultrapassa um limiar configurável
+  (indício de instabilidade do Serving), ou quando o job de treinamento falha.
+- **Rastreabilidade:** todo item recomendado carrega `recommendation_id`, que é
+  referenciado nos eventos subsequentes de clique/compra/feedback, permitindo
+  reconstituir o funil completo de uma recomendação até a conversão.
+
+---
+
+## 8. Especificações técnicas (opcional nesta fase)
+
+> As definições desta seção são propostas iniciais e podem ser revisadas conforme
+> restrições da equipe de engenharia responsável pela implementação.
+
+### 8.1 Linguagem
+
+- **Python** para os componentes de treinamento, inferência e feature
+  engineering — justificado pelo ecossistema maduro de bibliotecas de machine
+  learning e pela facilidade de integração com ferramentas de dados já comuns em
+  times de ML.
+- **Node.js ou Python** (a definir com a equipe de engenharia) para a camada de
+  API síncrona (`/v1/recommendations`, `/v1/events`), priorizando consistência
+  com as demais APIs do sistema principal, caso já existam.
+
+### 8.2 Bibliotecas (sugestão)
+
+| Finalidade | Biblioteca sugerida | Justificativa |
+|---|---|---|
+| Filtragem colaborativa | `implicit` ou `LightFM` | Bibliotecas maduras para fatoração de matriz com dados implícitos (cliques, compras), adequadas ao cenário de feedback implícito predominante do marketplace. |
+| Similaridade de conteúdo | `scikit-learn` | Implementação padrão de similaridade de cosseno e pré-processamento de atributos categóricos. |
+| API síncrona | `FastAPI` (Python) | Tipagem de contrato via Pydantic, alinhada aos campos de entrada/saída definidos na seção 5. |
+| Fila de eventos | `Kafka` ou `Amazon SQS` | Desacoplamento entre ingestão e processamento, atendendo ao requisito de resposta assíncrona (RF04/RNF01). |
+
+### 8.3 Banco de dados (sugestão)
+
+| Uso | Tecnologia sugerida | Justificativa |
+|---|---|---|
+| Feature Store (leitura rápida) | Banco chave-valor (ex.: Redis) para features pré-calculadas usadas na inferência em tempo real. | Atende ao requisito de tempo de resposta de 300 ms (p95). |
+| Histórico de eventos (RF04) | Banco orientado a colunas ou data lake (ex.: BigQuery, Redshift, ou armazenamento em Parquet) | Adequado a cargas analíticas de treinamento e métricas, com grande volume de eventos. |
+| Configurações do motor | Banco relacional (ex.: PostgreSQL) | Necessidade de consistência forte e validação transacional das configurações (RF09). |
+
+### 8.4 Organização prevista das pastas (módulo)
+
+```
+recomendacao/
+├── api/                  # Camada de API síncrona (endpoints REST)
+├── ingestao/             # Serviço de ingestão e validação de eventos
+├── feature_store/        # Acesso e atualização de features
+├── motor/
+│   ├── colaborativo/     # Componente de filtragem colaborativa
+│   ├── conteudo/         # Componente baseado em atributos
+│   └── hibrido.py        # Combinação dos scores e pós-processamento
+├── fallback/             # Estratégia de popularidade
+├── treinamento/          # Jobs batch de treinamento e avaliação
+├── config/               # Gestão de configurações do motor
+├── monitoramento/        # Métricas, alertas e auditoria
+└── testes/
+```
+
+### 8.5 Localização do módulo e ponto de integração
+
+- O módulo é implantado como **serviço desacoplado** (microsserviço), fora do
+  monólito/serviço principal do marketplace, comunicando-se exclusivamente via
+  API REST (seção 5) e fila de eventos assíncrona.
+- O ponto de integração com o sistema principal ocorre em três frentes: (1)
+  chamadas síncronas do front-end/back-end do marketplace à API de
+  recomendação; (2) publicação de eventos de interação do sistema principal
+  para o módulo; (3) leitura periódica de atributos de catálogo e perfil pelo
+  módulo (via API do sistema principal ou replicação de dados, a definir).
+
+### 8.6 Ambiente de execução
+
+- Contêineres (Docker) orquestrados via Kubernetes (ou equivalente gerenciado
+  pela nuvem já utilizada pelo marketplace), permitindo escalar
+  horizontalmente o Serviço de Inferência conforme o volume de requisições
+  (RNF02).
+
+### 8.7 Restrições técnicas conhecidas
+
+- O tempo de resposta de 300 ms (p95) exige que o Serving utilize features
+  pré-calculadas (não cálculo de similaridade em tempo real sobre todo o
+  catálogo a cada requisição).
+- O retreinamento diário completo depende do volume de eventos acumulados;
+  catálogos muito grandes podem exigir retreinamento incremental em vez de
+  completo, a ser avaliado na fase de implementação.
+- A qualidade da estratégia de cold start por conteúdo depende do
+  preenchimento consistente dos atributos `categoria`, `tecnica` e `material`
+  no cadastro de produtos pelos artesãos — uma limitação de qualidade de dados
+  de origem, não do módulo em si.
+
+==================================================
+ARQUIVO: ./docs/product.md
+==================================================
+# Product — Módulo de IA de Recomendação
+
+## Contexto do projeto principal
+
+O **Marketplace de Artesanato** é uma plataforma de comércio eletrônico que conecta
+artesãos e pequenos produtores a compradores, oferecendo produtos feitos à mão como
+cerâmica, cestaria, bordado, marcenaria, joalheria artesanal e têxteis. A plataforma
+já possui catálogo de produtos, cadastro de vendedores (artesãos), carrinho de
+compras, checkout e painel administrativo.
+
+O **Módulo de IA de Recomendação** é um subsistema desse marketplace, responsável por
+personalizar a exibição de produtos para cada visitante e comprador, substituindo
+vitrines estáticas e genéricas por seleções relevantes geradas a partir do
+comportamento de navegação e compra.
+
+## Problema de negócio ou necessidade do usuário
+
+- O catálogo de artesanato é **longo, disperso e heterogêneo** (milhares de peças
+  únicas ou de baixa tiragem, produzidas por milhares de artesãos independentes),
+  o que dificulta a descoberta orgânica de produtos pelo comprador.
+- Vitrines genéricas (ordenadas por data de cadastro ou nome) **não refletem o
+  interesse individual** do usuário, reduzindo engajamento, tempo de sessão e
+  conversão.
+- Artesãos pequenos e recém-cadastrados **têm baixa visibilidade** frente a
+  vendedores já estabelecidos, o que compromete a proposta de valor do marketplace
+  como vitrine para novos produtores.
+- A equipe de negócio não possui hoje **nenhum mecanismo de personalização
+  automatizada**, dependendo de curadoria manual de vitrines, o que não escala com
+  o crescimento do catálogo.
+
+## Público-alvo
+
+| Perfil | Descrição | Necessidade em relação ao módulo |
+|---|---|---|
+| **Comprador (usuário final)** | Visitante ou cliente cadastrado que navega e compra peças artesanais. | Encontrar produtos relevantes ao seu gosto sem precisar buscar manualmente em todo o catálogo. |
+| **Artesão (vendedor)** | Pequeno produtor que cadastra e vende suas peças na plataforma. | Ganhar visibilidade proporcional à qualidade/relevância de seus produtos, mesmo sendo novo na plataforma. |
+| **Equipe de negócio / marketing** | Responsável por curadoria, campanhas e métricas comerciais do marketplace. | Configurar regras de exposição e acompanhar o impacto das recomendações nas métricas de negócio. |
+| **Equipe técnica (engenharia/dados)** | Responsável por operar, monitorar e evoluir o módulo de IA. | Integrar, monitorar e ajustar o motor de recomendação com previsibilidade e observabilidade. |
+
+## Objetivo do módulo
+
+Fornecer, como serviço desacoplado do sistema principal, **recomendações
+personalizadas de produtos artesanais** para diferentes pontos de contato do
+marketplace (página inicial, página de produto, carrinho, e-mail e notificações),
+combinando sinais de comportamento do usuário com atributos dos produtos, de forma
+a aumentar a relevância do que é exibido a cada visitante ou comprador.
+
+## Benefícios esperados
+
+- **Para o comprador:** descoberta mais relevante de produtos artesanais alinhados
+  ao seu interesse, reduzindo esforço de busca.
+- **Para o artesão:** maior chance de exposição de seus produtos a compradores com
+  perfil compatível, incluindo mecanismos de diversidade que evitam concentração de
+  visibilidade em poucos vendedores.
+- **Para o negócio:** aumento esperado de indicadores de engajamento (cliques,
+  tempo de sessão) e de conversão (adição ao carrinho, compra) nas vitrines
+  personalizadas em relação a vitrines não personalizadas (baseline), mensurado via
+  testes controlados (A/B testing).
+- **Para a operação:** painel de configuração e métricas que permitem à equipe de
+  negócio ajustar regras de recomendação sem depender de novas implantações de
+  código.
+
+## Limites do produto (fora de escopo nesta fase)
+
+- O módulo **não decide preço** de produtos nem executa precificação dinâmica
+  automática — apenas sugere faixas de referência ao artesão (RF08), sendo a
+  decisão final sempre do vendedor.
+- O módulo **não substitui a busca textual** do marketplace (busca por palavra-chave
+  segue sendo um componente separado do sistema principal).
+- O módulo **não realiza recomendações baseadas em imagem/visão computacional** nesta
+  primeira fase (ex.: "encontre produtos parecidos com esta foto"); a similaridade
+  de conteúdo é calculada a partir de atributos estruturados do produto (categoria,
+  material, técnica, preço), não de análise de imagem.
+- O módulo **não opera fora dos canais do próprio marketplace** nesta fase (web e
+  app); integrações com parceiros externos ou marketplaces de terceiros estão fora
+  do escopo inicial (relacionado a RNF09, tratado como requisito desejável de
+  arquitetura, não como entrega funcional desta fase).
+- Decisões de **moderação de conteúdo e aprovação de produtos** cadastrados
+  continuam sendo responsabilidade do sistema principal do marketplace, não do
+  módulo de recomendação.
+
+==================================================
+ARQUIVO: ./docs/requirements.md
+==================================================
+# Requirements — Módulo de IA de Recomendação
+
+## Convenções deste documento
+
+- Cada requisito é expresso como **história de usuário** no formato:
+  `Como [tipo de usuário], quero [objetivo], para [benefício esperado].`
+- Cada história possui um ou mais **critérios de aceitação em notação EARS**
+  (Easy Approach to Requirements Syntax), usando os padrões:
+  - **Ubíquo:** `O MÓDULO DE RECOMENDAÇÃO DEVERÁ [resposta verificável].`
+  - **Evento:** `QUANDO [evento], O MÓDULO DE RECOMENDAÇÃO DEVERÁ [resposta verificável].`
+  - **Estado:** `ENQUANTO [estado], O MÓDULO DE RECOMENDAÇÃO DEVERÁ [resposta verificável].`
+  - **Não desejado:** `SE [erro ou situação indesejada], ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ [resposta verificável].`
+- Critérios evitam termos não mensuráveis ("rápido", "inteligente", "adequado",
+  "fácil de usar") — toda condição de aceite é observável e testável (valor
+  numérico, contagem, presença/ausência de campo, código de retorno, etc.).
+- O identificador entre colchetes (ex.: `[RF01]`) referencia o requisito
+  correspondente no Documento de Requisitos de Software do projeto, para
+  rastreabilidade.
+
+---
+
+## 1. Recomendações na página inicial
+
+### História de usuário 1.1
+Como **comprador cadastrado**, quero **ver uma vitrine de produtos recomendados na
+página inicial**, para **descobrir peças artesanais alinhadas ao meu interesse sem
+precisar navegar por todo o catálogo**. `[RF01]`
+
+**Critérios de aceitação:**
+- QUANDO um usuário autenticado com pelo menos um evento de navegação ou compra
+  registrado acessar a página inicial, O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar uma
+  lista com o número de itens solicitado pelo marketplace (parâmetro `quantidade`),
+  composta exclusivamente por produtos com status "ativo" no catálogo.
+- QUANDO o marketplace solicitar recomendações para um usuário autenticado sem
+  nenhum evento de navegação ou compra registrado, O MÓDULO DE RECOMENDAÇÃO DEVERÁ
+  aplicar a estratégia de cold start definida no projeto (seção 4 do `design.md`) e
+  retornar o número de itens solicitado.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ garantir que nenhum item retornado nas
+  recomendações da página inicial esteja indisponível (estoque zero ou status
+  "inativo") no momento da geração da resposta.
+
+### História de usuário 1.2
+Como **visitante não identificado**, quero **ver uma vitrine de produtos em
+destaque na página inicial**, para **conhecer o catálogo mesmo sem estar
+logado**. `[RF01]`
+
+**Critérios de aceitação:**
+- QUANDO o marketplace solicitar recomendações para um visitante sem identificador
+  de usuário (sessão anônima), O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar uma lista
+  ordenada por popularidade (volume de compras nos últimos 30 dias) contendo o
+  número de itens solicitado.
+- SE a base de eventos de popularidade dos últimos 30 dias estiver vazia, ENTÃO O
+  MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar produtos ordenados por data de cadastro
+  decrescente como critério de desempate documentado.
+
+---
+
+## 2. Recomendações na página do produto
+
+### História de usuário 2.1
+Como **comprador**, quero **ver produtos similares ao que estou visualizando**,
+para **comparar opções parecidas antes de decidir a compra**. `[RF02]`
+
+**Critérios de aceitação:**
+- QUANDO um usuário acessar a página de um produto com identificador válido no
+  catálogo, O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar uma lista de produtos
+  similares cujo `product_id` seja diferente do produto visualizado.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ calcular a similaridade entre produtos com base
+  em, no mínimo, os atributos categoria, material e faixa de preço, conforme
+  definido na seção "Estratégia principal" do `design.md`.
+- SE o produto visualizado não possuir atributos suficientes cadastrados (categoria
+  ou material ausentes) para o cálculo de similaridade, ENTÃO O MÓDULO DE
+  RECOMENDAÇÃO DEVERÁ retornar produtos da mesma categoria do artesão responsável
+  pelo item, ou lista vazia caso o artesão não possua outros produtos ativos.
+
+### História de usuário 2.2
+Como **comprador**, quero **ver sugestões de "quem viu este produto também
+comprou" e itens complementares**, para **descobrir peças relacionadas que eu não
+pesquisaria diretamente**. `[RF03]`
+
+**Critérios de aceitação:**
+- QUANDO um produto tiver ao menos um par de coocorrência registrado (produtos
+  comprados em uma mesma transação), O MÓDULO DE RECOMENDAÇÃO DEVERÁ incluir esses
+  produtos na resposta da recomendação "combine com", ordenados por frequência de
+  coocorrência decrescente.
+- QUANDO o usuário estiver na tela do carrinho de compras com um ou mais itens
+  adicionados, O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar sugestões de itens
+  complementares para cada produto presente no carrinho.
+- SE nenhum par de coocorrência existir para o produto solicitado, ENTÃO O MÓDULO
+  DE RECOMENDAÇÃO DEVERÁ retornar lista vazia para essa seção, sem gerar erro na
+  resposta.
+
+---
+
+## 3. Coleta de sinais comportamentais
+
+### História de usuário 3.1
+Como **equipe de dados**, quero **que o módulo registre os eventos de interação dos
+usuários**, para **alimentar o motor de recomendação com dados atualizados de
+comportamento**. `[RF04]`
+
+**Critérios de aceitação:**
+- QUANDO o marketplace emitir um evento de interação (visualização de produto,
+  clique, adição ao carrinho, favoritar, compra ou avaliação) para o módulo, O
+  MÓDULO DE RECOMENDAÇÃO DEVERÁ persistir o evento com identificador de usuário (ou
+  de sessão anônima), identificador de produto, tipo de evento e carimbo de data e
+  hora.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ processar o registro de eventos de forma
+  assíncrona em relação à requisição HTTP de origem, retornando confirmação de
+  recebimento em até 100 ms no percentil 95 (p95), sem aguardar o processamento
+  completo do evento.
+- SE um evento recebido não contiver identificador de produto válido no catálogo,
+  ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ rejeitar o evento e registrar a ocorrência
+  em log de erros com o motivo da rejeição.
+
+---
+
+## 4. Recomendações por categoria, técnica e região
+
+### História de usuário 4.1
+Como **comprador**, quero **filtrar recomendações por categoria de artesanato,
+técnica ou região do artesão**, para **explorar o catálogo de acordo com meu
+interesse cultural específico**. `[RF05]`
+
+**Critérios de aceitação:**
+- QUANDO o marketplace solicitar recomendações informando um filtro de categoria,
+  técnica ou região, O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar exclusivamente
+  produtos que atendam ao(s) filtro(s) informado(s).
+- SE o filtro informado não corresponder a nenhuma categoria, técnica ou região
+  cadastrada, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar lista vazia e um
+  código de resposta indicando filtro inválido, sem interromper a disponibilidade
+  do serviço.
+
+---
+
+## 5. Motor de recomendação (núcleo de IA)
+
+### História de usuário 5.1
+Como **equipe de dados**, quero **que o motor combine filtragem colaborativa e
+recomendação baseada em conteúdo**, para **gerar recomendações relevantes tanto
+para usuários com histórico quanto para itens novos**. `[RF06]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ gerar recomendações combinando um componente de
+  filtragem colaborativa e um componente baseado em atributos de conteúdo,
+  conforme os pesos configuráveis descritos na seção "Estratégia principal" do
+  `design.md`.
+- QUANDO o marketplace solicitar cinco recomendações para um usuário sem histórico
+  de eventos, O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar cinco itens elegíveis
+  utilizando a estratégia de cold start definida no projeto.
+- QUANDO um produto for cadastrado sem nenhum evento de interação associado, O
+  MÓDULO DE RECOMENDAÇÃO DEVERÁ torná-lo elegível para recomendação baseada em
+  conteúdo a partir de seus atributos cadastrais, em até 24 horas após o cadastro
+  (rastreável a `RNF06`).
+- SE o motor de recomendação não conseguir gerar recomendações por indisponibilidade
+  do serviço, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ acionar o mecanismo de fallback
+  descrito em `RNF03`, retornando produtos populares em vez de retornar erro ao
+  chamador.
+
+---
+
+## 6. Recomendações por e-mail e notificação
+
+### História de usuário 6.1
+Como **comprador**, quero **receber recomendações personalizadas por e-mail ou
+notificação**, para **ser lembrado de produtos e artesãos do meu interesse mesmo
+fora da plataforma**. `[RF07]`
+
+**Critérios de aceitação:**
+- QUANDO o job periódico de geração de recomendações por canal externo for
+  executado, O MÓDULO DE RECOMENDAÇÃO DEVERÁ gerar uma lista de recomendações para
+  cada usuário com consentimento de comunicação ativo, registrado no perfil.
+- SE o usuário tiver revogado o consentimento de comunicação por e-mail ou
+  notificação, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ excluí-lo do lote de envio
+  correspondente.
+
+---
+
+## 7. Recomendações para o artesão (vendedor)
+
+### História de usuário 7.1
+Como **artesão**, quero **receber sugestões de precificação, categorias e produtos
+com potencial de conversão**, para **tomar decisões melhor embasadas sobre meu
+catálogo**. `[RF08]`
+
+**Critérios de aceitação:**
+- QUANDO um artesão acessar o painel de vendedor, O MÓDULO DE RECOMENDAÇÃO DEVERÁ
+  disponibilizar, para cada produto ativo do artesão, uma faixa de preço de
+  referência calculada a partir de produtos de categoria e material equivalentes.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ apresentar as faixas de preço e as
+  categorias/tags mais buscadas como valores de referência, sem aplicar alteração
+  automática no preço cadastrado pelo artesão.
+
+---
+
+## 8. Configuração administrativa do motor
+
+### História de usuário 8.1
+Como **equipe de negócio**, quero **configurar pesos, regras e ativação de
+estratégias de recomendação por vitrine**, para **ajustar o comportamento do motor
+sem depender de nova implantação de código**. `[RF09]`
+
+**Critérios de aceitação:**
+- QUANDO um administrador autorizado alterar o peso de um dos componentes do motor
+  (colaborativo ou baseado em conteúdo) pelo painel administrativo, O MÓDULO DE
+  RECOMENDAÇÃO DEVERÁ aplicar o novo peso nas próximas requisições de recomendação
+  em até 5 minutos, sem necessidade de reinício do serviço.
+- SE um usuário sem perfil de permissão "administrador do módulo de recomendação"
+  tentar alterar uma configuração, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ recusar a
+  operação e retornar código de acesso não autorizado.
+
+---
+
+## 9. Explicabilidade das recomendações
+
+### História de usuário 9.1
+Como **comprador**, quero **entender por que um produto foi recomendado para
+mim**, para **confiar mais nas sugestões apresentadas**. `[RF10]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ incluir, em cada item retornado na resposta de
+  recomendação, um campo `motivo` preenchido com um dos motivos pré-definidos
+  cadastrados no catálogo de justificativas do sistema (ex.: `compra_anterior`,
+  `categoria_favorita`, `artesao_seguido`, `popular_na_categoria`).
+- SE não for possível determinar um motivo específico para um item recomendado,
+  ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ preencher o campo `motivo` com o valor
+  `tendencia_geral`, nunca deixando o campo vazio ou nulo.
+
+---
+
+## 10. Feedback sobre recomendações
+
+### História de usuário 10.1
+Como **comprador**, quero **indicar que não me interessa por uma recomendação ou
+por um artesão**, para **que as próximas sugestões sejam mais relevantes para
+mim**. `[RF11]`
+
+**Critérios de aceitação:**
+- QUANDO um usuário registrar feedback negativo explícito sobre um item ou artesão
+  (ação "não me interessa" ou "ocultar artesão"), O MÓDULO DE RECOMENDAÇÃO DEVERÁ
+  excluir esse item ou os itens desse artesão das recomendações futuras exibidas
+  para esse usuário, a partir da próxima requisição de recomendação.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ registrar todo evento de clique, ignorar ou
+  compra associado a uma recomendação exibida, vinculando-o ao identificador da
+  recomendação original para uso em retreinamento.
+
+---
+
+## 11. Diversidade de exposição de artesãos
+
+### História de usuário 11.1
+Como **equipe de negócio**, quero **que as recomendações distribuam exposição entre
+diferentes artesãos**, para **evitar concentração de visibilidade em poucos
+vendedores e cumprir o propósito social do marketplace**. `[RF12]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ garantir que, em uma lista de recomendações com
+  10 ou mais itens, no máximo 30% dos itens pertençam ao mesmo artesão, salvo
+  quando o número de artesãos elegíveis para aquele contexto for insuficiente para
+  atender ao limite (situação documentada em log).
+- ENQUANTO a regra de diversidade estiver ativada no painel administrativo, O
+  MÓDULO DE RECOMENDAÇÃO DEVERÁ aplicar o limite de concentração por artesão em
+  toda resposta de recomendação da vitrine correspondente.
+
+---
+
+## 12. Desempenho e disponibilidade
+
+### História de usuário 12.1
+Como **equipe técnica**, quero **que o módulo responda dentro de um tempo
+previsível e permaneça disponível**, para **não degradar a experiência de
+navegação do marketplace**. `[RNF01, RNF03]`
+
+**Critérios de aceitação:**
+- QUANDO o marketplace solicitar recomendações em tempo real para exibição em
+  página, O MÓDULO DE RECOMENDAÇÃO DEVERÁ responder em até 300 ms no percentil 95
+  (p95), medido em ambiente de produção.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ manter disponibilidade mensal igual ou superior a
+  99,5%, medida pela proporção de requisições respondidas com sucesso sobre o
+  total de requisições recebidas.
+- SE o componente principal do motor de recomendação não responder dentro do tempo
+  limite configurado, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar a lista de
+  fallback por popularidade em até 300 ms adicionais, evitando erro exibido ao
+  usuário final.
+
+---
+
+## 13. Escalabilidade e atualização do modelo
+
+### História de usuário 13.1
+Como **equipe técnica**, quero **que o módulo suporte crescimento do catálogo e da
+base de usuários e incorpore novos itens automaticamente**, para **que o sistema
+continue funcionando conforme o marketplace cresce**. `[RNF02, RNF06]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ executar o retreinamento do modelo em ciclo com
+  periodicidade máxima de 24 horas, registrando data e hora de início e término de
+  cada execução.
+- QUANDO um novo produto for cadastrado no catálogo, O MÓDULO DE RECOMENDAÇÃO
+  DEVERÁ torná-lo elegível para recomendação baseada em conteúdo em até 24 horas
+  após o cadastro.
+- QUANDO um novo usuário realizar seu primeiro evento de interação, O MÓDULO DE
+  RECOMENDAÇÃO DEVERÁ incorporar esse evento no cálculo de recomendações
+  personalizadas em até 24 horas.
+
+---
+
+## 14. Monitoramento e qualidade do modelo
+
+### História de usuário 14.1
+Como **equipe de dados**, quero **acompanhar métricas de desempenho e qualidade do
+motor de recomendação**, para **identificar degradação do modelo e agir antes que
+afete o negócio**. `[RNF04, RNF08]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ expor, via painel administrativo, as métricas
+  taxa de clique (CTR), taxa de conversão, cobertura do catálogo e tempo de
+  resposta, atualizadas com periodicidade máxima de 24 horas.
+- SE a taxa de clique (CTR) medida em uma janela de 7 dias cair mais de 20% em
+  relação à média das 4 semanas anteriores, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ
+  gerar um alerta automático destinado à equipe responsável, registrado com data,
+  hora e valores comparados.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ registrar, para cada execução de teste controlado
+  (A/B test) configurada, a taxa de clique e a taxa de conversão de cada grupo
+  (variante personalizada e baseline não personalizada) para consulta posterior.
+
+---
+
+## 15. Privacidade e conformidade (LGPD)
+
+### História de usuário 15.1
+Como **comprador**, quero **poder consultar, exportar ou solicitar a exclusão dos
+meus dados usados para personalização**, para **exercer meus direitos garantidos
+pela LGPD**. `[RNF05]`
+
+**Critérios de aceitação:**
+- QUANDO um usuário solicitar a exportação de seus dados de personalização, O
+  MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar todos os eventos de interação e
+  preferências vinculados ao seu identificador em formato estruturado (JSON) em
+  até 72 horas.
+- QUANDO um usuário solicitar a exclusão de seus dados de personalização, O MÓDULO
+  DE RECOMENDAÇÃO DEVERÁ remover ou anonimizar os eventos vinculados ao seu
+  identificador em até 30 dias corridos, conforme prazo definido na política de
+  privacidade do projeto.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ armazenar exclusivamente os campos de dados
+  pessoais necessários para o cálculo de recomendação, conforme lista definida na
+  seção "Segurança, privacidade e observabilidade" do `design.md`.
+
+---
+
+## 16. Acessibilidade das interfaces de recomendação
+
+### História de usuário 16.1
+Como **comprador que utiliza tecnologia assistiva**, quero **que as vitrines de
+recomendação sigam padrões de acessibilidade**, para **conseguir navegar pelas
+sugestões independentemente de limitação visual ou motora**. `[RNF07]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ retornar, para cada item recomendado, os campos
+  `nome_produto` e `descricao_curta` preenchidos, permitindo que o front-end gere
+  texto alternativo (`alt text`) para as imagens dos produtos exibidos.
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ disponibilizar a mesma informação (itens, motivo,
+  metadados) tanto para renderização em página web quanto em e-mail, sem
+  diferença de conteúdo entre os canais, de forma que o front-end de cada canal
+  possa aplicar as marcações de acessibilidade equivalentes ao WCAG 2.1 nível AA.
+
+---
+
+## 17. Segurança de acesso
+
+### História de usuário 17.1
+Como **equipe técnica**, quero **que o acesso às APIs e ao painel de configuração
+seja autenticado, autorizado e auditado**, para **evitar alterações indevidas no
+comportamento do motor de recomendação**. `[RNF10]`
+
+**Critérios de aceitação:**
+- O MÓDULO DE RECOMENDAÇÃO DEVERÁ exigir um token de autenticação válido em toda
+  requisição recebida em suas APIs, rejeitando requisições sem token ou com token
+  expirado.
+- QUANDO uma configuração do motor de recomendação for alterada por um usuário
+  autenticado, O MÓDULO DE RECOMENDAÇÃO DEVERÁ registrar em log de auditoria o
+  identificador do usuário, a alteração realizada e o carimbo de data e hora.
+- SE uma requisição de alteração de configuração for recebida sem permissão de
+  administrador, ENTÃO O MÓDULO DE RECOMENDAÇÃO DEVERÁ recusar a operação, retornar
+  código de acesso não autorizado e registrar a tentativa em log de auditoria.
+
+==================================================
+ARQUIVO: ./docs/uso-de-ia.md
+==================================================
+# Declaração de uso de IA
+
+## 1. Declaração geral
+
+A equipe utilizou ferramentas de Inteligência Artificial durante o desenvolvimento do Projeto Integrador?
+
+- [x] Sim
+- [ ] Não
+
+Caso tenha utilizado, descreva de forma geral como a IA apoiou o desenvolvimento do projeto.
+
+A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a estrutura inicial (boilerplate) do frontend, implementar lógica de negocio e codigo exemplo para a equipe entender o funcionamento e boilerplate de bibliotecas como Zustand. Além disso, a IA apoiou o entendimento do ciclo de vida de renderização do Next.js (Hydration), estruturou requisições HTTP (Axios) para a Fake API, e ajudou a depurar erros lógicos no fluxo de hooks do React.
+---
+
+## 2. Ferramentas utilizadas
+
+| Ferramenta | Finalidade de uso | Integrantes que utilizaram |
+|---|---|---|
+| ChatGPT | | |
+| GitHub Copilot | | |
+| Gemini | Estruturação de estado global (Zustand), resolução de bugs do Next.js, comandos Git, configuração de Fake API (json-server) e automação de scripts NPM. | Equipe de Desenvolvimento |
+| Claude | | |
+| Outra | | |
+
+---
+
+## 3. Registro dos principais usos
+
+| Data | Ferramenta | Uso realizado | Parte do projeto impactada | Resultado incorporado? | Revisão feita pela equipe |
+|---|---|---|---|---|---|
+| 10/09/2026 | Gemini | Criação das stores de sessão e carrinho usando Zustand com a dependência de persistência (`persist`).| Frontend, Gerenciamento de Estado | Sim | A equipe revisou o código inicial e solicitou a divisão em dois arquivos isolados (`sessionStore.ts` e `cartStore.ts`).|
+| 10/09/2026 | Gemini | Resolução de erros de "hydration mismatch" entre o servidor do Next.js e o navegador (`localStorage`). | Frontend, Páginas | Sim | A equipe validou e aplicou a lógica do estado `mounted` via `useEffect` para impedir a renderização inicial incorreta. |
+| 10/09/2026 | Gemini | Refatoração do sistema de login simulado, alterando de funções isoladas para busca por `id` em um array de usuários mockados. | Frontend, Sessão/Autenticação | Sim | A lógica foi testada e integrada aos botões da interface garantindo as trocas de perfis corretas. |
+| 11/09/2026 | Gemini | Configuração do `json-server` e criação do arquivo `routes.json` baseados nos contratos de API do projeto. | Backend (Fake API) | Sim | A equipe validou a estrutura JSON final e testou as requisições HTTP (`curl`) localmente. |
+| 11/09/2026 | Gemini | Downgrade de versão da biblioteca `json-server` para restaurar compatibilidade de rotas. | Dependências, Ambiente | Sim | A equipe executou os comandos recomendados para substituir a versão que quebrava o script local. |
+| 11/09/2026 | Gemini | Criação do script NPM `preapi` para automatizar a cópia do arquivo `base-db.json` e evitar conflitos no Git. | Configuração (package.json) | Sim | O fluxo foi adaptado ao ambiente Linux da equipe, usando comandos bash para copiar o arquivo a cada inicialização do servidor. |
+| 13/09/2026 | Gemini | Explicação do ciclo de hidratação e implementação de Proteção de Rotas (Route Guards) para as páginas de Dashboard e Login. | Frontend, Roteamento | Sim | A equipe posicionou as barreiras de retorno nulo (`return null`) rigorosamente após a declaração dos hooks, respeitando as regras do React. |
+| 13/09/2026 | Gemini | Implementação de serviços HTTP (Axios) para Login e Cadastro na Fake API, utilizando o utilitário TypeScript `Omit` para ignorar o campo `id`. | Frontend, Consumo de API | Sim | O código foi integrado aos formulários de autenticação de Clientes e Artesãos, permitindo a persistência simulada. |
+| 14/09/2026 | Gemini | Conversão dos formulários de autenticação e registro para componentes básicos do Chakra UI v3 (`Field.Root`, `Grid`, `Box`, `Button`). | Frontend, Componentização/UI | Sim | A equipe validou a estrutura visual, o uso de temas personalizados (`brand`) e o comportamento responsivo dos inputs. |
+| 14/09/2026 | Gemini | Implementação de validação de duplicidade de E-mail e CPF nos serviços de cadastro (`userService`) com tratamento de exceções via `throw new Error`. | Frontend/Backend, Validação de Dados | Sim | A equipe revisou a captura de erros no bloco `catch` dos formulários e testou as mensagens personalizadas exibidas aos usuários. |
+| 14/09/2026 | Gemini | Adaptação do cadastro de Clientes para suportar a nova estrutura complexa de dados do tipo `Endereco` (array de objetos). | Frontend, Tipagem TypeScript | Sim | A equipe validou o mapeamento correto dos inputs do formulário para o payload esperado pela API. |
+| 15/09/2026 | Gemini | Criação do Documento de Requisitos de Software | Gestão de Projeto / Documentação | Sim | A equipe validou os requisitos com as histórias de usuário criado previamente |
+| 16/09/2026 | Gemini | Criação do dos documentos de Spec-Driven Development | Gestão de Projeto / Documentação | Sim | A equipe revisou e centralizou a terminologia usada nos requerimentos |
+| 18/09/2026 | Gemini | Implementação de rotas dinâmicas no Next.js usando o formato amigável para SEO `[slug]` (`titulo-id`) em substituição ao roteamento simples de ID. | Frontend, Roteamento | Sim | A equipe implementou o utilitário `createSlug`, atualizou os componentes de link e ajustou a lógica de `decodeURIComponent` e `split` no componente de página para garantir que a API receba a string correta do ID do produto. |
+| 18/09/2026 | Gemini | Resolução de bugs e otimização de `useEffect`. A IA ajudou a corrigir arrays de dependência incompletos na lógica de busca com debounce (evitando "stale closures") e corrigiu erros onde tipos `string` vs `number` causavam erros 404 em chamadas da API do Axios. | Frontend, Otimização de Performance e Consumo de API | Sim | A equipe envolveu funções em `useCallback`, removeu conversões impróprias de `Number()` e corrigiu os blocos `try/catch` para expor de forma adequada as falhas de API (ex: `getArtesaoById`). |
+
+---
+
+## 4. Prompts ou descrições relevantes
+
+### Prompt 1
+
+Prompt ou descrição:
+
+> "create boilerplate for using zustand in react to keep track of a shopping cart and log in session(visitante, comprador, artesao)... is should persist when user closes the app and comes back the next day"
+
+Como a resposta foi utilizada:
+
+> A base gerada foi utilizada para configurar os stores principais do projeto (`sessionStore` e `cartStore`). A equipe utilizou as recomendações do middleware `persist` do Zustand para salvar os dados no navegador de forma que o carrinho e a sessão do usuário permaneçam salvos ao recarregar a página.
+
+### Prompt 2
+
+Prompt ou descrição:
+
+> A equipe informou problemas onde a aplicação exibia um estado padrão por um segundo antes de carregar o usuário correto do localStorage ("the app shows the default state for a second before showing the correct one") e questionou sobre como corrigir erros de hidratação.
+
+Como a resposta foi utilizada:
+
+> O código fornecido pela IA para adicionar um estado `mounted` usando `useState` e `useEffect` foi incorporado nas páginas (`page.tsx` e `ola-role/page.tsx`). A equipe garantiu que o componente só renderizasse as informações de sessão e carrinho após a montagem segura no navegador, removendo as falhas visuais.
+
+### Prompt 3
+
+Prompt ou descrição:
+> "i want to use json-server to create at least these gateways... [contratos em XLSX e PDF anexados detalhando rotas GET, POST, PATCH, DELETE para Produtos, Artesãos e Clientes]"
+
+Como a resposta foi utilizada:
+> A resposta orientou a criação do arquivo `routes.json` para prefixar as rotas da Fake API com `/api/v1/` e estruturou o banco de dados inicial (`base-db.json`) contendo todos os atributos exigidos nos contratos. As orientações permitiram testar a API mockada de forma isolada antes da construção do backend real.
+
+### Prompt 4
+
+Prompt ou descrição:
+> "what is the best place to put if(!mounted || isCustomerLogged()) return null; ?"
+
+Como a resposta foi utilizada:
+> A resposta confirmou o local exato (antes do retorno JSX e após todas as declarações de Hooks) e explicou os motivos técnicos (Rules of Hooks), o que auxiliou a equipe a aplicar a lógica de proteção de rota de maneira segura nas páginas de Dashboard sem gerar erros no React
+
+### Prompt 5
+
+Prompt ou descrição:
+> por favor altere pra user componentes basico de chakra ui
+
+Como a resposta foi utilizada:
+> deu um boilerplate bonito
+
+### Prompt 6
+
+Prompt ou descrição:
+> change this to check if someone with the same email or cpf already exists, and return a different error for each
+
+Como a resposta foi utilizada:
+> depois de algumas iterações foi mantido o try catch
+
+### Prompt 7
+
+Prompt ou descrição:
+> Utilizando o Documento de Requisitos, faca o design.md: Deve descrever diagrama de componentes; fluxo dos dados; modelo de dados; estratégia principal e baseline; interface de integração; exemplo de requisição e resposta; tratamento de erros [...]
+
+Como a resposta foi utilizada:
+> Utilizada para gerar os arquivos em Markdown do ciclo de Spec-Driven Development (product.md, requirements.md e design.md), convertendo todos os 31 requisitos para a sintaxe formal EARS, detalhando a arquitetura técnica (diagramas, schema SQL, contratos JSON/REST e políticas de fallback) e criando a folha de rosto individual com a tabela de auditoria do uso de IA.
+
+### Prompt 8
+
+Prompt ou descrição:
+> "in Nextjs, I can use [id] to create a link with that id for every product, but could I do something like [id+titulo] ?" e atualizações subsequentes para corrigir falhas de `undefined` na obtenção de rotas dinâmicas.
+
+Como a resposta foi utilizada:
+> A resposta permitiu refatorar as URLs de produto da aplicação para torná-las amigáveis para SEO. A equipe criou o helper `createSlug`, modificou a pasta `app/product/[id]` para `app/product/[slug]`, e assegurou que o componente de página decodificasse adequadamente e analisasse o ID do parâmetro de URL antes de acionar as chamadas de API.
+
+---
+
+## 5. Partes do projeto que tiveram apoio de IA
+
+Marquem os itens em que houve uso de IA.
+
+- [x] Entendimento do problema
+- [ ] Pesquisa técnica
+- [ ] Prototipação de telas
+- [x] Estruturação do frontend
+- [x] Componentização
+- [x] Tipagem TypeScript
+- [x] Consumo de API
+- [x] Fake API
+- [ ] Backend
+- [ ] Banco de dados
+- [x] Autenticação *(Mock de papéis/roles)*
+- [x] Carrinho
+- [ ] Pedidos
+- [ ] Recomendação
+- [ ] Processamento assíncrono
+- [x] Cache *(Uso de LocalStorage)*
+- [ ] Testes
+- [x] Documentação
+- [ ] README
+- [ ] Deploy *(Apoio inicial com comandos de inicialização Git/GitHub)*
+- [x] Correção de bugs
+- [ ] Outro:
+
+---
+
+## 6. Validação humana
+
+A equipe declara que:
+
+- [x] Todo código gerado ou sugerido por IA foi revisado pelos integrantes.
+- [x] O código incorporado foi testado antes da entrega.
+- [x] A equipe compreende as partes implementadas com apoio de IA.
+- [x] A equipe está apta a explicar tecnicamente as decisões tomadas.
+- [x] Nenhuma parte relevante foi incorporada sem análise, adaptação ou validação.
+- [x] As limitações, erros ou sugestões inadequadas da IA foram avaliadas pela equipe.
+
+---
+
+## 7. Limitações e problemas encontrados
+
+Registro da equipe:
+
+- A IA sugeriu, em uma de suas otimizações de código para focar na lógica, a remoção completa do CSS (bordas, flexbox e preenchimentos) que já havíamos estabelecido para a tela. A equipe descartou o código não estilizado gerado pela IA e exigiu a inserção da lógica de hidratação sem alterar a interface original, mantendo nossa estrutura visual intacta.
+- A IA inicialmente modelou a troca de usuários com funções dedicadas repetitivas (`loginAsVisitante`, `loginAsComprador`). A equipe descartou essa abordagem e solicitou uma refatoração implementando uma busca otimizada por `id` em um vetor unificado (`login(id)`), garantindo uma estrutura de código mais limpa e escalável para a simulação da sessão.
+- Falta de extensões em arquivos: a IA recomendou arquivos sem enfatizar que, devido à sintaxe JSX no Next.js (Turbopack), os arquivos precisavam obrigatoriamente da extensão `.tsx`, ocasionando um erro de "The default export is not a React Component". A equipe corrigiu renomeando o arquivo.
+- Conflito de versão na dependência: a IA gerou scripts para o `json-server` utilizando a flag `--routes`, que foi removida nas versões 1.0+ da ferramenta, quebrando a inicialização da API local. A equipe precisou intervir, relatar o erro de terminal ("Unknown option '--routes'") e aplicar um downgrade forçado para a versão `0.17.4` para restaurar o funcionamento da Fake API.
+- Gestão de versão do banco de dados: a IA sugeriu inicialmente usar o `.gitignore` para mascarar as alterações do arquivo `db.json`, o que falhou pois o arquivo já estava sendo rastreado pelo Git. A equipe interveio e alterou a estratégia para uma abordagem de template, criando um `base-db.json` e automatizando sua cópia para um `running-db.json` via script no NPM.
+- Tela em branco por dependência de Hooks: Durante a implementação da proteção do Dashboard, a equipe enfrentou um erro de "not loading" (tela em branco). A IA foi utilizada para diagnosticar que o gatilho de redirecionamento falhava por conta de um array de dependências vazio `[]` no `useEffect`, além de uma inconsistência de tipagem (`nome` vs `nomeArtesao`) não alinhada ao contrato da API. A equipe corrigiu ambas as falhas guiada pela explicação técnica.
+- Limite de tokens
+- Queria tratar erros quebrando o programa
+
+
+---
+
+## 8. Responsabilidade da equipe
+
+A Retequipe declara que todo conteúdo entregue no projeto foi revisado, compreendido e validado pelos integrantes.
+
+A equipe reconhece que o uso de IA não substitui a responsabilidade técnica sobre o projeto e que todos os integrantes devem ser capazes de explicar as funcionalidades, decisões técnicas, código, integrações e documentação entregues.
+
+==================================================
+ARQUIVO: ./eslint.config.mjs
+==================================================
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
+
+export default eslintConfig;
+
+==================================================
+ARQUIVO: ./next.config.ts
+==================================================
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;
+
+==================================================
+ARQUIVO: ./next-env.d.ts
+==================================================
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+import "./.next/types/routes.d.ts";
+import "./.next/types/root-params.d.ts";
+
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+
+==================================================
+ARQUIVO: ./package.json
+==================================================
 {
   "name": "projeto-integrador",
   "version": "0.1.0",
@@ -55,143 +1538,59 @@ DATA DA EXTRAÇÃO: Sat, Sep 19, 2026 12:25:28 PM
   }
 }
 
---- 3. ARQUIVOS DE CONFIGURAÇÃO VISUAL ---
-
---- tsconfig.json ---
-{
-  "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+==================================================
+ARQUIVO: ./postcss.config.mjs
+==================================================
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
-  "exclude": ["node_modules"]
-}
-
---- next.config.ts ---
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
 };
 
-export default nextConfig;
-
---- 4. ESTRUTURA COMPLETA DE DIRETÓRIOS ---
-.
-./AGENTS.md
-./base-db.json
-./CLAUDE.md
-./docs
-./docs/design.md
-./docs/Documento de Requisitos.docx
-./docs/product.md
-./docs/requirements.md
-./docs/uso-de-ia.md
-./dump_projeto_equipe.txt
-./eslint.config.mjs
-./extrair_projeto_equipe.sh
-./next.config.ts
-./package.json
-./package-lock.json
-./postcss.config.mjs
-./public
-./public/file.svg
-./public/globe.svg
-./public/next.svg
-./public/vercel.svg
-./public/window.svg
-./README.md
-./routes.json
-./src
-./src/app
-./src/app/admin
-./src/app/admin/login
-./src/app/admin/login/page.tsx
-./src/app/admin/page.tsx
-./src/app/artesao
-./src/app/artesao/login
-./src/app/artesao/login/page.tsx
-./src/app/artesao/page.tsx
-./src/app/artesao/register
-./src/app/artesao/register/page.tsx
-./src/app/components
-./src/app/components/AvaliacaoCard.tsx
-./src/app/components/CartDrawer.tsx
-./src/app/components/CategoryFilter.tsx
-./src/app/components/FormularioAvaliacao.tsx
-./src/app/components/HeaderCarrinho.tsx
-./src/app/components/ListaAvaliacoes.tsx
-./src/app/components/ProductCard.tsx
-./src/app/components/ProductList.tsx
-./src/app/customer
-./src/app/customer/checkout
-./src/app/customer/checkout/page.tsx
-./src/app/customer/login
-./src/app/customer/login/page.tsx
-./src/app/customer/minha-conta
-./src/app/customer/minha-conta/page.tsx
-./src/app/customer/page.tsx
-./src/app/customer/register
-./src/app/customer/register/page.tsx
-./src/app/customer/seguranca
-./src/app/customer/seguranca/page.tsx
-./src/app/globals.css
-./src/app/layout.tsx
-./src/app/page.tsx
-./src/app/product
-./src/app/product/[slug]
-./src/app/product/[slug]/page.tsx
-./src/app/provider.tsx
-./src/services
-./src/services/addressService.ts
-./src/services/apiService.ts
-./src/services/orderService.ts
-./src/services/paymentService.ts
-./src/services/productService.ts
-./src/services/userService.ts
-./src/store
-./src/store/cartStore.ts
-./src/store/sessionStore.ts
-./src/theme.ts
-./src/types
-./src/types/admin.ts
-./src/types/artesao.ts
-./src/types/customer.ts
-./src/types/index.ts
-./src/types/order.ts
-./src/types/product.ts
-./tsconfig.json
-
---- 5. CONTEÚDO DE ARQUIVOS (CÓDIGO-FONTE E ROTAS) ---
+export default config;
 
 ==================================================
-ARQUIVO: src/app/admin/login/page.tsx
+ARQUIVO: ./README.md
+==================================================
+## Instalando
+
+```bash
+npm install
+npm run produzirDB
+```
+
+## Rodando
+
+Use o seguinte comando para subir o website e o mock api juntos
+
+```bash
+npm run dev:full
+```
+
+## API
+
+Essa aplicação usa json-server para subir uma API localmente para testes usando os seguintes endpoints:
+
+http://localhost:3001/artesaos<br>
+http://localhost:3001/customers<br>
+http://localhost:3001/products<br>
+http://localhost:3001/admins<br>
+
+O arquivo base-db.json é a base que é copiada para o BD local. Para resetar a DB local, execute:
+
+```bash
+npm run produzirDB
+```
+
+==================================================
+ARQUIVO: ./routes.json
+==================================================
+{
+  "/api/v1/*": "/$1"
+}
+
+==================================================
+ARQUIVO: ./src/app/admin/login/page.tsx
 ==================================================
 'use client';
 
@@ -260,7 +1659,7 @@ export default function AdminLoginPage() {
     return (
         <Flex minH="80vh" align="center" justify="center">
             <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="md">
-                <VStack spacing={6} align="stretch">
+                <VStack align="stretch" gap="{6}">
                     <Heading size="lg" textAlign="center" color="brand.500">
                         Login de Admin
                     </Heading>
@@ -272,7 +1671,7 @@ export default function AdminLoginPage() {
                     )}
 
                     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-                        <VStack spacing={4}>
+                        <VStack gap="{4}">
                             <Field.Root required>
                                 <Field.Label>E-mail</Field.Label>
                                 <Input
@@ -314,7 +1713,7 @@ export default function AdminLoginPage() {
 }
 
 ==================================================
-ARQUIVO: src/app/admin/page.tsx
+ARQUIVO: ./src/app/admin/page.tsx
 ==================================================
 'use client';
 
@@ -357,7 +1756,7 @@ export default function AdminPage() {
 }
 
 ==================================================
-ARQUIVO: src/app/artesao/login/page.tsx
+ARQUIVO: ./src/app/artesao/login/page.tsx
 ==================================================
 'use client';
 
@@ -365,6 +1764,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { sessionStore } from '@/store/sessionStore';
 import { userService } from '@/services/userService';
+import NextLink from 'next/link';
 import {
     Box,
     Button,
@@ -374,8 +1774,10 @@ import {
     Input,
     Text,
     VStack,
-    Spinner
+    Spinner,
+    IconButton
 } from '@chakra-ui/react';
+import { LuHouse } from 'react-icons/lu';
 
 export default function ArtesaoLoginPage() {
     const [mounted, setMounted] = useState(false);
@@ -428,6 +1830,18 @@ export default function ArtesaoLoginPage() {
         <Flex minH="80vh" align="center" justify="center">
             <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="md">
                 <VStack gap={6} align="stretch">
+                    <Flex justify="center" mb={-2}>
+                                <NextLink href="/">
+                                  <IconButton
+                                    aria-label="Voltar para a página inicial"
+                                    variant="ghost"
+                                    size="lg"
+                                    borderRadius="full"
+                                  >
+                                    <LuHouse size={24} />
+                                  </IconButton>
+                                </NextLink>
+                              </Flex>
                     <Heading size="lg" textAlign="center" color="brand.500">
                         Login de Artesão
                     </Heading>
@@ -490,7 +1904,7 @@ export default function ArtesaoLoginPage() {
 }
 
 ==================================================
-ARQUIVO: src/app/artesao/page.tsx
+ARQUIVO: ./src/app/artesao/page.tsx
 ==================================================
 "use client";
 
@@ -557,7 +1971,7 @@ export default function Artesao() {
 }
 
 ==================================================
-ARQUIVO: src/app/artesao/register/page.tsx
+ARQUIVO: ./src/app/artesao/register/page.tsx
 ==================================================
 'use client';
 
@@ -637,7 +2051,7 @@ export default function ArtesaoRegisterPage() {
     return (
         <Flex minH="80vh" align="center" justify="center" py={8}>
             <Box bg="white" p={8} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200" w="full" maxW="2xl">
-                <VStack spacing={6} align="stretch">
+                <VStack align="stretch" gap="{6}">
                     <Heading size="lg" textAlign="center" color="brand.500">
                         Registro de Artesão
                     </Heading>
@@ -751,7 +2165,7 @@ export default function ArtesaoRegisterPage() {
 
                             {/* Botões (Ocupa 2 colunas) */}
                             <GridItem colSpan={{ base: 1, md: 2 }}>
-                                <VStack spacing={3} mt={4}>
+                                <VStack gap="{3}" mt="{4}">
                                     <Button
                                         type="submit"
                                         colorPalette="brand"
@@ -781,7 +2195,7 @@ export default function ArtesaoRegisterPage() {
 }
 
 ==================================================
-ARQUIVO: src/app/components/AvaliacaoCard.tsx
+ARQUIVO: ./src/app/components/AvaliacaoCard.tsx
 ==================================================
 import { Box, Text } from '@chakra-ui/react';
 
@@ -816,7 +2230,7 @@ export default function AvaliacaoCard({ avaliacao }: { avaliacao: Avaliacao }) {
 }
 
 ==================================================
-ARQUIVO: src/app/components/CartDrawer.tsx
+ARQUIVO: ./src/app/components/CartDrawer.tsx
 ==================================================
 "use client";
 
@@ -976,7 +2390,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
 }
 
 ==================================================
-ARQUIVO: src/app/components/CategoryFilter.tsx
+ARQUIVO: ./src/app/components/CategoryFilter.tsx
 ==================================================
 "use client";
 
@@ -1018,7 +2432,274 @@ export function CategoryFilter({
   );
 }
 ==================================================
-ARQUIVO: src/app/components/FormularioAvaliacao.tsx
+ARQUIVO: ./src/app/components/EnderecoManager.tsx
+==================================================
+"use client";
+
+import { useState } from "react";
+import { sessionStore } from "@/store/sessionStore";
+import { addressService } from "@/services/addressService";
+import {
+  Box,
+  Button,
+  Field,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Heading,
+  Input,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { FiTrash2 } from "react-icons/fi";
+
+const ENDERECO_VAZIO = {
+  cep: "",
+  rua: "",
+  numero: "",
+  bairro: "",
+  complemento: "",
+  cidade: "",
+  estado: "",
+};
+
+interface EnderecoManagerProps {
+  onSelectEndereco?: (enderecoId: string) => void;
+  enderecoSelecionadoId?: string | null;
+  /** true: foca em selecionar um endereço (checkout). false: foca em gerenciar (conta). */
+  modoSelecao?: boolean;
+}
+
+export default function EnderecoManager({
+  onSelectEndereco,
+  enderecoSelecionadoId,
+  modoSelecao = false,
+}: EnderecoManagerProps) {
+  const customer = sessionStore((state) => state.customer);
+  const salvarCustomer = sessionStore((state) => state.salvarCustomer);
+
+  const [mostrarForm, setMostrarForm] = useState(false);
+  const [novoEndereco, setNovoEndereco] = useState(ENDERECO_VAZIO);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  if (!customer) return null;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNovoEndereco((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSalvarEndereco = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg("");
+    setIsLoading(true);
+    try {
+      const customerAtualizado = await addressService.addEndereco(customer, novoEndereco);
+      salvarCustomer(customerAtualizado);
+
+      // No checkout, o endereço recém-criado já fica selecionado
+      const enderecoCriado = customerAtualizado.enderecos[customerAtualizado.enderecos.length - 1];
+      if (modoSelecao && enderecoCriado) {
+        onSelectEndereco?.(enderecoCriado.id);
+      }
+
+      setNovoEndereco(ENDERECO_VAZIO);
+      setMostrarForm(false);
+    } catch (err) {
+      console.error(err);
+      setErrorMsg("Não foi possível salvar o endereço. Tente novamente.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRemoverEndereco = (enderecoId: string) => {
+    const enderecosAtualizados = customer.enderecos.filter((e) => e.id !== enderecoId);
+    salvarCustomer({ ...customer, enderecos: enderecosAtualizados });
+  };
+
+  return (
+    <VStack align="stretch" gap={5}>
+      <Flex justify="space-between" align="center">
+        <Heading size="md">Endereço de Entrega</Heading>
+        {!modoSelecao && !mostrarForm && (
+          <Button colorPalette="brand" size="sm" onClick={() => setMostrarForm(true)}>
+            + Adicionar endereço
+          </Button>
+        )}
+      </Flex>
+
+      {customer.enderecos.length === 0 && (
+        <Text color="gray.500" fontSize="sm">
+          Você ainda não tem endereços salvos. Cadastre um endereço para continuar.
+        </Text>
+      )}
+
+      {/* Lista de endereços */}
+      {customer.enderecos.length > 0 && !mostrarForm && (
+        <VStack align="stretch" gap={3}>
+          {customer.enderecos.map((endereco) => {
+            const isSelected = modoSelecao && enderecoSelecionadoId === endereco.id;
+            return (
+              <Box
+                key={endereco.id}
+                p={4}
+                borderWidth="2px"
+                borderRadius="md"
+                borderColor={isSelected ? "brand.500" : "gray.200"}
+                bg={isSelected ? "brand.50" : "white"}
+                cursor={modoSelecao ? "pointer" : "default"}
+                onClick={() => modoSelecao && onSelectEndereco?.(endereco.id)}
+              >
+                <Flex justify="space-between" align="flex-start">
+                  <VStack align="start" gap={1}>
+                    <Text fontWeight="semibold">
+                      {endereco.rua}, {endereco.numero}
+                      {endereco.complemento ? ` - ${endereco.complemento}` : ""}
+                    </Text>
+                    <Text fontSize="sm" color="gray.600">
+                      {endereco.bairro} — {endereco.cidade}/{endereco.estado} — CEP {endereco.cep}
+                    </Text>
+                  </VStack>
+
+                  {!modoSelecao && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      colorPalette="red"
+                      aria-label="Remover endereço"
+                      onClick={() => handleRemoverEndereco(endereco.id)}
+                    >
+                      <FiTrash2 />
+                    </Button>
+                  )}
+                </Flex>
+              </Box>
+            );
+          })}
+        </VStack>
+      )}
+
+      {/* No checkout o botão de adicionar fica abaixo da lista */}
+      {modoSelecao && !mostrarForm && (
+        <Button
+          variant="outline"
+          colorPalette="brand"
+          alignSelf="start"
+          onClick={() => setMostrarForm(true)}
+        >
+          + Adicionar novo endereço
+        </Button>
+      )}
+
+      {/* Formulário de cadastro (usado na conta e no checkout) */}
+      {mostrarForm && (
+        <Box borderTopWidth="1px" borderColor="gray.100" pt={5}>
+          {errorMsg && (
+            <Text color="red.500" fontSize="sm" mb={3}>
+              {errorMsg}
+            </Text>
+          )}
+          <form onSubmit={handleSalvarEndereco}>
+            <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={4}>
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>CEP</Field.Label>
+                  <Input
+                    name="cep"
+                    value={novoEndereco.cep}
+                    onChange={handleChange}
+                    placeholder="00000-000"
+                  />
+                </Field.Root>
+              </GridItem>
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>Estado (UF)</Field.Label>
+                  <Input
+                    name="estado"
+                    value={novoEndereco.estado}
+                    onChange={handleChange}
+                    placeholder="Ex: PE"
+                    maxLength={2}
+                  />
+                </Field.Root>
+              </GridItem>
+              <GridItem colSpan={{ base: 1, md: 2 }}>
+                <Field.Root required>
+                  <Field.Label>Rua / Logradouro</Field.Label>
+                  <Input
+                    name="rua"
+                    value={novoEndereco.rua}
+                    onChange={handleChange}
+                    placeholder="Ex: Rua das Flores"
+                  />
+                </Field.Root>
+              </GridItem>
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>Número</Field.Label>
+                  <Input
+                    name="numero"
+                    value={novoEndereco.numero}
+                    onChange={handleChange}
+                    placeholder="123"
+                  />
+                </Field.Root>
+              </GridItem>
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>Bairro</Field.Label>
+                  <Input
+                    name="bairro"
+                    value={novoEndereco.bairro}
+                    onChange={handleChange}
+                    placeholder="Ex: Centro"
+                  />
+                </Field.Root>
+              </GridItem>
+              <GridItem colSpan={1}>
+                <Field.Root>
+                  <Field.Label>Complemento (Opcional)</Field.Label>
+                  <Input
+                    name="complemento"
+                    value={novoEndereco.complemento}
+                    onChange={handleChange}
+                    placeholder="Apto 101"
+                  />
+                </Field.Root>
+              </GridItem>
+              <GridItem colSpan={1}>
+                <Field.Root required>
+                  <Field.Label>Cidade</Field.Label>
+                  <Input
+                    name="cidade"
+                    value={novoEndereco.cidade}
+                    onChange={handleChange}
+                    placeholder="Ex: Recife"
+                  />
+                </Field.Root>
+              </GridItem>
+            </Grid>
+
+            <HStack gap={3} mt={4}>
+              <Button type="submit" colorPalette="brand" loading={isLoading} loadingText="Salvando...">
+                Salvar endereço
+              </Button>
+              <Button type="button" variant="ghost" onClick={() => setMostrarForm(false)}>
+                Cancelar
+              </Button>
+            </HStack>
+          </form>
+        </Box>
+      )}
+    </VStack>
+  );
+}
+==================================================
+ARQUIVO: ./src/app/components/FormularioAvaliacao.tsx
 ==================================================
 "use client";
 
@@ -1071,7 +2752,7 @@ export default function FormularioAvaliacao({ onEnviar }: FormularioAvaliacaoPro
             bg="white"
             boxShadow="sm"
         >
-            <VStack spacing={4} align="stretch">
+            <VStack align="stretch" gap="{4}">
                 {erro && (
                     <Text color="red.500" fontSize="sm" fontWeight="medium">
                         {erro}
@@ -1140,7 +2821,7 @@ export default function FormularioAvaliacao({ onEnviar }: FormularioAvaliacaoPro
 }
 
 ==================================================
-ARQUIVO: src/app/components/HeaderCarrinho.tsx
+ARQUIVO: ./src/app/components/HeaderCarrinho.tsx
 ==================================================
 "use client";
 
@@ -1211,7 +2892,7 @@ export function HeaderCarrinho() {
 }
 
 ==================================================
-ARQUIVO: src/app/components/ListaAvaliacoes.tsx
+ARQUIVO: ./src/app/components/ListaAvaliacoes.tsx
 ==================================================
 import { Box, Text, VStack } from "@chakra-ui/react";
 import AvaliacaoCard from "./AvaliacaoCard";
@@ -1248,7 +2929,7 @@ export default function ListaAvaliacoes({ avaliacoes, mostrarMedia }: ListaAvali
     }
 
     return (
-        <VStack spacing={4} align="stretch" w="full">
+        <VStack align="stretch" gap="{4}" w="full">
             {media}
             {avaliacoes.map((avaliacao, index) => (
                 <AvaliacaoCard key={index} avaliacao={avaliacao} />
@@ -1258,7 +2939,7 @@ export default function ListaAvaliacoes({ avaliacoes, mostrarMedia }: ListaAvali
 }
 
 ==================================================
-ARQUIVO: src/app/components/ProductCard.tsx
+ARQUIVO: ./src/app/components/ProductCard.tsx
 ==================================================
 "use client";
 
@@ -1274,77 +2955,79 @@ import NextLink from "next/link";
 import { Product } from "@/types/product";
 import { useCartStore } from "@/store/cartStore";
 
-// Helper function to create a clean URL string from the title
 function createSlug(titulo: string) {
     return titulo
         .toLowerCase()
-        .normalize("NFD") // Removes accents
+        .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9]+/g, "-") // Replaces spaces and special chars with hyphens
-        .replace(/(^-|-$)+/g, ""); // Removes leading or trailing hyphens
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "");
 }
 
-interface ProductCardProps {
+export interface ProductCardProps {
     product: Product;
+    onAddToCart?: (product: Product) => void;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, onAddToCart }: ProductCardProps) {
     const addItem = useCartStore((state) => state.addItem);
-    const imageSrc = product.linkImagens?.[0] ?? "/placeholder-product.png";
-
-    // Combine the slugified title and the ID
+    const imageSrc = product.linkImagens?.[0] ?? product.imagem ?? "/placeholder-product.png";
     const productUrl = `/product/${createSlug(product.titulo)}-${product.id}`;
 
+    const handleAdd = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (onAddToCart) {
+            onAddToCart(product);
+        } else {
+            addItem(product);
+        }
+    };
+
     return (
-        <Box
-            as={NextLink}
-            href={productUrl}
-            display="block"
-            bg="white"
-            borderRadius="lg"
-            overflow="hidden"
-            shadow="md"
-            transition="transform 0.2s"
-            _hover={{ transform: "translateY(-4px)", shadow: "lg" }}
-        >
-            <Image
-                src={imageSrc}
-                alt={product.titulo}
-                w="100%"
-                h="200px"
-                objectFit="cover"
-            />
-            <VStack p={4} align="stretch" gap={2}>
-                <Badge colorScheme="purple" alignSelf="flex-start" fontSize="xs">
-                    {product.categoria}
-                </Badge>
-                <Text fontWeight="bold" fontSize="md" lineClamp={1}>
-                    {product.titulo}
-                </Text>
-                <Text fontSize="sm" color="gray.500" lineClamp={2}>
-                    {product.descricao}
-                </Text>
-                <Text fontWeight="bold" fontSize="lg" color="brand.600">
-                    R$ {product.preco.toFixed(2)}
-                </Text>
-                <Button
-                    colorScheme="blue"
-                    size="sm"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        addItem(product);
-                    }}
-                >
-                    Adicionar ao carrinho
-                </Button>
-            </VStack>
-        </Box>
+        <NextLink href={productUrl} style={{ textDecoration: 'none', display: 'block' }}>
+            <Box
+                bg="white"
+                borderRadius="lg"
+                overflow="hidden"
+                shadow="md"
+                transition="transform 0.2s"
+                _hover={{ transform: "translateY(-4px)", shadow: "lg" }}
+            >
+                <Image
+                    src={imageSrc}
+                    alt={product.titulo}
+                    w="100%"
+                    h="200px"
+                    objectFit="cover"
+                />
+                <VStack p={4} align="stretch" gap={2}>
+                    <Badge colorScheme="purple" alignSelf="flex-start" fontSize="xs">
+                        {product.categoria}
+                    </Badge>
+                    <Text fontWeight="bold" fontSize="md" lineClamp={1}>
+                        {product.titulo}
+                    </Text>
+                    <Text fontSize="sm" color="gray.500" lineClamp={2}>
+                        {product.descricao}
+                    </Text>
+                    <Text fontWeight="bold" fontSize="lg" color="brand.600">
+                        R$ {Number(product.preco).toFixed(2)}
+                    </Text>
+                    <Button
+                        colorScheme="blue"
+                        size="sm"
+                        onClick={handleAdd}
+                    >
+                        Adicionar ao carrinho
+                    </Button>
+                </VStack>
+            </Box>
+        </NextLink>
     );
 }
-
 ==================================================
-ARQUIVO: src/app/components/ProductList.tsx
+ARQUIVO: ./src/app/components/ProductList.tsx
 ==================================================
 "use client";
 
@@ -1400,7 +3083,7 @@ export function ProductList({ products, isLoading, error, onAddToCart }: Product
   );
 }
 ==================================================
-ARQUIVO: src/app/customer/checkout/page.tsx
+ARQUIVO: ./src/app/customer/checkout/page.tsx
 ==================================================
 "use client";
 
@@ -1409,9 +3092,9 @@ import { useRouter } from "next/navigation";
 import NextLink from "next/link";
 import { sessionStore } from "@/store/sessionStore";
 import { useCartStore } from "@/store/cartStore";
-import { addressService } from "@/services/addressService";
 import { orderService } from "@/services/orderService";
 import { paymentService } from "@/services/paymentService";
+import EnderecoManager from "../../components/EnderecoManager";
 import { Endereco, MetodoPagamento, Order } from "@/types";
 import {
   Box,
@@ -1431,23 +3114,12 @@ import {
 } from "@chakra-ui/react";
 import { FiHome } from "react-icons/fi";
 
-const ENDERECO_VAZIO = {
-  cep: "",
-  rua: "",
-  numero: "",
-  bairro: "",
-  complemento: "",
-  cidade: "",
-  estado: "",
-};
-
 export default function CheckoutPage() {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
   const customer = sessionStore((state) => state.customer);
   const isCustomerLogged = sessionStore((state) => state.isCustomerLogged);
-  const salvarCustomer = sessionStore((state) => state.salvarCustomer);
 
   const { items, totalPrice, clearCart } = useCartStore();
 
@@ -1455,10 +3127,6 @@ export default function CheckoutPage() {
 
   // --- Endereço ---
   const [enderecoSelecionadoId, setEnderecoSelecionadoId] = useState<string | null>(null);
-  const [mostrarFormNovoEndereco, setMostrarFormNovoEndereco] = useState(false);
-  const [novoEndereco, setNovoEndereco] = useState(ENDERECO_VAZIO);
-  const [isSavingEndereco, setIsSavingEndereco] = useState(false);
-  const [enderecoError, setEnderecoError] = useState("");
 
   // --- Pagamento ---
   const [metodo, setMetodo] = useState<MetodoPagamento>("cartao");
@@ -1495,33 +3163,9 @@ export default function CheckoutPage() {
     );
   }
 
-  const handleChangeNovoEndereco = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNovoEndereco((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleChangeCartao = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setCartaoData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSalvarEndereco = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setEnderecoError("");
-    setIsSavingEndereco(true);
-    try {
-      const customerAtualizado = await addressService.addEndereco(customer, novoEndereco);
-      salvarCustomer(customerAtualizado);
-      const enderecoCriado = customerAtualizado.enderecos[customerAtualizado.enderecos.length - 1];
-      setEnderecoSelecionadoId(enderecoCriado.id);
-      setNovoEndereco(ENDERECO_VAZIO);
-      setMostrarFormNovoEndereco(false);
-    } catch (err) {
-      console.error(err);
-      setEnderecoError("Não foi possível salvar o endereço. Tente novamente.");
-    } finally {
-      setIsSavingEndereco(false);
-    }
   };
 
   const enderecoSelecionado: Endereco | undefined = customer.enderecos.find(
@@ -1630,159 +3274,11 @@ export default function CheckoutPage() {
 
               {step === "endereco" && (
                 <VStack align="stretch" gap={5}>
-                  <Heading size="md">Endereço de Entrega</Heading>
-
-                  {customer.enderecos.length === 0 && (
-                    <Text color="gray.500" fontSize="sm">
-                      Você ainda não tem endereços salvos. Cadastre um endereço para continuar.
-                    </Text>
-                  )}
-
-                  {customer.enderecos.length > 0 && (
-                    <VStack align="stretch" gap={3}>
-                      {customer.enderecos.map((endereco) => (
-                        <Box
-                          key={endereco.id}
-                          p={4}
-                          borderWidth="2px"
-                          borderRadius="md"
-                          borderColor={enderecoSelecionadoId === endereco.id ? "brand.500" : "gray.200"}
-                          bg={enderecoSelecionadoId === endereco.id ? "brand.50" : "white"}
-                          cursor="pointer"
-                          onClick={() => setEnderecoSelecionadoId(endereco.id)}
-                        >
-                          <Text fontWeight="semibold">
-                            {endereco.rua}, {endereco.numero}
-                            {endereco.complemento ? ` - ${endereco.complemento}` : ""}
-                          </Text>
-                          <Text fontSize="sm" color="gray.600">
-                            {endereco.bairro} — {endereco.cidade}/{endereco.estado} — CEP {endereco.cep}
-                          </Text>
-                        </Box>
-                      ))}
-                    </VStack>
-                  )}
-
-                  {!mostrarFormNovoEndereco && (
-                    <Button
-                      variant="outline"
-                      colorPalette="brand"
-                      alignSelf="start"
-                      onClick={() => setMostrarFormNovoEndereco(true)}
-                    >
-                      + Adicionar novo endereço
-                    </Button>
-                  )}
-
-                  {mostrarFormNovoEndereco && (
-                    <Box borderTopWidth="1px" borderColor="gray.100" pt={5}>
-                      {enderecoError && (
-                        <Text color="red.500" fontSize="sm" mb={3}>
-                          {enderecoError}
-                        </Text>
-                      )}
-                      <form onSubmit={handleSalvarEndereco}>
-                        <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={4}>
-                          <GridItem colSpan={1}>
-                            <Field.Root required>
-                              <Field.Label>CEP</Field.Label>
-                              <Input
-                                name="cep"
-                                value={novoEndereco.cep}
-                                onChange={handleChangeNovoEndereco}
-                                placeholder="00000-000"
-                              />
-                            </Field.Root>
-                          </GridItem>
-                          <GridItem colSpan={1}>
-                            <Field.Root required>
-                              <Field.Label>Estado (UF)</Field.Label>
-                              <Input
-                                name="estado"
-                                value={novoEndereco.estado}
-                                onChange={handleChangeNovoEndereco}
-                                placeholder="Ex: PE"
-                                maxLength={2}
-                              />
-                            </Field.Root>
-                          </GridItem>
-                          <GridItem colSpan={{ base: 1, md: 2 }}>
-                            <Field.Root required>
-                              <Field.Label>Rua / Logradouro</Field.Label>
-                              <Input
-                                name="rua"
-                                value={novoEndereco.rua}
-                                onChange={handleChangeNovoEndereco}
-                                placeholder="Ex: Rua das Flores"
-                              />
-                            </Field.Root>
-                          </GridItem>
-                          <GridItem colSpan={1}>
-                            <Field.Root required>
-                              <Field.Label>Número</Field.Label>
-                              <Input
-                                name="numero"
-                                value={novoEndereco.numero}
-                                onChange={handleChangeNovoEndereco}
-                                placeholder="123"
-                              />
-                            </Field.Root>
-                          </GridItem>
-                          <GridItem colSpan={1}>
-                            <Field.Root required>
-                              <Field.Label>Bairro</Field.Label>
-                              <Input
-                                name="bairro"
-                                value={novoEndereco.bairro}
-                                onChange={handleChangeNovoEndereco}
-                                placeholder="Ex: Centro"
-                              />
-                            </Field.Root>
-                          </GridItem>
-                          <GridItem colSpan={1}>
-                            <Field.Root>
-                              <Field.Label>Complemento (Opcional)</Field.Label>
-                              <Input
-                                name="complemento"
-                                value={novoEndereco.complemento}
-                                onChange={handleChangeNovoEndereco}
-                                placeholder="Apto 101"
-                              />
-                            </Field.Root>
-                          </GridItem>
-                          <GridItem colSpan={1}>
-                            <Field.Root required>
-                              <Field.Label>Cidade</Field.Label>
-                              <Input
-                                name="cidade"
-                                value={novoEndereco.cidade}
-                                onChange={handleChangeNovoEndereco}
-                                placeholder="Ex: Recife"
-                              />
-                            </Field.Root>
-                          </GridItem>
-                        </Grid>
-
-                        <HStack gap={3} mt={4}>
-                          <Button
-                            type="submit"
-                            colorPalette="brand"
-                            loading={isSavingEndereco}
-                            loadingText="Salvando..."
-                          >
-                            Salvar endereço
-                          </Button>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            onClick={() => setMostrarFormNovoEndereco(false)}
-                          >
-                            Cancelar
-                          </Button>
-                        </HStack>
-                      </form>
-                    </Box>
-                  )}
+                  <EnderecoManager
+                    modoSelecao
+                    enderecoSelecionadoId={enderecoSelecionadoId}
+                    onSelectEndereco={setEnderecoSelecionadoId}
+                  />
 
                   <Separator />
 
@@ -1934,9 +3430,61 @@ export default function CheckoutPage() {
     </Box>
   );
 }
-
 ==================================================
-ARQUIVO: src/app/customer/login/page.tsx
+ARQUIVO: ./src/app/customer/enderecos/page.tsx
+==================================================
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import NextLink from 'next/link';
+import { Box, Button, Container, Flex, HStack, Spinner, Text } from '@chakra-ui/react';
+import { FiArrowLeft } from 'react-icons/fi';
+import { sessionStore } from '@/store/sessionStore';
+import EnderecoManager from '../../components/EnderecoManager';
+
+export default function CustomerEnderecosPage() {
+    const [mounted, setMounted] = useState(false);
+    const router = useRouter();
+    const isCustomerLogged = sessionStore((state) => state.isCustomerLogged);
+
+    useEffect(() => setMounted(true), []);
+
+    useEffect(() => {
+        if (mounted && !isCustomerLogged()) {
+            router.push('/customer/login');
+        }
+    }, [mounted, isCustomerLogged, router]);
+
+    if (!mounted || !isCustomerLogged()) {
+        return (
+            <Flex minH="80vh" align="center" justify="center">
+                <Spinner size="xl" color="brand.500" />
+            </Flex>
+        );
+    }
+
+    return (
+        <Box minH="100vh" bg="gray.50" py={8}>
+            <Container maxW="800px">
+                <NextLink href="/customer/minha-conta">
+                    <Button variant="ghost" size="sm" mb={6}>
+                        <HStack gap={2}>
+                            <FiArrowLeft />
+                            <Text>Voltar para Sua Conta</Text>
+                        </HStack>
+                    </Button>
+                </NextLink>
+
+                <Box bg="white" p={6} rounded="lg" shadow="sm" border="1px solid" borderColor="gray.200">
+                    <EnderecoManager />
+                </Box>
+            </Container>
+        </Box>
+    );
+}
+==================================================
+ARQUIVO: ./src/app/customer/login/page.tsx
 ==================================================
 "use client";
 
@@ -2098,7 +3646,7 @@ export default function CustomerLoginPage() {
   );
 }
 ==================================================
-ARQUIVO: src/app/customer/minha-conta/page.tsx
+ARQUIVO: ./src/app/customer/minha-conta/page.tsx
 ==================================================
 'use client';
 
@@ -2108,6 +3656,27 @@ import { useRouter } from 'next/navigation';
 import { sessionStore } from '@/store/sessionStore';
 import NextLink from 'next/link';
 import { FiBox, FiMapPin, FiLock, FiArrowLeft } from 'react-icons/fi';
+
+const accountSections = [
+    {
+        title: "Seus pedidos",
+        description: "Rastrear, devolver ou ver histórico de compras",
+        icon: FiBox,
+        href: "/customer/pedidos"
+    },
+    {
+        title: "Seus endereços",
+        description: "Ver endereços salvos ou adicionar novos para entrega",
+        icon: FiMapPin,
+        href: "/customer/enderecos"
+    },
+    {
+        title: "Acesso e segurança",
+        description: "Gerenciar senha, e-mail e dados pessoais",
+        icon: FiLock,
+        href: "/customer/seguranca"
+    }
+];
 
 export default function CustomerAccountHubPage() {
     const [mounted, setMounted] = useState(false);
@@ -2131,28 +3700,6 @@ export default function CustomerAccountHubPage() {
         );
     }
 
-    // As três opções principais que você pediu
-    const accountSections = [
-        {
-            title: "Seus pedidos",
-            description: "Rastrear, devolver ou ver histórico de compras",
-            icon: FiBox,
-            href: "/customer/pedidos"
-        },
-        {
-            title: "Seus endereços",
-            description: "Alterar ou adicionar endereços para entrega",
-            icon: FiMapPin,
-            href: "/customer/enderecos"
-        },
-        {
-            title: "Acesso e segurança",
-            description: "Gerenciar senha, e-mail e dados pessoais",
-            icon: FiLock,
-            href: "/customer/seguranca"
-        }
-    ];
-
     return (
         <Box minH="100vh" bg="gray.50" py={8}>
             <Container maxW="1100px">
@@ -2170,15 +3717,15 @@ export default function CustomerAccountHubPage() {
                     <Heading size="xl">Sua Conta</Heading>
                     <Text color="gray.600">Olá, <b>{customer?.nome}</b> ({customer?.email})</Text>
                 </VStack>
-                
-                {/* Grid estilo Amazon com as seções */}
+
+                {/* Grid com as seções da conta */}
                 <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
-                    {accountSections.map((section, index) => (
-                        <NextLink key={index} href={section.href} passHref style={{ textDecoration: 'none' }}>
-                            <Card.Root 
-                                p={6} 
-                                borderWidth="1px" 
-                                borderRadius="lg" 
+                    {accountSections.map((section) => (
+                        <NextLink key={section.href} href={section.href} style={{ textDecoration: 'none' }}>
+                            <Card.Root
+                                p={6}
+                                borderWidth="1px"
+                                borderRadius="lg"
                                 bg="white"
                                 height="100%"
                                 _hover={{ shadow: "md", borderColor: "brand.500", transform: "translateY(-2px)" }}
@@ -2207,7 +3754,7 @@ export default function CustomerAccountHubPage() {
     );
 }
 ==================================================
-ARQUIVO: src/app/customer/page.tsx
+ARQUIVO: ./src/app/customer/page.tsx
 ==================================================
 'use client';
 
@@ -2437,7 +3984,7 @@ export default function CustomerDashboard() {
 }
 
 ==================================================
-ARQUIVO: src/app/customer/register/page.tsx
+ARQUIVO: ./src/app/customer/register/page.tsx
 ==================================================
 "use client";
 
@@ -2779,7 +4326,7 @@ export default function CustomerRegisterPage() {
   );
 }
 ==================================================
-ARQUIVO: src/app/customer/seguranca/page.tsx
+ARQUIVO: ./src/app/customer/seguranca/page.tsx
 ==================================================
 'use client';
 
@@ -2997,7 +4544,37 @@ export default function CustomerSecurityPage() {
     );
 }
 ==================================================
-ARQUIVO: src/app/layout.tsx
+ARQUIVO: ./src/app/globals.css
+==================================================
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+==================================================
+ARQUIVO: ./src/app/layout.tsx
 ==================================================
 import { Provider } from "./provider";
 
@@ -3021,7 +4598,7 @@ export default function RootLayout({
 }
 
 ==================================================
-ARQUIVO: src/app/page.tsx
+ARQUIVO: ./src/app/page.tsx
 ==================================================
 "use client";
 
@@ -3180,25 +4757,19 @@ export default function Home() {
 }
 
 ==================================================
-ARQUIVO: src/app/product/[slug]/page.tsx
+ARQUIVO: ./src/app/product/[slug]/page.tsx
 ==================================================
 "use client";
 
 import { useEffect, useState, use } from "react";
 import { Box, Heading, Text, VStack, HStack, Button, Image } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import NextLink from "next/link";
 import { userService } from "@/services/userService";
 import { productService } from "@/services/productService";
 import { useCartStore } from "@/store/cartStore";
-import { Product, Artesao } from "@/types";
+import { Product, Artesao, CartItem } from "@/types";
 import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
-
-
-
-type ProductWithImages = Product & {
-    linkImagens?: string[] | string;
-};
 
 type PageProps = {
     params: Promise<{
@@ -3213,47 +4784,33 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     const urlParts = rawUrlParam.split("-");
     const productId = urlParts[urlParts.length - 1];
 
-    const [produto, setProduto] = useState<ProductWithImages | null>(null);
-
+    const [produto, setProduto] = useState<Product | null>(null);
     const [artesao, setArtesao] = useState<Artesao | null>(null);
     const [loading, setLoading] = useState(true);
     const [quantidade, setQuantidade] = useState(1);
-    const [erroEstoque, setErroEstoque] = useState(false);
     const [isNavigating, setIsNavigating] = useState(false);
 
     const router = useRouter();
-
     const addItem = useCartStore((state) => state.addItem);
-    const cartItems = useCartStore((state: any) => state.items || []);
+    const cartItems = useCartStore((state) => state.items);
 
     useEffect(() => {
         async function fetchDados() {
             setLoading(true);
-
             try {
-                const produtoRes = await productService.getById(productId);
+                const produtoRes = await productService.getById(Number(productId) || productId);
                 setProduto(produtoRes);
-
-                // DEBUG: Verifique exatamente o que está vindo no produto
-                console.log("Dados do Produto:", produtoRes);
 
                 if (produtoRes && produtoRes.idArtesao) {
                     try {
                         const artesaoRes = await userService.getArtesaoById(produtoRes.idArtesao);
-
-                        // DEBUG: Verifique se o artesão foi encontrado
-                        console.log("Dados do Artesão:", artesaoRes);
-
                         setArtesao(artesaoRes);
                     } catch (artesaoError) {
-                        // AGORA VOCÊ VERÁ O ERRO NO CONSOLE
                         console.error("Erro ao buscar o artesão:", artesaoError);
                     }
-                } else {
-                    console.warn("O produto não possui um campo 'idArtesao'.");
                 }
             } catch (error) {
-                console.error("Erro ao carregar os dados do produto:", error);
+                console.error("Erro ao carregar dados do produto:", error);
                 setProduto(null);
             } finally {
                 setLoading(false);
@@ -3274,7 +4831,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     if (!produto) {
         return (
             <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <VStack spacing={4} align="start">
+                <VStack gap={4} align="start">
                     <Heading as="h1" size="lg" color="red.500">
                         Produto não encontrado
                     </Heading>
@@ -3284,12 +4841,12 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         );
     }
 
-    const primeiraImagem = produto.linkImagens[0];
-
+    const primeiraImagem = produto.linkImagens?.[0] || produto.imagem;
     const estoqueDisponivel = produto.quantidadeEstoque ?? 0;
 
-    const quantidadeNoCarrinho = cartItems.reduce((total: number, item: any) => {
-        if (String(item.id) === String(produto.id)) {
+    // Redução fortemente tipada com CartItem, sem nenhum any
+    const quantidadeNoCarrinho = cartItems.reduce((total: number, item: CartItem) => {
+        if (Number(item?.product?.id) === Number(produto.id)) {
             return total + (item.quantity || 1);
         }
         return total;
@@ -3298,10 +4855,6 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     const estoqueRestante = estoqueDisponivel - quantidadeNoCarrinho;
     const esgotado = estoqueDisponivel < 1 || estoqueRestante < 1;
     const limiteAtingido = quantidade > estoqueRestante || estoqueRestante < 1;
-
-    if (quantidade > estoqueRestante && estoqueRestante > 0) {
-        setQuantidade(estoqueRestante);
-    }
 
     const handleIncrement = () => {
         if (quantidade < estoqueRestante) {
@@ -3316,30 +4869,22 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     };
 
     const handleAddToCart = () => {
-        if (esgotado || limiteAtingido || quantidade > estoqueRestante || isNavigating) {
-            return;
-        }
+        if (esgotado || limiteAtingido || isNavigating) return;
 
         setIsNavigating(true);
-
         for (let i = 0; i < quantidade; i++) {
-            addItem({
-                id: String(produto.id),
-                name: produto.titulo,
-                price: produto.preco,
-            });
+            addItem(produto);
         }
-
         router.push("/customer/checkout");
     };
 
-    const botaoDesabilitado = Boolean(esgotado || limiteAtingido || isNavigating || quantidade > estoqueRestante);
+    const botaoDesabilitado = Boolean(esgotado || limiteAtingido || isNavigating);
 
     return (
         <Box minH="100vh">
             <HeaderCarrinho />
             <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <VStack spacing={6} align="start" w="full">
+                <VStack gap={6} align="start" w="full">
                     <Heading as="h1" size="xl" color="gray.800">
                         {produto.titulo}
                     </Heading>
@@ -3358,7 +4903,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                         )}
 
                         <Text fontSize="2xl" fontWeight="bold" color="green.600" mb={2}>
-                            R$ {produto.preco.toFixed(2)}
+                            R$ {Number(produto.preco).toFixed(2)}
                         </Text>
 
                         <Text fontSize="sm" color={esgotado ? "red.500" : "gray.600"} mb={1}>
@@ -3376,7 +4921,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                         )}
 
                         {!esgotado && estoqueRestante > 0 && (
-                            <HStack spacing={4} mb={6} align="center">
+                            <HStack gap={4} mb={6} align="center">
                                 <Text fontWeight="medium">Quantidade:</Text>
                                 <HStack>
                                     <Button
@@ -3396,12 +4941,6 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                     </Button>
                                 </HStack>
                             </HStack>
-                        )}
-
-                        {erroEstoque && !isNavigating && (
-                            <Text color="red.500" fontSize="sm" mb={4}>
-                                A quantidade selecionada excede o estoque disponível.
-                            </Text>
                         )}
 
                         <Button
@@ -3433,14 +4972,11 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                     <Text fontSize="sm" color="gray.600" mb={4}>
                                         Região de Produção: {artesao.regiaoProducao}
                                     </Text>
-                                    <Button
-                                        as={Link}
-                                        href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}
-                                        size="sm"
-                                        variant="outline"
-                                    >
-                                        Ver Perfil do Artesão
-                                    </Button>
+                                    <NextLink href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}>
+                                        <Button size="sm" variant="outline">
+                                            Ver Perfil do Artesão
+                                        </Button>
+                                    </NextLink>
                                 </Box>
                             ) : (
                                 <Text fontSize="sm" color="gray.500">Informações do artesão não disponíveis.</Text>
@@ -3452,9 +4988,8 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         </Box>
     );
 }
-
 ==================================================
-ARQUIVO: src/app/provider.tsx
+ARQUIVO: ./src/app/provider.tsx
 ==================================================
 "use client";
 
@@ -3470,7 +5005,7 @@ export function Provider({ children }: ProviderProps) {
   return <ChakraProvider value={system}>{children}</ChakraProvider>;
 }
 ==================================================
-ARQUIVO: src/services/addressService.ts
+ARQUIVO: ./src/services/addressService.ts
 ==================================================
 import { apiService } from './apiService';
 import { Customer, Endereco } from '@/types';
@@ -3490,7 +5025,7 @@ export const addressService = {
 };
 
 ==================================================
-ARQUIVO: src/services/apiService.ts
+ARQUIVO: ./src/services/apiService.ts
 ==================================================
 import axios from 'axios';
 
@@ -3500,7 +5035,7 @@ export const apiService = axios.create({
 });
 
 ==================================================
-ARQUIVO: src/services/orderService.ts
+ARQUIVO: ./src/services/orderService.ts
 ==================================================
 import { apiService } from './apiService';
 import { Order } from '@/types';
@@ -3519,7 +5054,7 @@ export const orderService = {
 };
 
 ==================================================
-ARQUIVO: src/services/paymentService.ts
+ARQUIVO: ./src/services/paymentService.ts
 ==================================================
 import { MetodoPagamento, Pagamento } from '@/types';
 
@@ -3536,89 +5071,115 @@ export const paymentService = {
 };
 
 ==================================================
-ARQUIVO: src/services/productService.ts
+ARQUIVO: ./src/services/productService.ts
 ==================================================
 import { apiService } from './apiService';
-import { Product } from "@/types/product";
+import { Product, CriarProductDTO, AtualizarProductDTO } from '@/types/product';
 
 export const productService = {
-    async getAll(): Promise<Product[]> {
-        try {
-            const response = await apiService.get<Product[]>("/products");
-            return response.data;
-        } catch (error) {
-            console.error("Erro ao buscar produtos:", error);
-            throw error;
-        }
-    },
+  async getAll(): Promise<Product[]> {
+    try {
+      const response = await apiService.get<Product[]>('/products');
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar produtos:', error);
+      throw error;
+    }
+  },
 
-    async getByCategory(categoria: string): Promise<Product[]> {
-        try {
-            const response = await apiService.get<Product[]>("/products", {
-                params: { categoria },
-            });
-            return response.data;
-        } catch (error) {
-            console.error(`Erro ao buscar produtos da categoria "${categoria}":`, error);
-            throw error;
-        }
-    },
+  async getByCategory(categoria: string): Promise<Product[]> {
+    try {
+      const response = await apiService.get<Product[]>('/products', {
+        params: { categoria },
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao buscar produtos da categoria "${categoria}":`, error);
+      throw error;
+    }
+  },
 
-    async getById(id: string): Promise<Product> {
-        try {
-            const response = await apiService.get<Product>(`/products/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error(`Erro ao buscar produto ${id}:`, error);
-            throw error;
-        }
-    },
+  async getById(id: string | number): Promise<Product> {
+    try {
+      const response = await apiService.get<Product>(`/products/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao buscar produto ${id}:`, error);
+      throw error;
+    }
+  },
 
-    // Busca combinada: aceita qualquer combinação de categoria, técnica e região.
-    // Os filtros omitidos (undefined) não são enviados na query.
-    async search(
-        filters: Partial<Pick<Product, "categoria" | "tecnica" | "regiaoProducao">>
-    ): Promise<Product[]> {
-        try {
-            const response = await apiService.get<Product[]>("/products", {
-                params: filters,
-            });
-            return response.data;
-        } catch (error) {
-            console.error("Erro ao buscar produtos com filtros:", filters, error);
-            throw error;
-        }
-    },
+  async search(
+    filters: Partial<Pick<Product, 'categoria' | 'tecnica' | 'regiaoProducao'>>
+  ): Promise<Product[]> {
+    try {
+      const response = await apiService.get<Product[]>('/products', {
+        params: filters,
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar produtos com filtros:', filters, error);
+      throw error;
+    }
+  },
 
-    // Busca por texto livre: usa o parâmetro "q" do json-server, que procura
-    // o termo em TODOS os campos do produto (título, descrição, técnica, etc.)
-    async searchByText(query: string): Promise<Product[]> {
-        try {
-            const response = await apiService.get<Product[]>("/products", {
-                params: { q: query },
-            });
-            return response.data;
-        } catch (error) {
-            console.error(`Erro ao buscar produtos com o termo "${query}":`, error);
-            throw error;
-        }
-    },
+  async searchByText(query: string): Promise<Product[]> {
+    try {
+      const response = await apiService.get<Product[]>('/products', {
+        params: { q: query },
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao buscar produtos com o termo "${query}":`, error);
+      throw error;
+    }
+  },
 
-    async getByArtesao(idArtesao: string): Promise<Product[]> {
-        try {
-            const response = await apiService.get<Product[]>("/products", {
-                params: { idArtesao },
-            });
-            return response.data;
-        } catch (error) {
-            console.error(`Erro ao buscar produtos do artesão ${idArtesao}:`, error);
-            throw error;
-        }
-    },
+  async getByArtesao(idArtesao: string): Promise<Product[]> {
+    try {
+      const response = await apiService.get<Product[]>('/products', {
+        params: { idArtesao },
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao buscar produtos do artesão ${idArtesao}:`, error);
+      throw error;
+    }
+  },
+
+  // --- MÉTODOS CRUD (HU-67 a HU-69) ---
+
+  async create(payload: CriarProductDTO): Promise<Product> {
+    try {
+      const response = await apiService.post<Product>('/products', payload);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao criar produto na API:', error);
+      throw error;
+    }
+  },
+
+  async update(id: string | number, payload: AtualizarProductDTO): Promise<Product> {
+    try {
+      const response = await apiService.patch<Product>(`/products/${id}`, payload);
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao atualizar parcialmente o produto ${id}:`, error);
+      throw error;
+    }
+  },
+
+  async delete(id: string | number): Promise<void> {
+    try {
+      await apiService.delete(`/products/${id}`);
+    } catch (error) {
+      console.error(`Erro ao remover produto ${id}:`, error);
+      throw error;
+    }
+  },
 };
-
 ==================================================
-ARQUIVO: src/services/userService.ts
+ARQUIVO: ./src/services/userService.ts
 ==================================================
 import { apiService } from './apiService';
 import { Customer, Artesao, Admin } from '@/types';
@@ -3695,7 +5256,7 @@ export const userService = {
 };
 
 ==================================================
-ARQUIVO: src/store/cartStore.ts
+ARQUIVO: ./src/store/cartStore.ts
 ==================================================
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
@@ -3780,7 +5341,7 @@ export const useCartStore = create<CartStore>()(
   )
 );
 ==================================================
-ARQUIVO: src/store/sessionStore.ts
+ARQUIVO: ./src/store/sessionStore.ts
 ==================================================
 'use client';
 
@@ -3835,7 +5396,7 @@ export const sessionStore = create<SessionState>()(
     )
 );
 ==================================================
-ARQUIVO: src/theme.ts
+ARQUIVO: ./src/theme.ts
 ==================================================
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
@@ -3879,7 +5440,7 @@ const config = defineConfig({
 
 export const system = createSystem(defaultConfig, config);
 ==================================================
-ARQUIVO: src/types/admin.ts
+ARQUIVO: ./src/types/admin.ts
 ==================================================
 export interface Admin {
     nome: string,
@@ -3888,7 +5449,7 @@ export interface Admin {
 }
 
 ==================================================
-ARQUIVO: src/types/artesao.ts
+ARQUIVO: ./src/types/artesao.ts
 ==================================================
 export interface Artesao {
     id: string;
@@ -3902,7 +5463,7 @@ export interface Artesao {
 }
 
 ==================================================
-ARQUIVO: src/types/customer.ts
+ARQUIVO: ./src/types/customer.ts
 ==================================================
 export interface Customer {
     id: string;
@@ -3926,13 +5487,18 @@ export interface Endereco {
 }
 
 ==================================================
-ARQUIVO: src/types/index.ts
+ARQUIVO: ./src/types/index.ts
 ==================================================
+import { Artesao } from './artesao';
+import { Customer } from './customer';
+import { Product } from './product';
+import { Admin } from './admin';
+
 export * from './artesao';
 export * from './customer';
 export * from './product';
 export * from './admin';
-export * from './order'
+export * from './order';
 
 export interface RootData {
     artesaos: Artesao[];
@@ -3940,9 +5506,8 @@ export interface RootData {
     products: Product[];
     admin: Admin[];
 }
-
 ==================================================
-ARQUIVO: src/types/order.ts
+ARQUIVO: ./src/types/order.ts
 ==================================================
 import { Endereco } from "./customer";
 
@@ -3973,8 +5538,10 @@ export interface Order {
 }
 
 ==================================================
-ARQUIVO: src/types/product.ts
+ARQUIVO: ./src/types/product.ts
 ==================================================
+export type TipoProduto = 'unico' | 'lote';
+
 export interface Product {
     id: number;
     idArtesao: string;
@@ -3988,9 +5555,58 @@ export interface Product {
     quantidadeEstoque: number;
     dimensoes: string;
     linkImagens: string[];
+    imagem?: string;
+    tipo?: TipoProduto;
+    sku?: string;
+    prazoProducao?: number;
+    ativo?: boolean;
 }
 
 export interface CartItem {
     product: Product;
     quantity: number;
 }
+
+export type CriarProductDTO = Omit<Product, 'id'> & {
+    id?: number;
+};
+
+export type AtualizarProductDTO = Partial<Omit<Product, 'id' | 'idArtesao'>>;
+==================================================
+ARQUIVO: ./tsconfig.json
+==================================================
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
+

@@ -9,7 +9,7 @@ export interface Pagamento {
 }
 
 export interface OrderItem {
-    productId: number;
+    productId: string | number;
     titulo: string;
     precoUnitario: number;
     quantidade: number;

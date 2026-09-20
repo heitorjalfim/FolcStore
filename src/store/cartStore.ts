@@ -5,8 +5,8 @@ import { Product, CartItem } from "@/types/product";
 interface CartStore {
   items: CartItem[];
   addItem: (product: Product) => void;
-  removeItem: (productId: number) => void;
-  updateQuantity: (productId: number, quantity: number) => void;
+  removeItem: (productId: string | number) => void;
+  updateQuantity: (productId: string | number, quantity: number) => void;
   clearCart: () => void;
   totalItems: () => number;
   totalPrice: () => number;
@@ -20,13 +20,13 @@ export const useCartStore = create<CartStore>()(
       addItem: (product: Product) => {
         set((state) => {
           const existing = state.items.find(
-            (item) => item.product.id === product.id
+            (item) => String(item.product.id) === String(product.id)
           );
 
           if (existing) {
             return {
               items: state.items.map((item) =>
-                item.product.id === product.id
+                String(item.product.id) === String(product.id)
                   ? { ...item, quantity: item.quantity + 1 }
                   : item
               ),
@@ -39,13 +39,13 @@ export const useCartStore = create<CartStore>()(
         });
       },
 
-      removeItem: (productId: number) => {
+      removeItem: (productId: string | number) => {
         set((state) => ({
-          items: state.items.filter((item) => item.product.id !== productId),
+          items: state.items.filter((item) => String(item.product.id) !== String(productId)),
         }));
       },
 
-      updateQuantity: (productId: number, quantity: number) => {
+      updateQuantity: (productId: string | number, quantity: number) => {
         if (quantity <= 0) {
           get().removeItem(productId);
           return;
@@ -53,7 +53,7 @@ export const useCartStore = create<CartStore>()(
 
         set((state) => ({
           items: state.items.map((item) =>
-            item.product.id === productId ? { ...item, quantity } : item
+            String(item.product.id) === String(productId) ? { ...item, quantity } : item
           ),
         }));
       },
@@ -74,9 +74,9 @@ export const useCartStore = create<CartStore>()(
       },
     }),
     {
-      name: "cart-storage", // localStorage key
+      name: "cart-storage",
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ items: state.items }), // only persist items, not the action functions
+      partialize: (state) => ({ items: state.items }),
     }
   )
 );
