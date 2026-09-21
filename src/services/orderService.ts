@@ -39,5 +39,45 @@ export const orderService = {
             console.error("Erro ao declarar postagem:", error);
             throw error;
         }
+    },
+
+    async getComprasPorComprador(idComprador: string): Promise<Order[]> {
+        try {
+            const response = await apiService.get<Order[]>('/orders', {
+                params: { 
+                    idComprador: idComprador,
+                    _t: new Date().getTime() 
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao buscar compras do cliente:", error);
+            throw error;
+        }
+    },
+
+    async declararRecebimento(idPedido: string): Promise<Order> {
+        try {
+            const response = await apiService.patch<Order>(`/orders/${idPedido}`, {
+                situacaoEntrega: "Entregue"
+            });
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao declarar recebimento:", error);
+            throw error;
+        }
+    },
+
+    async marcarComoAvaliado(idPedido: string): Promise<Order> {
+        try {
+            const response = await apiService.patch<Order>(`/orders/${idPedido}`, {
+                avaliado: true
+            });
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao marcar pedido como avaliado:", error);
+            throw error;
+        }
     }
+    
 };

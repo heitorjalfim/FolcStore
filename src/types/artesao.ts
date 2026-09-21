@@ -7,4 +7,6 @@ export interface Artesao {
     regiaoProducao: string;
     telefone: string;
     biografia: string;
+    notaMedia?: number;
+    totalAvaliacoes?: number;
 }

@@ -109,7 +109,7 @@ export default function Home() {
                     >
                         <InputGroup startElement={<LuSearch color="var(--chakra-colors-neutral-muted)" />} flex={1}>
                             <Input
-                                placeholder="Search crafts, artisans, city or material"
+                                placeholder="Procure por tipo, material, artesão"
                                 value={searchInput}
                                 onChange={(e) => setSearchInput(e.target.value)}
                                 onKeyDown={(e) => {

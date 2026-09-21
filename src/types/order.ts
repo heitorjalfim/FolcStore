@@ -23,4 +23,5 @@ export interface Order {
     pagamento: Pagamento;
     situacaoEntrega: "aguardadoEnvio" | "Enviado" | "Entregue";
     codigoPostagem: string | null;
+    avaliado?: boolean; 
 }
