@@ -47,6 +47,7 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 21/09/2026 | Gemini | Resolução de cache de navegador em requisições GET utilizando um timestamp (_t) no Axios. | Frontend, Consumo de API | Sim | O código foi incorporado no orderService para forçar a exibição de vendas recém-feitas na tela do artesão em tempo real.
 21/09/2026 | Gemini | Unificação das páginas de Checkout e Pagamento e adição de fluxo de envio ("Declarar Postagem") via PATCH. | Frontend, Fluxo de Compra e Envios | Sim | A equipe substituiu os fluxos separados por um checkout mais robusto e validou os modais de inserção de código de rastreio.
 21/09/2026 | Gemini	Criação do Dashboard Administrativo com cards de estatísticas (Total Arrecadado, Itens Vendidos, Pendências). | Frontend, Dashboard Admin | Sim | A equipe testou o fluxo de login de administrador e a renderização correta dos cálculos com base na API.
+| 21/09/2026 | Gemini | Implementação do endpoint de avaliações, página de acompanhamento de pedidos para o comprador (`/customer/pedidos`), fluxos de confirmação de recebimento, submissão de reviews (nota 0-10 com limite de 2000 caracteres) e atualização dinâmica de nota média do artesão. | Backend, Avaliações, Pedidos e Vitrine | Sim | A equipe validou a persistência dos dados no json-server, a restrição de caracteres/nota e a listagem correta das últimas 5 reviews e nota média na página do produto. |
 
 ---
 
@@ -136,6 +137,14 @@ Prompt ou descrição:
 
 Como a resposta foi utilizada:
 > A IA gerou um painel de administração estruturado, consumindo o serviço de pedidos (/orders) para calcular e renderizar cards de estatísticas globais (Volume Financeiro, Total de Pedidos, Peças Vendidas e Entregas Pendentes) usando os componentes visuais do Chakra UI.
+
+### Prompt 11
+
+Prompt ou descrição:
+> "crie um endpoint para avaliações, a interface deve ter idComprador, idArtesao, idProduto, notaMedia... crie uma pagina para /customer/pedidos que deve permitir usuarios verem seus pedidos... quando declarado recebido o produto, comprador tem opção de deixar um review de 0 a 10 pro produto com uma descrição de até 2000 caracteres. faça aparecer as 5 ultimas reviews e a nota média do artesao em seus produtos"
+
+Como a resposta foi utilizada:
+> A IA auxiliou na criação do ecossistema completo de avaliações (endpoint `/avaliacoes`, cálculo dinâmico de nota média e contagem no perfil do artesão), desenvolvimento da página de gerenciamento de pedidos do cliente com rastreio e botões de confirmação de entrega, além da estruturação do modal de submissão de reviews (0 a 10 com limitação de 2000 caracteres) e exibição das 5 últimas reviews na vitrine pública do produto.
 
 ---
 
