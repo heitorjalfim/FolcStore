@@ -1,10 +1,10 @@
 === REPOSITÓRIO DA EQUIPE (COMPLETO) ===
-DATA DA EXTRAÇÃO: Sun, Sep 20, 2026  6:49:30 PM
+DATA DA EXTRAÇÃO: Mon 21 Sep 09:59:14 -03 2026
 
 --- 1. GIT STATUS E BRANCH ATUAL ---
  M dump_projeto_equipe.txt
-?? extrair_projeto_equipe.sh
-feature/PI4-88-cadastro-peca-unica
+ M extrair_projeto_equipe.sh
+main
 
 --- 2. ÁRVORE COMPLETA DE PASTAS E ARQUIVOS ---
 .
@@ -31,6 +31,7 @@ feature/PI4-88-cadastro-peca-unica
 ./public/window.svg
 ./README.md
 ./routes.json
+./running-db.json
 ./src
 ./src/app
 ./src/app/admin
@@ -41,6 +42,12 @@ feature/PI4-88-cadastro-peca-unica
 ./src/app/artesao/login
 ./src/app/artesao/login/page.tsx
 ./src/app/artesao/page.tsx
+./src/app/artesao/produtos
+./src/app/artesao/produtos/novo-lote
+./src/app/artesao/produtos/novo-lote/page.tsx
+./src/app/artesao/produtos/novo-unico
+./src/app/artesao/produtos/novo-unico/page.tsx
+./src/app/artesao/produtos/page.tsx
 ./src/app/artesao/register
 ./src/app/artesao/register/page.tsx
 ./src/app/components
@@ -1492,8 +1499,8 @@ ARQUIVO: ./next-env.d.ts
 ==================================================
 /// <reference types="next" />
 /// <reference types="next/image-types/global" />
-import "./.next/types/routes.d.ts";
-import "./.next/types/root-params.d.ts";
+import "./.next/dev/types/routes.d.ts";
+import "./.next/dev/types/root-params.d.ts";
 
 // NOTE: This file should not be edited
 // see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
@@ -1589,6 +1596,220 @@ ARQUIVO: ./routes.json
   "/api/v1/*": "/$1"
 }
 
+==================================================
+ARQUIVO: ./running-db.json
+==================================================
+{
+  "artesaos": [
+    {
+      "nome": "Maria da Silva",
+      "cpf": "012.345.678-90",
+      "email": "artesao@gmail.com",
+      "senha": "senha",
+      "regiaoProducao": "Olinda",
+      "telefone": "81999999999",
+      "biografia": "Claro! Aqui vai uma versão curta e profissional: Biografia de artesão [Nome do artesão] é um artesão dedicado à criação de peças únicas, feitas à mão com criatividade, cuidado e atenção aos detalhes. Seu trabalho valoriza a tradição artesanal e transforma materiais em objetos que carregam personalidade, beleza e significado. Se quiser, posso adaptar para um artesão de madeira, cerâmica, palha, couro, tecido ou outro material, deixando a biografia mais pessoal.",
+      "id": "e1eK141d4u70m471c4m3n73"
+    }
+  ],
+  "customers": [
+    {
+      "nome": "João Cliente",
+      "email": "comprador@gmail.com",
+      "senha": "senha",
+      "cpf": "123.456.789-00",
+      "telefone": "81988887777",
+      "enderecos": [
+        {
+          "id": "end-1",
+          "cep": "50000-000",
+          "bairro": "São Thomaz",
+          "rua": "Rua da avenida",
+          "numero": "97",
+          "complemento": "casa",
+          "cidade": "Recife",
+          "estado": "PE"
+        }
+      ],
+      "id": "3s3mp3B0t4n0F1nnn"
+    }
+  ],
+  "products": [
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Vaso de Barro Decorativo",
+      "descricao": "Vaso artesanal feito com argila regional.",
+      "materiaPrima": "Argila",
+      "tecnica": "Modelagem Manual",
+      "regiaoProducao": "Alto do Moura",
+      "categoria": "Decoração",
+      "preco": 95,
+      "quantidadeEstoque": 12,
+      "dimensoes": "20cm x 15cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "posseee"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Boneco de Barro Vitalino",
+      "descricao": "Escultura figurativa inspirada no estilo tradicional pernambucano.",
+      "materiaPrima": "Argila",
+      "tecnica": "Escultura em Cerâmica",
+      "regiaoProducao": "Caruaru",
+      "categoria": "Arte Sacra e Escultura",
+      "preco": 150,
+      "quantidadeEstoque": 5,
+      "dimensoes": "30cm x 12cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-02"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Bolsa de Palha Artesanal",
+      "descricao": "Bolsa trançada à mão com palha de carnaúba, ideal para o dia a dia.",
+      "materiaPrima": "Palha de Carnaúba",
+      "tecnica": "Trançado",
+      "regiaoProducao": "Norte Pernambucano",
+      "categoria": "Acessórios",
+      "preco": 120,
+      "quantidadeEstoque": 8,
+      "dimensoes": "35cm x 25cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-03"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Renda de Bilro - Toalha de Mesa",
+      "descricao": "Toalha de mesa produzida artesanalmente com a técnica tradicional de renda de bilro.",
+      "materiaPrima": "Linha de Algodão",
+      "tecnica": "Renda de Bilro",
+      "regiaoProducao": "Nísia Floresta",
+      "categoria": "Cama, Mesa e Banho",
+      "preco": 220,
+      "quantidadeEstoque": 4,
+      "dimensoes": "120cm x 80cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-04"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "titulo": "Fruteira de Madeira Maciça",
+      "descricao": "Fruteira esculpida em madeira de reaproveitamento com acabamento em cera natural.",
+      "materiaPrima": "Madeira Reciclada",
+      "tecnica": "Entalhe em Madeira",
+      "regiaoProducao": "Recife",
+      "categoria": "Utilidades Domésticas",
+      "preco": 180,
+      "quantidadeEstoque": 6,
+      "dimensoes": "40cm x 20cm",
+      "linkImagens": [
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
+      ],
+      "id": "prod-05"
+    },
+    {
+      "sku": "LOT-7924",
+      "titulo": "a",
+      "descricao": "1",
+      "materiaPrima": "1",
+      "tecnica": "Torno cerâmico e queima a lenha",
+      "regiaoProducao": "Olinda",
+      "categoria": "Cerâmica Tradicional",
+      "preco": 1,
+      "tipo": "lote",
+      "quantidadeEstoque": 1,
+      "prazoProducao": 5,
+      "idArtesao": "1",
+      "nomeArtesao": "Maria da Silva",
+      "dimensoes": {
+        "altura": 12,
+        "largura": 20,
+        "profundidade": 20,
+        "peso": 0.7
+      },
+      "guiaCuidados": "Lavar com esponja macia e sabão neutro.",
+      "galeriaImagens": [
+        "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80"
+      ],
+      "ativo": true,
+      "id": "prod-7925",
+      "linkImagens": [
+        "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80"
+      ],
+      "imagem": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80",
+      "dataCriacao": "2026-09-20T23:28:47.925Z"
+    }
+  ],
+  "productSuggestions": [
+    {
+      "id": "sug-01",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Porta-copos de Madeira Entalhada",
+      "descricao": "Sugestão de um kit com 6 porta-copos com temática de cordel e madeira reaproveitada.",
+      "categoriaDesejada": "Utilidades Domésticas",
+      "status": "Pendente",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-02",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Rede de Descanso Bordada à Mão",
+      "descricao": "Gostaria de ver redes de casal com detalhes de renascença ou bordado regional na varanda.",
+      "categoriaDesejada": "Cama, Mesa e Banho",
+      "status": "Em Análise",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-03",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Abajur de Chita com Base de Cerâmica",
+      "descricao": "Luminária de mesa com cúpula forrada em tecido de chita colorida.",
+      "categoriaDesejada": "Decoração",
+      "status": "Pendente",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-04",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Carteira de Couro Bovino Estampado",
+      "descricao": "Carteira masculina e feminina em couro legítimo com entalhes inspirados no cangaço.",
+      "categoriaDesejada": "Acessórios",
+      "status": "Aprovado",
+      "dataCriacao": "2026-09-19"
+    },
+    {
+      "id": "sug-05",
+      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "tituloSugerido": "Prato de Parede em Cerâmica Vitrificada",
+      "descricao": "Prato decorativo pintado à mão com traços do barroco pernambucano.",
+      "categoriaDesejada": "Arte Sacra e Escultura",
+      "status": "Pendente",
+      "dataCriacao": "2026-09-19"
+    }
+  ],
+  "admins": [
+    {
+      "nome": "Cirio Adinilson",
+      "email": "admin@gmail.com",
+      "senha": "senha",
+      "id": "wasd"
+    }
+  ],
+  "orders": []
+}
 ==================================================
 ARQUIVO: ./src/app/admin/login/page.tsx
 ==================================================
@@ -1908,29 +2129,36 @@ ARQUIVO: ./src/app/artesao/page.tsx
 ==================================================
 "use client";
 
-import AvaliacaoCard from "../components/AvaliacaoCard";
-import { useEffect, useState } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import { useRouter } from 'next/navigation';
+import NextLink from 'next/link';
 import { sessionStore } from '@/store/sessionStore';
+import AvaliacaoCard from "../components/AvaliacaoCard";
+import { Box, Button, Container, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/react';
+import { FiPackage, FiLogOut } from 'react-icons/fi';
 
-// TODO: substituir esse mock pela lista de avaliações reais desse artesão,
-// buscada do backend, quando a API estiver pronta.
+// Função vazia estável para subscrição de hidratação
+const emptySubscribe = () => () => {};
+
 export default function Artesao() {
-    const [mounted, setMounted] = useState(false);
     const router = useRouter();
 
-    // Best Practice: Always use selectors to extract Zustand state to prevent unnecessary re-renders.
+    // Padrão do React 19 para detetar o cliente sem recorrer a setState em useEffect
+    const mounted = useSyncExternalStore(
+        emptySubscribe,
+        () => true,
+        () => false
+    );
+
     const logoutArtesao = sessionStore((state) => state.logoutArtesao);
     const isArtesaoLogged = sessionStore((state) => state.isArtesaoLogged);
     const artesao = sessionStore((state) => state.artesao);
-
-    useEffect(() => setMounted(true), []);
 
     useEffect(() => {
         if (mounted && !isArtesaoLogged()) {
             router.push('/artesao/login');
         }
-    }, [mounted, isArtesaoLogged]);
+    }, [mounted, isArtesaoLogged, router]);
 
     if (!mounted || !isArtesaoLogged()) return null;
 
@@ -1945,31 +2173,1495 @@ export default function Artesao() {
         { nota: 5, comentario: "Superou minhas expectativas.", data: "01/09/2026" },
     ];
 
-    let conteudo;
-    if (avaliacoes.length === 0) {
-        conteudo = <p>Ainda não há avaliações para esse vendedor.</p>;
-    } else {
-        const soma = avaliacoes.reduce((total, avaliacao) => total + avaliacao.nota, 0);
-        const media = soma / avaliacoes.length;
-
-        conteudo = (
-            <div>
-                <p>Nota média: {media.toFixed(1)} / 5</p>
-                {avaliacoes.map((avaliacao, index) => (
-                    <AvaliacaoCard key={index} avaliacao={avaliacao} />
-                ))}
-            </div>
-        );
-    }
+    const soma = avaliacoes.reduce((total, a) => total + a.nota, 0);
+    const media = (soma / avaliacoes.length).toFixed(1);
 
     return (
-        <div>
-            <h1>Avaliações do artesão</h1>
-            {conteudo}
-        </div>
+        <Box minH="100vh" bg="gray.50" py={8}>
+            <Container maxW="1000px">
+                {/* Barra de Ações do Artesão */}
+                <Box bg="white" p={6} borderRadius="xl" shadow="sm" borderWidth="1px" borderColor="gray.200" mb={8}>
+                    <Flex justify="space-between" align="center">
+                        <VStack align="start" gap={1}>
+                            <Heading size="lg" color="brand.500">
+                                Olá, {artesao?.nome || 'Mestre Artesão'}!
+                            </Heading>
+                            <Text color="gray.600" fontSize="sm">
+                                Polo Regional: <b>{artesao?.regiaoProducao || 'Pernambuco'}</b>
+                            </Text>
+                        </VStack>
+
+                        <HStack gap={3}>
+                            <NextLink href="/artesao/produtos">
+                                <Button colorPalette="brand" size="md">
+                                    <HStack gap={2}>
+                                        <FiPackage />
+                                        <Text>Gerenciar Catálogo</Text>
+                                    </HStack>
+                                </Button>
+                            </NextLink>
+
+                            <Button variant="outline" colorPalette="red" size="md" onClick={handleLogout}>
+                                <HStack gap={2}>
+                                    <FiLogOut />
+                                    <Text>Sair</Text>
+                                </HStack>
+                            </Button>
+                        </HStack>
+                    </Flex>
+                </Box>
+
+                {/* Avaliações */}
+                <Box bg="white" p={6} borderRadius="xl" shadow="sm" borderWidth="1px" borderColor="gray.200">
+                    <Heading size="md" mb={2}>Avaliações do Vendedor</Heading>
+                    <Text fontSize="sm" color="gray.600" mb={6}>Nota média: <b>{media} / 5</b></Text>
+
+                    <VStack align="stretch" gap={4}>
+                        {avaliacoes.map((item, idx) => (
+                            <AvaliacaoCard key={idx} avaliacao={item} />
+                        ))}
+                    </VStack>
+                </Box>
+            </Container>
+        </Box>
     );
 }
+==================================================
+ARQUIVO: ./src/app/artesao/produtos/novo-lote/page.tsx
+==================================================
+'use client';
 
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import NextLink from 'next/link';
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Text,
+  Input,
+  Textarea,
+  Button,
+  Field,
+  Badge,
+  Container,
+  Heading,
+  Image,
+  VStack,
+  HStack,
+  Card,
+} from '@chakra-ui/react';
+import { FiArrowLeft, FiCheck, FiEye, FiTruck, FiShield, FiAlertCircle } from 'react-icons/fi';
+import { productService } from '@/services/productService';
+import { sessionStore } from '@/store/sessionStore';
+import { CriarProdutoDTO } from '@/types/product';
+
+export default function NovoProdutoLotePage() {
+  const router = useRouter();
+  const artesao = sessionStore((state) => state.artesao);
+
+  const [titulo, setTitulo] = useState('');
+  const [categoria, setCategoria] = useState('Cerâmica Tradicional');
+  const [regiaoProducao, setRegiaoProducao] = useState(artesao?.regiaoProducao || 'Caruaru, PE');
+  const [nomeArtesao, setNomeArtesao] = useState(artesao?.nome || '');
+  const [descricao, setDescricao] = useState('');
+  const [materiaPrima, setMateriaPrima] = useState('');
+  const [tecnica, setTecnica] = useState('');
+  const [preco, setPreco] = useState('');
+  const [quantidadeEstoque, setQuantidadeEstoque] = useState('');
+  const [prazoProducao, setPrazoProducao] = useState('5');
+  const [sku, setSku] = useState('');
+  const [guiaCuidados, setGuiaCuidados] = useState('');
+  const [urlFotoPrincipal, setUrlFotoPrincipal] = useState(
+    'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80'
+  );
+  const [fotoAdicional1, setFotoAdicional1] = useState('');
+
+  const [altura, setAltura] = useState('');
+  const [largura, setLargura] = useState('');
+  const [profundidade, setProfundidade] = useState('');
+  const [peso, setPeso] = useState('');
+
+  // Estados de validação granular (PI4-93, PI4-94, PI4-95)
+  const [erros, setErros] = useState<Record<string, string>>({});
+  const [carregando, setCarregando] = useState(false);
+
+  const validarFormulario = () => {
+    const novosErros: Record<string, string> = {};
+
+    if (!titulo.trim()) {
+      novosErros.titulo = 'O título do lote é obrigatório.';
+    }
+
+    if (!descricao.trim()) {
+      novosErros.descricao = 'A história e significado cultural são obrigatórios.';
+    }
+
+    // PI4-95: Validação de preço
+    const precoNum = parseFloat(preco.replace(',', '.'));
+    if (!preco || isNaN(precoNum) || precoNum <= 0) {
+      novosErros.preco = 'Informe um preço válido maior que zero (R$ > 0,00).';
+    }
+
+    // PI4-93: Validação de estoque inicial (inteiro >= 1)
+    const estoqueNum = Number(quantidadeEstoque);
+    if (!quantidadeEstoque || isNaN(estoqueNum) || estoqueNum < 1 || !Number.isInteger(estoqueNum)) {
+      novosErros.quantidadeEstoque = 'O estoque de lote deve ser um número inteiro de no mínimo 1 peça.';
+    }
+
+    // PI4-94: Validação de prazo de produção (inteiro >= 0)
+    const prazoNum = Number(prazoProducao);
+    if (prazoProducao === '' || isNaN(prazoNum) || prazoNum < 0 || !Number.isInteger(prazoNum)) {
+      novosErros.prazoProducao = 'O prazo de produção deve ser de 0 (pronta entrega) ou mais dias úteis.';
+    }
+
+    setErros(novosErros);
+    return Object.keys(novosErros).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validarFormulario()) {
+      return;
+    }
+
+    try {
+      setCarregando(true);
+
+      const listaImagens = [urlFotoPrincipal.trim(), fotoAdicional1.trim()].filter(Boolean);
+      const skuFinal = sku.trim() || `LOT-${Date.now().toString().slice(-4)}`;
+
+      // PI4-95: Contrato estrito com tipo: 'lote'
+      const payload: CriarProdutoDTO = {
+        sku: skuFinal,
+        titulo: titulo.trim(),
+        descricao: descricao.trim(),
+        materiaPrima: materiaPrima.trim() || 'Argila regional cozida',
+        tecnica: tecnica.trim() || 'Torno cerâmico e queima a lenha',
+        regiaoProducao: regiaoProducao.trim() || artesao?.regiaoProducao || 'Caruaru, PE',
+        categoria,
+        preco: parseFloat(preco.replace(',', '.')),
+        tipo: 'lote',
+        quantidadeEstoque: parseInt(quantidadeEstoque, 10),
+        prazoProducao: parseInt(prazoProducao, 10),
+        idArtesao: artesao?.id || 'e1eK141d4u70m471c4m3n73',
+        nomeArtesao: nomeArtesao.trim() || artesao?.nome || 'Severino Vitalino',
+        dimensoes: {
+          altura: parseFloat(altura) || 12,
+          largura: parseFloat(largura) || 20,
+          profundidade: parseFloat(profundidade) || 20,
+          peso: parseFloat(peso) || 0.7,
+        },
+        guiaCuidados: guiaCuidados.trim() || 'Lavar com esponja macia e sabão neutro.',
+        galeriaImagens: listaImagens,
+        ativo: true,
+      };
+
+      await productService.create(payload);
+      router.push('/artesao/produtos');
+    } catch (err) {
+      console.error('Erro ao cadastrar lote:', err);
+      setErros({ api: 'Falha ao registrar lote na API. Verifique a conexão com o servidor local.' });
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  return (
+    <Box minH="100vh" bg="gray.50" py={8}>
+      <Container maxW="1200px">
+        <HStack justify="space-between" mb={6}>
+          <NextLink href="/artesao/produtos">
+            <Button variant="ghost" size="sm">
+              <HStack gap={2}>
+                <FiArrowLeft />
+                <Text>Voltar ao Catálogo</Text>
+              </HStack>
+            </Button>
+          </NextLink>
+
+          <Badge colorPalette="brand" size="lg" px={3} py={1}>
+            HU-89 (PI4-92 a PI4-95): Cadastro em Lote
+          </Badge>
+        </HStack>
+
+        <Grid templateColumns={{ base: '1fr', lg: '240px 1fr 300px' }} gap={6} alignItems="start">
+          
+          {/* Stepper lateral */}
+          <Box bg="white" p={5} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+            <Text fontWeight="bold" fontSize="sm" color="gray.900" mb={1}>
+              Cadastro em Lote
+            </Text>
+            <Text fontSize="xs" color="gray.500" mb={6}>
+              Peças seriadas com estoque variável e prazo de confecção.
+            </Text>
+
+            <VStack align="stretch" gap={4} fontSize="xs">
+              <HStack gap={2.5} color="brand.600" fontWeight="bold">
+                <Box p={1} bg="brand.50" borderRadius="full">
+                  <FiCheck size={14} />
+                </Box>
+                <Text>1. Informações Básicas</Text>
+              </HStack>
+              <HStack gap={2.5} color="gray.500">
+                <Box p={1} bg="gray.100" borderRadius="full">
+                  <FiCheck size={14} />
+                </Box>
+                <Text>2. Imagens</Text>
+              </HStack>
+              <HStack gap={2.5} color="gray.500">
+                <Box p={1} bg="gray.100" borderRadius="full">
+                  <FiCheck size={14} />
+                </Box>
+                <Text>3. História Cultural</Text>
+              </HStack>
+              <HStack gap={2.5} color="gray.500">
+                <Box p={1} bg="gray.100" borderRadius="full">
+                  <FiCheck size={14} />
+                </Box>
+                <Text>4. Materiais & Dimensões</Text>
+              </HStack>
+              <HStack gap={2.5} color="gray.500">
+                <Box p={1} bg="gray.100" borderRadius="full">
+                  <FiCheck size={14} />
+                </Box>
+                <Text>5. Preço & Estoque</Text>
+              </HStack>
+            </VStack>
+          </Box>
+
+          {/* Formulário Central */}
+          <Box as="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={6}>
+            {erros.api && (
+              <Box bg="red.50" borderColor="red.200" borderWidth="1px" p={4} borderRadius="lg">
+                <HStack gap={2} color="red.600">
+                  <FiAlertCircle />
+                  <Text fontSize="sm" fontWeight="semibold">{erros.api}</Text>
+                </HStack>
+              </Box>
+            )}
+
+            {/* 1. Informações Básicas */}
+            <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+              <Heading size="sm" mb={4} color="gray.800">
+                1. Informações Básicas
+              </Heading>
+
+              <VStack gap={4} align="stretch">
+                <Field.Root invalid={!!erros.titulo} required>
+                  <Field.Label>Título do Lote de Produtos</Field.Label>
+                  <Input
+                    value={titulo}
+                    onChange={(e) => setTitulo(e.target.value)}
+                    placeholder="Ex: Tigela Cerâmica Vitrificada Massapê"
+                    bg="white"
+                  />
+                  {erros.titulo && (
+                    <Text color="red.500" fontSize="2xs" mt={1}>{erros.titulo}</Text>
+                  )}
+                </Field.Root>
+
+                <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={4}>
+                  <GridItem>
+                    <Field.Root required>
+                      <Field.Label>Categoria</Field.Label>
+                      <select
+                        value={categoria}
+                        onChange={(e) => setCategoria(e.target.value)}
+                        style={{
+                          width: '100%',
+                          padding: '8px 12px',
+                          borderRadius: '6px',
+                          border: '1px solid #E2E8F0',
+                          backgroundColor: 'white',
+                          fontSize: '14px',
+                        }}
+                      >
+                        <option value="Cerâmica Tradicional">Cerâmica Tradicional</option>
+                        <option value="Madeira e Xilogravura">Madeira e Xilogravura</option>
+                        <option value="Fibras Naturais">Fibras Naturais</option>
+                        <option value="Rendas e Bordados">Rendas e Bordados</option>
+                        <option value="Utilidades Domésticas">Utilidades Domésticas</option>
+                      </select>
+                    </Field.Root>
+                  </GridItem>
+
+                  <GridItem>
+                    <Field.Root required>
+                      <Field.Label>Polo Regional</Field.Label>
+                      <Input
+                        value={regiaoProducao}
+                        onChange={(e) => setRegiaoProducao(e.target.value)}
+                        placeholder="Ex: Caruaru, PE"
+                        bg="white"
+                      />
+                    </Field.Root>
+                  </GridItem>
+                </Grid>
+
+                <Field.Root required>
+                  <Field.Label>Nome do Artesão Responsável</Field.Label>
+                  <Input
+                    value={nomeArtesao}
+                    onChange={(e) => setNomeArtesao(e.target.value)}
+                    placeholder={artesao?.nome || 'Severino Vitalino'}
+                    bg="white"
+                  />
+                </Field.Root>
+              </VStack>
+            </Box>
+
+            {/* 2. Fotos da Peça */}
+            <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+              <Heading size="sm" mb={4} color="gray.800">
+                2. Imagens da Peça
+              </Heading>
+              <VStack gap={4} align="stretch">
+                <Field.Root required>
+                  <Field.Label>URL da Imagem Principal</Field.Label>
+                  <Input
+                    value={urlFotoPrincipal}
+                    onChange={(e) => setUrlFotoPrincipal(e.target.value)}
+                    placeholder="https://images.unsplash.com/..."
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>URL de Imagem Adicional (Opcional)</Field.Label>
+                  <Input
+                    value={fotoAdicional1}
+                    onChange={(e) => setFotoAdicional1(e.target.value)}
+                    placeholder="https://images.unsplash.com/..."
+                    bg="white"
+                  />
+                </Field.Root>
+              </VStack>
+            </Box>
+
+            {/* 3. História Cultural & Descrição */}
+            <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+              <Heading size="sm" mb={1} color="gray.800">
+                3. História e Significado Cultural *
+              </Heading>
+              <Text fontSize="xs" color="gray.500" mb={4}>
+                Descreva a narrativa, técnica e tradição transmitida através desta produção.
+              </Text>
+              <Field.Root invalid={!!erros.descricao} required>
+                <Textarea
+                  rows={4}
+                  value={descricao}
+                  onChange={(e) => setDescricao(e.target.value)}
+                  placeholder="Linha de utensílios utilitários inspirados nos traços artesanais de Caruaru..."
+                  bg="white"
+                />
+                {erros.descricao && (
+                  <Text color="red.500" fontSize="2xs" mt={1}>{erros.descricao}</Text>
+                )}
+              </Field.Root>
+            </Box>
+
+            {/* 4. Materiais e Dimensões */}
+            <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+              <Heading size="sm" mb={4} color="gray.800">
+                4. Especificações Técnicas
+              </Heading>
+
+              <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={4} mb={4}>
+                <Field.Root>
+                  <Field.Label>Matéria-Prima</Field.Label>
+                  <Input
+                    value={materiaPrima}
+                    onChange={(e) => setMateriaPrima(e.target.value)}
+                    placeholder="Ex: Argila regional e esmalte fosco"
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>Técnica Empregada</Field.Label>
+                  <Input
+                    value={tecnica}
+                    onChange={(e) => setTecnica(e.target.value)}
+                    placeholder="Ex: Torno cerâmico e queima a lenha"
+                    bg="white"
+                  />
+                </Field.Root>
+              </Grid>
+
+              <Grid templateColumns="repeat(4, 1fr)" gap={3} mb={4}>
+                <Field.Root>
+                  <Field.Label>Alt. (cm)</Field.Label>
+                  <Input
+                    type="number"
+                    value={altura}
+                    onChange={(e) => setAltura(e.target.value)}
+                    placeholder="12"
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>Larg. (cm)</Field.Label>
+                  <Input
+                    type="number"
+                    value={largura}
+                    onChange={(e) => setLargura(e.target.value)}
+                    placeholder="20"
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>Prof. (cm)</Field.Label>
+                  <Input
+                    type="number"
+                    value={profundidade}
+                    onChange={(e) => setProfundidade(e.target.value)}
+                    placeholder="20"
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>Peso (kg)</Field.Label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    value={peso}
+                    onChange={(e) => setPeso(e.target.value)}
+                    placeholder="0.7"
+                    bg="white"
+                  />
+                </Field.Root>
+              </Grid>
+
+              <Field.Root>
+                <Field.Label>Instruções de Cuidados</Field.Label>
+                <Input
+                  value={guiaCuidados}
+                  onChange={(e) => setGuiaCuidados(e.target.value)}
+                  placeholder="Ex: Pode ir ao micro-ondas. Lavar com esponja macia."
+                  bg="white"
+                />
+              </Field.Root>
+            </Box>
+
+            {/* 5. Preço, Estoque & Produção (PI4-93, PI4-94, PI4-95) */}
+            <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+              <Heading size="sm" mb={4} color="gray.800">
+                5. Preço, Estoque & Produção
+              </Heading>
+
+              <Grid templateColumns={{ base: '1fr', md: 'repeat(4, 1fr)' }} gap={4}>
+                {/* PI4-95: Preço */}
+                <Field.Root invalid={!!erros.preco} required>
+                  <Field.Label>Preço Unitário (R$)</Field.Label>
+                  <Input
+                    value={preco}
+                    onChange={(e) => setPreco(e.target.value)}
+                    placeholder="75.00"
+                    fontWeight="bold"
+                    bg="white"
+                  />
+                  {erros.preco && (
+                    <Text color="red.500" fontSize="2xs" mt={1}>{erros.preco}</Text>
+                  )}
+                </Field.Root>
+
+                {/* PI4-93: Estoque inicial em Lote */}
+                <Field.Root invalid={!!erros.quantidadeEstoque} required>
+                  <Field.Label>Estoque Inicial</Field.Label>
+                  <Input
+                    type="number"
+                    min="1"
+                    step="1"
+                    value={quantidadeEstoque}
+                    onChange={(e) => setQuantidadeEstoque(e.target.value)}
+                    placeholder="25"
+                    fontWeight="bold"
+                    bg="white"
+                  />
+                  {erros.quantidadeEstoque && (
+                    <Text color="red.500" fontSize="2xs" mt={1}>{erros.quantidadeEstoque}</Text>
+                  )}
+                </Field.Root>
+
+                {/* PI4-94: Prazo de produção */}
+                <Field.Root invalid={!!erros.prazoProducao} required>
+                  <Field.Label>Prazo Produção (dias)</Field.Label>
+                  <Input
+                    type="number"
+                    min="0"
+                    step="1"
+                    value={prazoProducao}
+                    onChange={(e) => setPrazoProducao(e.target.value)}
+                    placeholder="7"
+                    bg="white"
+                  />
+                  {erros.prazoProducao && (
+                    <Text color="red.500" fontSize="2xs" mt={1}>{erros.prazoProducao}</Text>
+                  )}
+                </Field.Root>
+
+                {/* SKU */}
+                <Field.Root>
+                  <Field.Label>SKU (Opcional)</Field.Label>
+                  <Input
+                    value={sku}
+                    onChange={(e) => setSku(e.target.value)}
+                    placeholder="LOT-101"
+                    bg="white"
+                  />
+                </Field.Root>
+              </Grid>
+            </Box>
+
+            <Flex justify="flex-end" pt={2}>
+              <Button
+                type="submit"
+                colorPalette="brand"
+                size="lg"
+                loading={carregando}
+                loadingText="Publicando lote..."
+                px={8}
+              >
+                Publicar Peça em Lote
+              </Button>
+            </Flex>
+          </Box>
+
+          {/* Coluna Direita: Live Preview Reativo (PI4-94) */}
+          <Box position="sticky" top="20px">
+            <Card.Root bg="white" p={4} borderRadius="xl" borderWidth="1px" borderColor="gray.200" shadow="sm">
+              <HStack justify="space-between" mb={3}>
+                <HStack gap={1.5} color="gray.800" fontWeight="bold" fontSize="xs">
+                  <FiEye size={14} />
+                  <Text>Pré-visualização</Text>
+                </HStack>
+                <Badge colorPalette="brand" fontSize="2xs">
+                  Lote
+                </Badge>
+              </HStack>
+
+              <Box borderRadius="lg" overflow="hidden" mb={3} h="180px" bg="gray.100">
+                <Image
+                  src={urlFotoPrincipal || 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80'}
+                  alt="Preview"
+                  w="full"
+                  h="full"
+                  objectFit="cover"
+                />
+              </Box>
+
+              <Text fontSize="xs" color="gray.500" mb={1}>
+                {regiaoProducao}
+              </Text>
+              <Text fontWeight="bold" fontSize="md" color="gray.900" lineClamp={1}>
+                {titulo || 'Título do Produto'}
+              </Text>
+              <Text fontSize="xs" color="gray.600" mb={3}>
+                Por {nomeArtesao.trim() || artesao?.nome || 'Mestre Artesão'}
+              </Text>
+
+              <HStack justify="space-between" pt={2} borderTopWidth="1px" borderColor="gray.100">
+                <Text fontWeight="bold" fontSize="lg" color="brand.600">
+                  R$ {preco ? Number(preco.replace(',', '.')).toFixed(2) : '0.00'}
+                </Text>
+                <Badge colorPalette="green" fontSize="2xs">
+                  {quantidadeEstoque ? `${quantidadeEstoque} un. em lote` : 'Em lote'}
+                </Badge>
+              </HStack>
+
+              {/* PI4-94: Reatividade do prazo */}
+              <VStack align="start" gap={2} pt={4} mt={3} borderTopWidth="1px" borderColor="gray.100" fontSize="2xs" color="gray.500">
+                <HStack gap={2}>
+                  <FiTruck color="#C25E2E" />
+                  <Text>
+                    {prazoProducao === '0'
+                      ? 'Pronta entrega: enviado em até 24h úteis'
+                      : `Prazo de produção e postagem: ${prazoProducao || 0} dias úteis`}
+                  </Text>
+                </HStack>
+                <HStack gap={2}>
+                  <FiShield color="#38A169" />
+                  <Text>Garantia de autenticidade artesanal de Pernambuco.</Text>
+                </HStack>
+              </VStack>
+            </Card.Root>
+          </Box>
+        </Grid>
+      </Container>
+    </Box>
+  );
+}
+==================================================
+ARQUIVO: ./src/app/artesao/produtos/novo-unico/page.tsx
+==================================================
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import NextLink from 'next/link';
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Text,
+  Input,
+  Textarea,
+  Button,
+  Field,
+  Badge,
+  Container,
+  Heading,
+  Image,
+  VStack,
+  HStack,
+  Card,
+} from '@chakra-ui/react';
+import { FiArrowLeft, FiCheck, FiLock, FiEye, FiTrendingUp } from 'react-icons/fi';
+import { productService } from '@/services/productService';
+import { sessionStore } from '@/store/sessionStore';
+import { CriarProdutoDTO } from '@/types/product';
+
+export default function NovoProdutoUnicoPage() {
+  const router = useRouter();
+
+  const artesao = sessionStore((state) => state.artesao);
+
+  const [titulo, setTitulo] = useState('');
+  const [categoria, setCategoria] = useState('Cerâmica');
+  const [regiaoProducao, setRegiaoProducao] = useState(artesao?.regiaoProducao || 'Caruaru, PE');
+  const [nomeArtesao, setNomeArtesao] = useState(artesao?.nome || '');
+  const [descricao, setDescricao] = useState('');
+  const [materiaPrima, setMateriaPrima] = useState('');
+  const [tecnica, setTecnica] = useState('');
+  const [preco, setPreco] = useState('');
+  const [sku, setSku] = useState('');
+  const [guiaCuidados, setGuiaCuidados] = useState('');
+  const [imagemUrl, setImagemUrl] = useState('');
+
+  const [altura, setAltura] = useState('');
+  const [largura, setLargura] = useState('');
+  const [profundidade, setProfundidade] = useState('');
+  const [peso, setPeso] = useState('');
+
+  const [erroValidacao, setErroValidacao] = useState<string | null>(null);
+  const [carregando, setCarregando] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErroValidacao(null);
+
+    if (!descricao.trim()) {
+      setErroValidacao('A descrição e história da peça é obrigatória para prosseguir.');
+      return;
+    }
+
+    if (!titulo.trim() || !preco || Number(preco.replace(',', '.')) <= 0) {
+      setErroValidacao('Informe um título e um preço válido maior que zero.');
+      return;
+    }
+
+    try {
+      setCarregando(true);
+
+      const payload: CriarProdutoDTO = {
+        sku: sku.trim() || `UNI-${Date.now().toString().slice(-4)}`,
+        titulo: titulo.trim(),
+        descricao: descricao.trim(),
+        materiaPrima: materiaPrima.trim() || 'Argila regional cozida',
+        tecnica: tecnica.trim() || 'Modelagem artesanal',
+        regiaoProducao: regiaoProducao.trim() || artesao?.regiaoProducao || 'Caruaru, PE',
+        categoria,
+        preco: parseFloat(preco.replace(',', '.')),
+        tipo: 'unico',
+        quantidadeEstoque: 1, // Regra HU-88: estoque fixo em 1 unidade
+        idArtesao: artesao?.id || 'e1eK141d4u70m471c4m3n73',
+        nomeArtesao: nomeArtesao.trim() || artesao?.nome || 'Mestre Artesão',
+        dimensoes: {
+          altura: parseFloat(altura) || 15,
+          largura: parseFloat(largura) || 15,
+          profundidade: parseFloat(profundidade) || 10,
+          peso: parseFloat(peso) || 0.8,
+        },
+        guiaCuidados: guiaCuidados.trim() || 'Limpar com flanela seca. Proteger contra quedas e umidade excessiva.',
+        galeriaImagens: imagemUrl.trim()
+          ? [imagemUrl.trim()]
+          : ['https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80'],
+        prazoProducao: 0,
+        ativo: true,
+      };
+
+      await productService.create(payload);
+      router.push('/artesao/produtos');
+    } catch (err) {
+      console.error(err);
+      setErroValidacao('Falha ao registrar produto na API. Verifique a conexão com o json-server.');
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  return (
+    <Box minH="100vh" bg="gray.50" py={8}>
+      <Container maxW="1200px">
+        <HStack justify="space-between" mb={6}>
+          <NextLink href="/artesao/produtos">
+            <Button variant="ghost" size="sm">
+              <HStack gap={2}>
+                <FiArrowLeft />
+                <Text>Voltar ao Catálogo</Text>
+              </HStack>
+            </Button>
+          </NextLink>
+
+          <Badge colorPalette="brand" size="lg" px={3} py={1}>
+            HU-88: Peça Única
+          </Badge>
+        </HStack>
+
+        <Grid templateColumns={{ base: '1fr', lg: '240px 1fr 300px' }} gap={6} alignItems="start">
+          
+          {/* Stepper lateral informativo */}
+          <Box bg="white" p={5} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+            <Text fontWeight="bold" fontSize="sm" color="gray.900" mb={1}>
+              Cadastro Peça Única
+            </Text>
+            <Text fontSize="xs" color="gray.500" mb={6}>
+              Obra autoral exclusiva com estoque travado em 1 unidade.
+            </Text>
+
+            <VStack align="stretch" gap={4} fontSize="xs">
+              <HStack gap={2.5} color="brand.600" fontWeight="bold">
+                <Box p={1} bg="brand.50" borderRadius="full">
+                  <FiCheck size={14} />
+                </Box>
+                <Text>1. Informações Básicas</Text>
+              </HStack>
+              <HStack gap={2.5} color="gray.500">
+                <Box p={1} bg="gray.100" borderRadius="full">
+                  <FiCheck size={14} />
+                </Box>
+                <Text>2. Imagens</Text>
+              </HStack>
+              <HStack gap={2.5} color="gray.500">
+                <Box p={1} bg="gray.100" borderRadius="full">
+                  <FiCheck size={14} />
+                </Box>
+                <Text>3. História Cultural</Text>
+              </HStack>
+              <HStack gap={2.5} color="gray.500">
+                <Box p={1} bg="gray.100" borderRadius="full">
+                  <FiCheck size={14} />
+                </Box>
+                <Text>4. Dimensões & Matéria</Text>
+              </HStack>
+              <HStack gap={2.5} color="gray.500">
+                <Box p={1} bg="gray.100" borderRadius="full">
+                  <FiCheck size={14} />
+                </Box>
+                <Text>5. Preço & SKU</Text>
+              </HStack>
+            </VStack>
+          </Box>
+
+          {/* Formulário Central */}
+          <Box as="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={6}>
+            {erroValidacao && (
+              <Box bg="red.50" borderColor="red.200" borderWidth="1px" p={4} borderRadius="lg">
+                <Text color="red.600" fontSize="sm" fontWeight="semibold">
+                  {erroValidacao}
+                </Text>
+              </Box>
+            )}
+
+            {/* 1. Informações Básicas */}
+            <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+              <Heading size="sm" mb={4} color="gray.800">
+                1. Informações Básicas
+              </Heading>
+
+              <VStack gap={4} align="stretch">
+                <Field.Root required>
+                  <Field.Label>Título da Peça</Field.Label>
+                  <Input
+                    value={titulo}
+                    onChange={(e) => setTitulo(e.target.value)}
+                    placeholder="Ex: Escultura Trio Nordestino em Barro Cozido"
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={4}>
+                  <GridItem>
+                    <Field.Root required>
+                      <Field.Label>Categoria</Field.Label>
+                      <select
+                        value={categoria}
+                        onChange={(e) => setCategoria(e.target.value)}
+                        style={{
+                          width: '100%',
+                          padding: '8px 12px',
+                          borderRadius: '6px',
+                          border: '1px solid #E2E8F0',
+                          backgroundColor: 'white',
+                          fontSize: '14px',
+                        }}
+                      >
+                        <option value="Cerâmica">Cerâmica</option>
+                        <option value="Madeira">Madeira</option>
+                        <option value="Têxtil & Renda">Têxtil & Renda</option>
+                        <option value="Xilogravura">Xilogravura</option>
+                        <option value="Arte Sacra e Escultura">Arte Sacra e Escultura</option>
+                        <option value="Decoração">Decoração</option>
+                      </select>
+                    </Field.Root>
+                  </GridItem>
+
+                  <GridItem>
+                    <Field.Root required>
+                      <Field.Label>Polo Regional</Field.Label>
+                      <Input
+                        value={regiaoProducao}
+                        onChange={(e) => setRegiaoProducao(e.target.value)}
+                        placeholder="Ex: Caruaru, PE"
+                        bg="white"
+                      />
+                    </Field.Root>
+                  </GridItem>
+                </Grid>
+
+                <Field.Root required>
+                  <Field.Label>Nome do Artesão Responsável</Field.Label>
+                  <Input
+                    value={nomeArtesao}
+                    onChange={(e) => setNomeArtesao(e.target.value)}
+                    placeholder={artesao?.nome || "Ex: Severino Vitalino"}
+                    bg="white"
+                  />
+                </Field.Root>
+              </VStack>
+            </Box>
+
+            {/* 2. Fotos da Peça */}
+            <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+              <Heading size="sm" mb={4} color="gray.800">
+                2. Imagem Principal da Peça
+              </Heading>
+              <Field.Root>
+                <Field.Label>URL da Imagem</Field.Label>
+                <Input
+                  value={imagemUrl}
+                  onChange={(e) => setImagemUrl(e.target.value)}
+                  placeholder="https://images.unsplash.com/photo-..."
+                  bg="white"
+                />
+              </Field.Root>
+            </Box>
+
+            {/* 3. História Cultural & Descrição */}
+            <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+              <Heading size="sm" mb={1} color="gray.800">
+                3. História e Significado Cultural *
+              </Heading>
+              <Text fontSize="xs" color="gray.500" mb={4}>
+                Conte o simbolismo, raízes e detalhes autorais da criação desta peça.
+              </Text>
+              <Field.Root required>
+                <Textarea
+                  rows={4}
+                  value={descricao}
+                  onChange={(e) => setDescricao(e.target.value)}
+                  placeholder="Descreva a inspiração regional, matéria-prima e processo manual..."
+                  bg="white"
+                />
+              </Field.Root>
+            </Box>
+
+            {/* 4. Materiais e Dimensões */}
+            <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+              <Heading size="sm" mb={4} color="gray.800">
+                4. Especificações Técnicas
+              </Heading>
+
+              <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={4} mb={4}>
+                <Field.Root>
+                  <Field.Label>Matéria-Prima</Field.Label>
+                  <Input
+                    value={materiaPrima}
+                    onChange={(e) => setMateriaPrima(e.target.value)}
+                    placeholder="Ex: Argila cozida e pigmento natural"
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>Técnica Empregada</Field.Label>
+                  <Input
+                    value={tecnica}
+                    onChange={(e) => setTecnica(e.target.value)}
+                    placeholder="Ex: Modelagem figurativa em torno"
+                    bg="white"
+                  />
+                </Field.Root>
+              </Grid>
+
+              <Grid templateColumns="repeat(4, 1fr)" gap={3} mb={4}>
+                <Field.Root>
+                  <Field.Label>Alt. (cm)</Field.Label>
+                  <Input
+                    type="number"
+                    value={altura}
+                    onChange={(e) => setAltura(e.target.value)}
+                    placeholder="20"
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>Larg. (cm)</Field.Label>
+                  <Input
+                    type="number"
+                    value={largura}
+                    onChange={(e) => setLargura(e.target.value)}
+                    placeholder="15"
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>Prof. (cm)</Field.Label>
+                  <Input
+                    type="number"
+                    value={profundidade}
+                    onChange={(e) => setProfundidade(e.target.value)}
+                    placeholder="15"
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>Peso (kg)</Field.Label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    value={peso}
+                    onChange={(e) => setPeso(e.target.value)}
+                    placeholder="1.2"
+                    bg="white"
+                  />
+                </Field.Root>
+              </Grid>
+
+              <Field.Root>
+                <Field.Label>Instruções de Cuidado</Field.Label>
+                <Input
+                  value={guiaCuidados}
+                  onChange={(e) => setGuiaCuidados(e.target.value)}
+                  placeholder="Ex: Limpar com flanela seca. Não molhar."
+                  bg="white"
+                />
+              </Field.Root>
+            </Box>
+
+            {/* 5. Preço & Estoque Travado */}
+            <Box bg="white" p={6} borderRadius="xl" borderWidth="1px" borderColor="gray.200">
+              <Heading size="sm" mb={4} color="gray.800">
+                5. Precificação e Controle de Estoque
+              </Heading>
+
+              <Grid templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap={4}>
+                <Field.Root required>
+                  <Field.Label>Preço à vista (R$)</Field.Label>
+                  <Input
+                    value={preco}
+                    onChange={(e) => setPreco(e.target.value)}
+                    placeholder="180.00"
+                    fontWeight="bold"
+                    bg="white"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>
+                    <HStack gap={1}>
+                      <Text>Estoque</Text>
+                      <FiLock size={12} color="#718096" />
+                    </HStack>
+                  </Field.Label>
+                  <Input
+                    value="1 unidade (Peça Única)"
+                    readOnly
+                    bg="gray.100"
+                    color="gray.600"
+                    fontWeight="bold"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>Código SKU</Field.Label>
+                  <Input
+                    value={sku}
+                    onChange={(e) => setSku(e.target.value)}
+                    placeholder="Ex: UNI-001"
+                    bg="white"
+                  />
+                </Field.Root>
+              </Grid>
+            </Box>
+
+            <Flex justify="flex-end" pt={2}>
+              <Button
+                type="submit"
+                colorPalette="brand"
+                size="lg"
+                loading={carregando}
+                loadingText="Cadastrando obra..."
+                px={8}
+              >
+                Publicar Peça Única
+              </Button>
+            </Flex>
+          </Box>
+
+          {/* Coluna Direita: Live Preview */}
+          <Box position="sticky" top="20px">
+            <Card.Root bg="white" p={4} borderRadius="xl" borderWidth="1px" borderColor="gray.200" shadow="sm">
+              <HStack justify="space-between" mb={3}>
+                <HStack gap={1.5} color="gray.800" fontWeight="bold" fontSize="xs">
+                  <FiEye size={14} />
+                  <Text>Pré-visualização</Text>
+                </HStack>
+                <Badge colorPalette="brand" fontSize="2xs">
+                  Ao Vivo
+                </Badge>
+              </HStack>
+
+              <Box borderRadius="lg" overflow="hidden" mb={3} h="180px" bg="gray.100">
+                <Image
+                  src={imagemUrl || 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80'}
+                  alt="Preview"
+                  w="full"
+                  h="full"
+                  objectFit="cover"
+                />
+              </Box>
+
+              <Text fontSize="xs" color="gray.500" mb={1}>
+                {regiaoProducao}
+              </Text>
+              <Text fontWeight="bold" fontSize="md" color="gray.900" lineClamp={1}>
+                {titulo || 'Título da Peça'}
+              </Text>
+              <Text fontSize="xs" color="gray.600" mb={3}>
+                Por {nomeArtesao.trim() || artesao?.nome || 'Mestre Artesão'}
+              </Text>
+
+              <HStack justify="space-between" pt={2} borderTopWidth="1px" borderColor="gray.100">
+                <Text fontWeight="bold" fontSize="lg" color="brand.600">
+                  R$ {preco ? Number(preco.replace(',', '.')).toFixed(2) : '0.00'}
+                </Text>
+                <Badge colorPalette="purple" fontSize="2xs">
+                  1 un. exclusiva
+                </Badge>
+              </HStack>
+
+              <VStack align="start" gap={2} pt={4} mt={3} borderTopWidth="1px" borderColor="gray.100" fontSize="2xs" color="gray.500">
+                <HStack gap={2}>
+                  <FiTrendingUp color="#38A169" />
+                  <Text>Histórias autorais valorizam o artesanato.</Text>
+                </HStack>
+              </VStack>
+            </Card.Root>
+          </Box>
+
+        </Grid>
+      </Container>
+    </Box>
+  );
+}
+==================================================
+ARQUIVO: ./src/app/artesao/produtos/page.tsx
+==================================================
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import NextLink from 'next/link';
+import {
+  Box,
+  Flex,
+  Grid,
+  Text,
+  Badge,
+  Image,
+  Input,
+  Textarea,
+  Button,
+  Field,
+  Container,
+  Heading,
+  HStack,
+  VStack,
+  Card,
+  Spinner,
+  Dialog,
+  Portal,
+} from '@chakra-ui/react';
+import { FiPlus, FiEdit, FiExternalLink, FiPackage, FiArrowLeft, FiAlertCircle } from 'react-icons/fi';
+import { productService } from '@/services/productService';
+import { sessionStore } from '@/store/sessionStore';
+import { Produto } from '@/types/product';
+
+function createSlug(titulo: string) {
+  return titulo
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '');
+}
+
+export default function GerenciarCatalogoPage() {
+  const artesao = sessionStore((state) => state.artesao);
+
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [carregando, setCarregando] = useState(true);
+  const [salvando, setSalvando] = useState(false);
+
+  // Estados de edição modal (PI4-129)
+  const [produtoEditando, setProdutoEditando] = useState<Produto | null>(null);
+  const [precoEdit, setPrecoEdit] = useState('');
+  const [descricaoEdit, setDescricaoEdit] = useState('');
+  const [erroPreco, setErroPreco] = useState<string | null>(null);
+  const [modalAberto, setModalAberto] = useState(false);
+
+  useEffect(() => {
+    let ativo = true;
+
+    async function carregarDados() {
+      try {
+        const dados = await productService.getAll();
+        if (ativo) {
+          const filtrados = artesao?.id
+            ? dados.filter((p) => String(p.idArtesao) === String(artesao.id))
+            : dados;
+          setProdutos(filtrados.length > 0 ? filtrados : dados);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar catálogo:', error);
+      } finally {
+        if (ativo) setCarregando(false);
+      }
+    }
+
+    carregarDados();
+    return () => {
+      ativo = false;
+    };
+  }, [artesao]);
+
+  // Validação em tempo real de preço (PI4-130)
+  const validarPreco = (valor: string): boolean => {
+    const valorTratado = valor.replace(',', '.').trim();
+    const num = parseFloat(valorTratado);
+
+    if (!valorTratado || isNaN(num)) {
+      setErroPreco('Informe um valor numérico válido.');
+      return false;
+    }
+    if (num <= 0) {
+      setErroPreco('O preço deve ser estritamente maior que zero (R$ > 0,00).');
+      return false;
+    }
+
+    setErroPreco(null);
+    return true;
+  };
+
+  // Abertura do modal com dados pré-preenchidos (PI4-128 & PI4-129)
+  const handleAbrirEdicao = (prod: Produto) => {
+    setProdutoEditando(prod);
+    setPrecoEdit(prod.preco.toString());
+    setDescricaoEdit(prod.descricao || '');
+    setErroPreco(null);
+    setModalAberto(true);
+  };
+
+  // Submissão PATCH parcial e atualização da listagem em tempo real (PI4-129 & PI4-130)
+  const handleSalvarEdicao = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validarPreco(precoEdit) || !produtoEditando) {
+      return;
+    }
+
+    try {
+      setSalvando(true);
+      const novoPreco = parseFloat(precoEdit.replace(',', '.'));
+
+      const atualizado = await productService.update(produtoEditando.id, {
+        preco: novoPreco,
+        descricao: descricaoEdit.trim(),
+      });
+
+      // Atualização imediata do estado local sem recarregar a tela
+      setProdutos((lista) =>
+        lista.map((item) => (String(item.id) === String(atualizado.id) ? { ...item, ...atualizado } : item))
+      );
+
+      setModalAberto(false);
+      setProdutoEditando(null);
+    } catch (error) {
+      console.error('Erro ao salvar edição:', error);
+      setErroPreco('Não foi possível salvar as alterações na API.');
+    } finally {
+      setSalvando(false);
+    }
+  };
+
+  return (
+    <Box minH="100vh" bg="gray.50" py={8}>
+      <Container maxW="1200px">
+        {/* Cabeçalho do Catálogo */}
+        <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" align={{ md: 'center' }} gap={4} mb={8}>
+          <Box>
+            <HStack gap={3} mb={1}>
+              <NextLink href="/artesao">
+                <Button variant="ghost" size="sm">
+                  <HStack gap={2}>
+                    <FiArrowLeft />
+                    <Text>Painel</Text>
+                  </HStack>
+                </Button>
+              </NextLink>
+              <Heading size="lg" color="gray.900">
+                Gerenciar Catálogo
+              </Heading>
+              <Badge colorPalette="brand" size="md">
+                HU 128-130
+              </Badge>
+            </HStack>
+            <Text fontSize="xs" color="gray.600">
+              Painel de manutenção de preços, descrições e estoque das peças artesanais cadastradas.
+            </Text>
+          </Box>
+
+          <HStack gap={3}>
+            <NextLink href="/artesao/produtos/novo-unico">
+              <Button colorPalette="brand" size="sm">
+                <HStack gap={1.5}>
+                  <FiPlus />
+                  <Text>Peça Única</Text>
+                </HStack>
+              </Button>
+            </NextLink>
+
+            <NextLink href="/artesao/produtos/novo-lote">
+              <Button variant="outline" colorPalette="brand" size="sm">
+                <HStack gap={1.5}>
+                  <FiPlus />
+                  <Text>Nova Peça / Lote</Text>
+                </HStack>
+              </Button>
+            </NextLink>
+          </HStack>
+        </Flex>
+
+        {/* Listagem do Catálogo */}
+        {carregando ? (
+          <Flex justify="center" py={20}>
+            <Spinner size="xl" color="brand.500" />
+          </Flex>
+        ) : produtos.length === 0 ? (
+          <Box bg="white" p={12} borderRadius="xl" borderWidth="1px" borderColor="gray.200" textAlign="center">
+            <FiPackage size={44} style={{ margin: '0 auto 12px auto', color: '#A0AEC0' }} />
+            <Heading size="md" color="gray.700" mb={1}>
+              Nenhum produto cadastrado no catálogo.
+            </Heading>
+            <Text fontSize="sm" color="gray.500" mb={4}>
+              Cadastre sua primeira peça única ou lote para começar a gerenciar sua loja.
+            </Text>
+          </Box>
+        ) : (
+          <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} gap={6}>
+            {produtos.map((prod) => {
+              const foto = prod.galeriaImagens?.[0] || prod.linkImagens?.[0] || prod.imagem || 'https://picsum.photos/400/300';
+              const productUrl = `/product/${createSlug(prod.titulo)}-${prod.id}`;
+
+              return (
+                <Card.Root
+                  key={prod.id}
+                  bg="white"
+                  borderWidth="1px"
+                  borderColor="gray.200"
+                  borderRadius="xl"
+                  overflow="hidden"
+                  shadow="sm"
+                  transition="all 0.2s"
+                  _hover={{ shadow: 'md' }}
+                >
+                  <Box position="relative" w="full" h="200px" bg="gray.100" overflow="hidden">
+                    <Image src={foto} alt={prod.titulo} w="full" h="full" objectFit="cover" />
+                    <Badge
+                      position="absolute"
+                      top={3}
+                      left={3}
+                      bg="whiteAlpha.900"
+                      color="gray.800"
+                      fontSize="2xs"
+                      px={2}
+                      py={0.5}
+                      borderRadius="md"
+                    >
+                      {prod.tipo === 'unico' ? 'Peça Única' : 'Lote'}
+                    </Badge>
+                    <Badge
+                      position="absolute"
+                      top={3}
+                      right={3}
+                      colorPalette={prod.ativo !== false ? 'green' : 'gray'}
+                      fontSize="2xs"
+                      borderRadius="md"
+                    >
+                      {prod.ativo !== false ? 'Ativo' : 'Pausado'}
+                    </Badge>
+                  </Box>
+
+                  <Box p={5} display="flex" flexDirection="column" flex="1">
+                    <Text fontSize="2xs" color="gray.400" fontWeight="bold" textTransform="uppercase" mb={1}>
+                      SKU: {prod.sku || prod.id}
+                    </Text>
+                    <Text fontSize="sm" fontWeight="bold" color="gray.900" lineClamp={1} mb={1}>
+                      {prod.titulo}
+                    </Text>
+                    <Text fontSize="xs" color="gray.600" lineClamp={2} mb={4}>
+                      {prod.descricao || 'Sem descrição cadastrada.'}
+                    </Text>
+
+                    <Flex justify="space-between" align="baseline" pt={3} borderTopWidth="1px" borderColor="gray.100" mt="auto">
+                      <Box>
+                        <Text fontSize="2xs" color="gray.400" fontWeight="bold">
+                          PREÇO ATUAL
+                        </Text>
+                        <Text fontSize="md" fontWeight="bold" color="brand.600">
+                          R$ {Number(prod.preco || 0).toFixed(2)}
+                        </Text>
+                      </Box>
+                      <Text fontSize="xs" color="gray.500">
+                        Estoque: <strong>{prod.quantidadeEstoque} un.</strong>
+                      </Text>
+                    </Flex>
+
+                    {/* Ações Rápidas (PI4-128) */}
+                    <HStack gap={2} mt={4}>
+                      <Button
+                        variant="outline"
+                        colorPalette="brand"
+                        size="sm"
+                        flex={1}
+                        onClick={() => handleAbrirEdicao(prod)}
+                      >
+                        <HStack gap={1.5}>
+                          <FiEdit size={13} />
+                          <Text>Editar</Text>
+                        </HStack>
+                      </Button>
+
+                      {/* Link direto para a vitrine pública em nova aba */}
+                      <NextLink href={productUrl} target="_blank">
+                        <Button variant="ghost" size="sm" aria-label="Ver na vitrine pública">
+                          <FiExternalLink size={14} />
+                        </Button>
+                      </NextLink>
+                    </HStack>
+                  </Box>
+                </Card.Root>
+              );
+            })}
+          </Grid>
+        )}
+
+        {/* Modal de Manutenção e Edição Rápida (PI4-129 & PI4-130) */}
+        <Dialog.Root open={modalAberto} onOpenChange={(e) => !e.open && setModalAberto(false)}>
+          <Portal>
+            <Dialog.Backdrop />
+            <Dialog.Positioner>
+              <Dialog.Content as="form" onSubmit={handleSalvarEdicao}>
+                <Dialog.Header>
+                  <Dialog.Title>Editar Produto — {produtoEditando?.titulo}</Dialog.Title>
+                </Dialog.Header>
+
+                <Dialog.Body>
+                  <VStack gap={4} align="stretch">
+                    <Box p={3} bg="amber.50" borderRadius="md" borderWidth="1px" borderColor="amber.200">
+                      <HStack gap={2} color="amber.900" fontSize="xs">
+                        <FiAlertCircle size={16} />
+                        <Text>
+                          Alterações de preço e descrição entram em vigor imediatamente na vitrine pública via atualização parcial (PATCH).
+                        </Text>
+                      </HStack>
+                    </Box>
+
+                    {/* Validação estrita de preço em tempo real (PI4-130) */}
+                    <Field.Root invalid={!!erroPreco} required>
+                      <Field.Label>Preço (R$)</Field.Label>
+                      <Input
+                        value={precoEdit}
+                        onChange={(e) => {
+                          setPrecoEdit(e.target.value);
+                          validarPreco(e.target.value);
+                        }}
+                        placeholder="Ex: 140.00"
+                        bg="white"
+                      />
+                      {erroPreco && (
+                        <Text color="red.500" fontSize="2xs" mt={1}>
+                          {erroPreco}
+                        </Text>
+                      )}
+                    </Field.Root>
+
+                    {/* Edição da história e descrição cultural (PI4-129) */}
+                    <Field.Root>
+                      <Field.Label>História & Descrição Cultural</Field.Label>
+                      <Textarea
+                        rows={4}
+                        value={descricaoEdit}
+                        onChange={(e) => setDescricaoEdit(e.target.value)}
+                        placeholder="Descreva a história e técnicas da peça..."
+                        bg="white"
+                      />
+                    </Field.Root>
+                  </VStack>
+                </Dialog.Body>
+
+                <Dialog.Footer>
+                  <Button variant="ghost" size="sm" onClick={() => setModalAberto(false)} disabled={salvando}>
+                    Cancelar
+                  </Button>
+                  <Button
+                    type="submit"
+                    colorPalette="brand"
+                    size="sm"
+                    loading={salvando}
+                    disabled={!!erroPreco || !precoEdit}
+                  >
+                    Salvar Alterações
+                  </Button>
+                </Dialog.Footer>
+              </Dialog.Content>
+            </Dialog.Positioner>
+          </Portal>
+        </Dialog.Root>
+      </Container>
+    </Box>
+  );
+}
 ==================================================
 ARQUIVO: ./src/app/artesao/register/page.tsx
 ==================================================
@@ -5074,12 +6766,12 @@ export const paymentService = {
 ARQUIVO: ./src/services/productService.ts
 ==================================================
 import { apiService } from './apiService';
-import { Product, CriarProductDTO, AtualizarProductDTO } from '@/types/product';
+import { Produto, CriarProdutoDTO, AtualizarProdutoDTO } from '@/types/product';
 
 export const productService = {
-  async getAll(): Promise<Product[]> {
+  async getAll(): Promise<Produto[]> {
     try {
-      const response = await apiService.get<Product[]>('/products');
+      const response = await apiService.get<Produto[]>('/products');
       return response.data;
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
@@ -5087,21 +6779,9 @@ export const productService = {
     }
   },
 
-  async getByCategory(categoria: string): Promise<Product[]> {
+  async getById(id: string | number): Promise<Produto> {
     try {
-      const response = await apiService.get<Product[]>('/products', {
-        params: { categoria },
-      });
-      return response.data;
-    } catch (error) {
-      console.error(`Erro ao buscar produtos da categoria "${categoria}":`, error);
-      throw error;
-    }
-  },
-
-  async getById(id: string | number): Promise<Product> {
-    try {
-      const response = await apiService.get<Product>(`/products/${id}`);
+      const response = await apiService.get<Produto>(`/products/${id}`);
       return response.data;
     } catch (error) {
       console.error(`Erro ao buscar produto ${id}:`, error);
@@ -5109,35 +6789,9 @@ export const productService = {
     }
   },
 
-  async search(
-    filters: Partial<Pick<Product, 'categoria' | 'tecnica' | 'regiaoProducao'>>
-  ): Promise<Product[]> {
+  async getByArtesao(idArtesao: string): Promise<Produto[]> {
     try {
-      const response = await apiService.get<Product[]>('/products', {
-        params: filters,
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Erro ao buscar produtos com filtros:', filters, error);
-      throw error;
-    }
-  },
-
-  async searchByText(query: string): Promise<Product[]> {
-    try {
-      const response = await apiService.get<Product[]>('/products', {
-        params: { q: query },
-      });
-      return response.data;
-    } catch (error) {
-      console.error(`Erro ao buscar produtos com o termo "${query}":`, error);
-      throw error;
-    }
-  },
-
-  async getByArtesao(idArtesao: string): Promise<Product[]> {
-    try {
-      const response = await apiService.get<Product[]>('/products', {
+      const response = await apiService.get<Produto[]>('/products', {
         params: { idArtesao },
       });
       return response.data;
@@ -5147,24 +6801,34 @@ export const productService = {
     }
   },
 
-  // --- MÉTODOS CRUD (HU-67 a HU-69) ---
-
-  async create(payload: CriarProductDTO): Promise<Product> {
+  async create(payload: CriarProdutoDTO): Promise<Produto> {
     try {
-      const response = await apiService.post<Product>('/products', payload);
+      const idGerado = payload.id || `prod-${Date.now().toString().slice(-4)}`;
+      const skuGerado = payload.sku || (payload.tipo === 'unico' ? `UNI-${Date.now().toString().slice(-4)}` : `LOT-${Date.now().toString().slice(-4)}`);
+      
+      const dadosCompletos: Produto = {
+        ...payload,
+        id: idGerado,
+        sku: skuGerado,
+        linkImagens: payload.galeriaImagens?.length ? payload.galeriaImagens : ['https://picsum.photos/400/400'],
+        imagem: payload.galeriaImagens?.[0] || 'https://picsum.photos/400/400',
+        dataCriacao: new Date().toISOString(),
+      };
+
+      const response = await apiService.post<Produto>('/products', dadosCompletos);
       return response.data;
     } catch (error) {
-      console.error('Erro ao criar produto na API:', error);
+      console.error('Erro ao cadastrar produto:', error);
       throw error;
     }
   },
 
-  async update(id: string | number, payload: AtualizarProductDTO): Promise<Product> {
+  async update(id: string | number, payload: AtualizarProdutoDTO): Promise<Produto> {
     try {
-      const response = await apiService.patch<Product>(`/products/${id}`, payload);
+      const response = await apiService.patch<Produto>(`/products/${id}`, payload);
       return response.data;
     } catch (error) {
-      console.error(`Erro ao atualizar parcialmente o produto ${id}:`, error);
+      console.error(`Erro ao atualizar produto ${id}:`, error);
       throw error;
     }
   },
@@ -5173,7 +6837,19 @@ export const productService = {
     try {
       await apiService.delete(`/products/${id}`);
     } catch (error) {
-      console.error(`Erro ao remover produto ${id}:`, error);
+      console.error(`Erro ao deletar produto ${id}:`, error);
+      throw error;
+    }
+  },
+
+  async searchByText(query: string): Promise<Produto[]> {
+    try {
+      const response = await apiService.get<Produto[]>('/products', {
+        params: { q: query },
+      });
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao buscar produtos com o termo "${query}":`, error);
       throw error;
     }
   },
@@ -5265,8 +6941,8 @@ import { Product, CartItem } from "@/types/product";
 interface CartStore {
   items: CartItem[];
   addItem: (product: Product) => void;
-  removeItem: (productId: number) => void;
-  updateQuantity: (productId: number, quantity: number) => void;
+  removeItem: (productId: string | number) => void;
+  updateQuantity: (productId: string | number, quantity: number) => void;
   clearCart: () => void;
   totalItems: () => number;
   totalPrice: () => number;
@@ -5280,13 +6956,13 @@ export const useCartStore = create<CartStore>()(
       addItem: (product: Product) => {
         set((state) => {
           const existing = state.items.find(
-            (item) => item.product.id === product.id
+            (item) => String(item.product.id) === String(product.id)
           );
 
           if (existing) {
             return {
               items: state.items.map((item) =>
-                item.product.id === product.id
+                String(item.product.id) === String(product.id)
                   ? { ...item, quantity: item.quantity + 1 }
                   : item
               ),
@@ -5299,13 +6975,13 @@ export const useCartStore = create<CartStore>()(
         });
       },
 
-      removeItem: (productId: number) => {
+      removeItem: (productId: string | number) => {
         set((state) => ({
-          items: state.items.filter((item) => item.product.id !== productId),
+          items: state.items.filter((item) => String(item.product.id) !== String(productId)),
         }));
       },
 
-      updateQuantity: (productId: number, quantity: number) => {
+      updateQuantity: (productId: string | number, quantity: number) => {
         if (quantity <= 0) {
           get().removeItem(productId);
           return;
@@ -5313,7 +6989,7 @@ export const useCartStore = create<CartStore>()(
 
         set((state) => ({
           items: state.items.map((item) =>
-            item.product.id === productId ? { ...item, quantity } : item
+            String(item.product.id) === String(productId) ? { ...item, quantity } : item
           ),
         }));
       },
@@ -5334,9 +7010,9 @@ export const useCartStore = create<CartStore>()(
       },
     }),
     {
-      name: "cart-storage", // localStorage key
+      name: "cart-storage",
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ items: state.items }), // only persist items, not the action functions
+      partialize: (state) => ({ items: state.items }),
     }
   )
 );
@@ -5520,7 +7196,7 @@ export interface Pagamento {
 }
 
 export interface OrderItem {
-    productId: number;
+    productId: string | number;
     titulo: string;
     precoUnitario: number;
     quantidade: number;
@@ -5536,42 +7212,59 @@ export interface Order {
     status: "Confirmado";
     createdAt: string;
 }
-
 ==================================================
 ARQUIVO: ./src/types/product.ts
 ==================================================
 export type TipoProduto = 'unico' | 'lote';
 
-export interface Product {
-    id: number;
-    idArtesao: string;
-    titulo: string;
-    descricao: string;
-    materiaPrima: string;
-    tecnica: string;
-    regiaoProducao: string;
-    categoria: string;
-    preco: number;
-    quantidadeEstoque: number;
-    dimensoes: string;
-    linkImagens: string[];
-    imagem?: string;
-    tipo?: TipoProduto;
-    sku?: string;
-    prazoProducao?: number;
-    ativo?: boolean;
+export interface DimensoesProduto {
+  altura: number; // em cm
+  largura: number; // em cm
+  profundidade: number; // em cm
+  peso: number; // em kg
 }
 
-export interface CartItem {
-    product: Product;
-    quantity: number;
+export interface Produto {
+  id: string;
+  sku: string;
+  titulo: string;
+  descricao: string;
+  materiaPrima: string;
+  tecnica: string;
+  regiaoProducao: string;
+  categoria: string;
+  preco: number;
+  tipo: TipoProduto;
+  quantidadeEstoque: number;
+  idArtesao: string;
+  nomeArtesao: string;
+  dimensoes: DimensoesProduto;
+  guiaCuidados: string;
+  galeriaImagens: string[];
+  prazoProducao: number; // em dias úteis
+  ativo: boolean;
+  dataCriacao?: string;
+
+  // Propriedades opcionais de retrocompatibilidade para componentes legados da vitrine
+  linkImagens?: string[];
+  imagem?: string;
 }
 
-export type CriarProductDTO = Omit<Product, 'id'> & {
-    id?: number;
+export type CriarProdutoDTO = Omit<Produto, 'id'> & {
+  id?: string;
 };
 
-export type AtualizarProductDTO = Partial<Omit<Product, 'id' | 'idArtesao'>>;
+export type AtualizarProdutoDTO = Partial<Omit<Produto, 'id' | 'idArtesao'>>;
+
+// --- ALIASES DE RETROCOMPATIBILIDADE COM A EQUIPE ---
+export type Product = Produto;
+export type CriarProductDTO = CriarProdutoDTO;
+export type AtualizarProductDTO = AtualizarProdutoDTO;
+
+export interface CartItem {
+  product: Produto;
+  quantity: number;
+}
 ==================================================
 ARQUIVO: ./tsconfig.json
 ==================================================

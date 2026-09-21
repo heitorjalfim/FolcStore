@@ -43,6 +43,10 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 | 16/09/2026 | Gemini | Criação do dos documentos de Spec-Driven Development | Gestão de Projeto / Documentação | Sim | A equipe revisou e centralizou a terminologia usada nos requerimentos |
 | 18/09/2026 | Gemini | Implementação de rotas dinâmicas no Next.js usando o formato amigável para SEO `[slug]` (`titulo-id`) em substituição ao roteamento simples de ID. | Frontend, Roteamento | Sim | A equipe implementou o utilitário `createSlug`, atualizou os componentes de link e ajustou a lógica de `decodeURIComponent` e `split` no componente de página para garantir que a API receba a string correta do ID do produto. |
 | 18/09/2026 | Gemini | Resolução de bugs e otimização de `useEffect`. A IA ajudou a corrigir arrays de dependência incompletos na lógica de busca com debounce (evitando "stale closures") e corrigiu erros onde tipos `string` vs `number` causavam erros 404 em chamadas da API do Axios. | Frontend, Otimização de Performance e Consumo de API | Sim | A equipe envolveu funções em `useCallback`, removeu conversões impróprias de `Number()` e corrigiu os blocos `try/catch` para expor de forma adequada as falhas de API (ex: `getArtesaoById`). |
+21/09/2026 | Gemini | Estruturação da API de Pedidos (/orders), criação de interface individual de compras e mesclagem de tabelas de vendas no Dashboard do Artesão. | Frontend, Pedidos e Tipagem | Sim | A equipe validou as alterações de interface para exibir os detalhes de envio e do comprador para o artesão.
+21/09/2026 | Gemini | Resolução de cache de navegador em requisições GET utilizando um timestamp (_t) no Axios. | Frontend, Consumo de API | Sim | O código foi incorporado no orderService para forçar a exibição de vendas recém-feitas na tela do artesão em tempo real.
+21/09/2026 | Gemini | Unificação das páginas de Checkout e Pagamento e adição de fluxo de envio ("Declarar Postagem") via PATCH. | Frontend, Fluxo de Compra e Envios | Sim | A equipe substituiu os fluxos separados por um checkout mais robusto e validou os modais de inserção de código de rastreio.
+21/09/2026 | Gemini	Criação do Dashboard Administrativo com cards de estatísticas (Total Arrecadado, Itens Vendidos, Pendências). | Frontend, Dashboard Admin | Sim | A equipe testou o fluxo de login de administrador e a renderização correta dos cálculos com base na API.
 
 ---
 
@@ -115,6 +119,23 @@ Prompt ou descrição:
 
 Como a resposta foi utilizada:
 > A resposta permitiu refatorar as URLs de produto da aplicação para torná-las amigáveis para SEO. A equipe criou o helper `createSlug`, modificou a pasta `app/product/[id]` para `app/product/[slug]`, e assegurou que o componente de página decodificasse adequadamente e analisasse o ID do parâmetro de URL antes de acionar as chamadas de API.
+
+### Prompt 9
+
+Prompt ou descrição:
+
+> "combine /customer/checkout e /customer/pagamento para uma unica pagina que cria o pedido... adicione situacaoEntrega e codigoPostagem a interface de orders... adicione um botao 'Declarar Postagem' que salva um codigo no codigoPostagem e muda situacaoEntrega para 'Enviado'"
+
+Como a resposta foi utilizada:
+> A IA auxiliou na unificação do fluxo do usuário comprador em uma única tela de Checkout otimizada. Além disso, permitiu expandir a interface do pedido e adicionar um modal no painel do artesão para submissão de códigos de rastreamento de envios (atualização via método PATCH).
+
+### Prompt 10
+
+Prompt ou descrição:
+> "crie uma pagina simples de admin para ver estatisticas das compras. use como base [código da página administrativa atual]"
+
+Como a resposta foi utilizada:
+> A IA gerou um painel de administração estruturado, consumindo o serviço de pedidos (/orders) para calcular e renderizar cards de estatísticas globais (Volume Financeiro, Total de Pedidos, Peças Vendidas e Entregas Pendentes) usando os componentes visuais do Chakra UI.
 
 ---
 
