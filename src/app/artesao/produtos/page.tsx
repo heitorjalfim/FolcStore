@@ -43,7 +43,7 @@ export default function GerenciarCatalogoPage() {
   const [carregando, setCarregando] = useState(true);
   const [salvando, setSalvando] = useState(false);
 
-  // Estados de edição modal (HU-90)
+  // Estados de edição modal (PI4-129)
   const [produtoEditando, setProdutoEditando] = useState<Produto | null>(null);
   const [precoEdit, setPrecoEdit] = useState('');
   const [descricaoEdit, setDescricaoEdit] = useState('');
@@ -57,8 +57,7 @@ export default function GerenciarCatalogoPage() {
       try {
         const dados = await productService.getAll();
         if (ativo) {
-          // Exibe os produtos do artesão se houver correspondência, ou todo o catálogo
-          const filtrados = artesao?.id 
+          const filtrados = artesao?.id
             ? dados.filter((p) => String(p.idArtesao) === String(artesao.id))
             : dados;
           setProdutos(filtrados.length > 0 ? filtrados : dados);
@@ -76,6 +75,25 @@ export default function GerenciarCatalogoPage() {
     };
   }, [artesao]);
 
+  // Validação em tempo real de preço (PI4-130)
+  const validarPreco = (valor: string): boolean => {
+    const valorTratado = valor.replace(',', '.').trim();
+    const num = parseFloat(valorTratado);
+
+    if (!valorTratado || isNaN(num)) {
+      setErroPreco('Informe um valor numérico válido.');
+      return false;
+    }
+    if (num <= 0) {
+      setErroPreco('O preço deve ser estritamente maior que zero (R$ > 0,00).');
+      return false;
+    }
+
+    setErroPreco(null);
+    return true;
+  };
+
+  // Abertura do modal com dados pré-preenchidos (PI4-128 & PI4-129)
   const handleAbrirEdicao = (prod: Produto) => {
     setProdutoEditando(prod);
     setPrecoEdit(prod.preco.toString());
@@ -84,24 +102,24 @@ export default function GerenciarCatalogoPage() {
     setModalAberto(true);
   };
 
+  // Submissão PATCH parcial e atualização da listagem em tempo real (PI4-129 & PI4-130)
   const handleSalvarEdicao = async (e: React.FormEvent) => {
     e.preventDefault();
-    const num = parseFloat(precoEdit.replace(',', '.'));
 
-    if (!precoEdit || isNaN(num) || num <= 0) {
-      setErroPreco('O preço deve ser um valor numérico estritamente maior que zero.');
+    if (!validarPreco(precoEdit) || !produtoEditando) {
       return;
     }
 
-    if (!produtoEditando) return;
-
     try {
       setSalvando(true);
+      const novoPreco = parseFloat(precoEdit.replace(',', '.'));
+
       const atualizado = await productService.update(produtoEditando.id, {
-        preco: num,
+        preco: novoPreco,
         descricao: descricaoEdit.trim(),
       });
 
+      // Atualização imediata do estado local sem recarregar a tela
       setProdutos((lista) =>
         lista.map((item) => (String(item.id) === String(atualizado.id) ? { ...item, ...atualizado } : item))
       );
@@ -135,7 +153,7 @@ export default function GerenciarCatalogoPage() {
                 Gerenciar Catálogo
               </Heading>
               <Badge colorPalette="brand" size="md">
-                HU-90
+                HU 128-130
               </Badge>
             </HStack>
             <Text fontSize="xs" color="gray.600">
@@ -164,7 +182,7 @@ export default function GerenciarCatalogoPage() {
           </HStack>
         </Flex>
 
-        {/* Listagem de Obras */}
+        {/* Listagem do Catálogo */}
         {carregando ? (
           <Flex justify="center" py={20}>
             <Spinner size="xl" color="brand.500" />
@@ -249,6 +267,7 @@ export default function GerenciarCatalogoPage() {
                       </Text>
                     </Flex>
 
+                    {/* Ações Rápidas (PI4-128) */}
                     <HStack gap={2} mt={4}>
                       <Button
                         variant="outline"
@@ -263,6 +282,7 @@ export default function GerenciarCatalogoPage() {
                         </HStack>
                       </Button>
 
+                      {/* Link direto para a vitrine pública em nova aba */}
                       <NextLink href={productUrl} target="_blank">
                         <Button variant="ghost" size="sm" aria-label="Ver na vitrine pública">
                           <FiExternalLink size={14} />
@@ -276,7 +296,7 @@ export default function GerenciarCatalogoPage() {
           </Grid>
         )}
 
-        {/* Modal de Manutenção e Edição Rápida (Chakra UI v3 Dialog) */}
+        {/* Modal de Manutenção e Edição Rápida (PI4-129 & PI4-130) */}
         <Dialog.Root open={modalAberto} onOpenChange={(e) => !e.open && setModalAberto(false)}>
           <Portal>
             <Dialog.Backdrop />
@@ -292,27 +312,31 @@ export default function GerenciarCatalogoPage() {
                       <HStack gap={2} color="amber.900" fontSize="xs">
                         <FiAlertCircle size={16} />
                         <Text>
-                          Alterações de preço e história entram em vigor imediatamente na vitrine via atualização parcial (PATCH).
+                          Alterações de preço e descrição entram em vigor imediatamente na vitrine pública via atualização parcial (PATCH).
                         </Text>
                       </HStack>
                     </Box>
 
-                    {erroPreco && (
-                      <Text color="red.500" fontSize="xs" fontWeight="semibold">
-                        {erroPreco}
-                      </Text>
-                    )}
-
-                    <Field.Root required>
+                    {/* Validação estrita de preço em tempo real (PI4-130) */}
+                    <Field.Root invalid={!!erroPreco} required>
                       <Field.Label>Preço (R$)</Field.Label>
                       <Input
                         value={precoEdit}
-                        onChange={(e) => setPrecoEdit(e.target.value)}
-                        placeholder="140.00"
+                        onChange={(e) => {
+                          setPrecoEdit(e.target.value);
+                          validarPreco(e.target.value);
+                        }}
+                        placeholder="Ex: 140.00"
                         bg="white"
                       />
+                      {erroPreco && (
+                        <Text color="red.500" fontSize="2xs" mt={1}>
+                          {erroPreco}
+                        </Text>
+                      )}
                     </Field.Root>
 
+                    {/* Edição da história e descrição cultural (PI4-129) */}
                     <Field.Root>
                       <Field.Label>História & Descrição Cultural</Field.Label>
                       <Textarea
@@ -330,7 +354,13 @@ export default function GerenciarCatalogoPage() {
                   <Button variant="ghost" size="sm" onClick={() => setModalAberto(false)} disabled={salvando}>
                     Cancelar
                   </Button>
-                  <Button type="submit" colorPalette="brand" size="sm" loading={salvando}>
+                  <Button
+                    type="submit"
+                    colorPalette="brand"
+                    size="sm"
+                    loading={salvando}
+                    disabled={!!erroPreco || !precoEdit}
+                  >
                     Salvar Alterações
                   </Button>
                 </Dialog.Footer>
