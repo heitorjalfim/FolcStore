@@ -25,3 +25,6 @@ export interface Order {
     codigoPostagem: string | null;
     avaliado?: boolean; 
 }
+
+// Tipo flexível para compatibilidade total com a página de pagamento (/customer/pagamento)
+export type CompraProduto = any;
