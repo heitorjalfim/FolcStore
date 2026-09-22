@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, use } from "react";
-import { Box, Heading, Text, VStack, HStack, Button, Image, Separator, Flex } from "@chakra-ui/react";
+import { Box, Heading, Text, VStack, HStack, Button, Image, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import NextLink from "next/link";
 import { userService } from "@/services/userService";
@@ -12,13 +12,11 @@ import { Product, Artesao, CartItem, Avaliacao } from "@/types";
 import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
 import { FiStar } from "react-icons/fi";
 
-type PageProps = { params: Promise<{ slug: string; }>; };
+type PageProps = { params: Promise<{ slug: string }>; };
 
 export default function DetalheProdutoPage({ params }: PageProps) {
     const resolvedParams = use(params);
     const rawUrlParam = decodeURIComponent(resolvedParams.slug);
-    const urlParts = rawUrlParam.split("--");
-    const productId = urlParts[urlParts.length - 1];
 
     const [produto, setProduto] = useState<Product | null>(null);
     const [artesao, setArtesao] = useState<Artesao | null>(null);
@@ -35,10 +33,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         async function fetchDados() {
             setLoading(true);
             try {
-                // O ID do produto pode conter hífens (ex: "prod-02"), então não dá
-                // para confiar em pegar só o último pedaço depois do último "-" na URL.
-                // Em vez disso, buscamos todos os produtos e comparamos o slug inteiro
-                // com o ID real de cada um (como sufixo ou como valor exato).
+                // Busca todos os produtos para bater com o slug ou id da URL
                 const todosProdutos = await productService.getAll();
                 const produtoEncontrado = todosProdutos.find(
                     (p: Product) =>
@@ -51,9 +46,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
 
                 setProduto(produtoEncontrado);
 
-                if (produtoRes && produtoRes.idArtesao) {
-                    const artesaoRes = await userService.getArtesaoById(produtoRes.idArtesao);
-                    setArtesao(artesaoRes);
+                // Busca dados do artesão
                 if (produtoEncontrado.idArtesao) {
                     try {
                         const artesaoRes = await userService.getArtesaoById(produtoEncontrado.idArtesao);
@@ -64,8 +57,12 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                 }
 
                 // Busca avaliações do produto e recorta as últimas 5
-                const avaliacoesRes = await avaliacaoService.getPorProduto(produtoRes.id);
-                setAvaliacoes(avaliacoesRes.slice(0, 5));
+                try {
+                    const avaliacoesRes = await avaliacaoService.getPorProduto(produtoEncontrado.id);
+                    setAvaliacoes(avaliacoesRes.slice(0, 5));
+                } catch (avError) {
+                    console.error("Erro ao buscar avaliações:", avError);
+                }
 
             } catch (error) {
                 console.error("Erro ao carregar dados:", error);
@@ -73,12 +70,10 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                 setLoading(false);
             }
         }
+
         fetchDados();
     }, [rawUrlParam]);
 
-    // ... (Blocos if(loading) e if(!produto) se mantêm exatamente como no arquivo original) ...
-    if (loading) return <Box maxW="7xl" mx="auto" py={8} px={4}><Text>Carregando...</Text></Box>;
-    if (!produto) return <Box maxW="7xl" mx="auto" py={8} px={4}><Text>Produto não encontrado.</Text></Box>;
     if (loading) {
         return (
             <Box maxW="7xl" mx="auto" py={8} px={4}>
@@ -111,9 +106,14 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     const estoqueRestante = estoqueDisponivel - quantidadeNoCarrinho;
     const esgotado = estoqueDisponivel < 1 || estoqueRestante < 1;
     const limiteAtingido = quantidade > estoqueRestante || estoqueRestante < 1;
+    const botaoDesabilitado = esgotado || limiteAtingido || isNavigating;
 
-    const handleIncrement = () => { if (quantidade < estoqueRestante) setQuantidade(q => q + 1); };
-    const handleDecrement = () => { if (quantidade > 1) setQuantidade(q => q - 1); };
+    const handleIncrement = () => { 
+        if (quantidade < estoqueRestante) setQuantidade(q => q + 1); 
+    };
+    const handleDecrement = () => { 
+        if (quantidade > 1) setQuantidade(q => q - 1); 
+    };
 
     const handleAddToCart = () => {
         if (esgotado || limiteAtingido || isNavigating) return;
@@ -127,54 +127,12 @@ export default function DetalheProdutoPage({ params }: PageProps) {
             <HeaderCarrinho />
             <Box maxW="7xl" mx="auto" py={8} px={4}>
                 <VStack gap={6} align="start" w="full">
-                    <Heading as="h1" size="xl" color="gray.800">{produto.titulo}</Heading>
-                    <Heading as="h1" size="xl" color="fg">
+                    <Heading as="h1" size="xl" color="gray.800">
                         {produto.titulo}
                     </Heading>
 
                     <Box mt={4} p={6} borderWidth="1px" borderColor="border" borderRadius="lg" bg="bg" w="full" boxShadow="sm">
                         {primeiraImagem && (
-                            <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="gray.100">
-                                <Image src={primeiraImagem} alt={produto.titulo} objectFit="cover" w="full" h="300px" />
-                            </Box>
-                        )}
-                        <Text fontSize="2xl" fontWeight="bold" color="green.600" mb={2}>
-                            R$ {Number(produto.preco).toFixed(2)}
-                        </Text>
-                        <Text fontSize="sm" color={esgotado ? "red.500" : "gray.600"} mb={1}>
-                            {esgotado ? "Esgotado" : `Estoque: ${estoqueDisponivel}`}
-                        </Text>
-                        <Text color="gray.700" mb={6} mt={3}>{produto.descricao}</Text>
-
-                        {/* Botões do Carrinho aqui (ocultados para concisão, idênticos ao código anterior) */}
-                        <HStack gap={4} mb={6} align="center">
-                            <Button size="sm" onClick={handleDecrement} disabled={quantidade <= 1}>-</Button>
-                            <Text px={2} fontWeight="bold">{quantidade}</Text>
-                            <Button size="sm" onClick={handleIncrement} disabled={limiteAtingido}>+</Button>
-                        </HStack>
-                        <Button size="lg" colorPalette="blue" onClick={handleAddToCart} disabled={esgotado || limiteAtingido}>
-                            Adicionar ao Carrinho
-                        </Button>
-
-                        <Box pt={6} mt={8} borderTop="1px solid" borderColor="gray.200" w="full">
-                            {artesao && (
-                                <Box bg="gray.50" p={4} borderRadius="md" borderWidth="1px" borderColor="gray.200" w="full">
-                                    <Flex justify="space-between" align="start" wrap="wrap">
-                                        <Box>
-                                            <Text fontSize="sm" fontWeight="bold" color="gray.500" textTransform="uppercase">Criado por</Text>
-                                            <Heading as="h3" size="md" color="gray.800" mb={1}>{artesao.nome}</Heading>
-                                            <Text fontSize="sm" color="gray.600" mb={2}>Região: {artesao.regiaoProducao}</Text>
-                                        </Box>
-                                        <HStack bg="white" p={2} borderRadius="md" borderWidth="1px">
-                                            <FiStar fill="#b8ad2a" color="#b8ad2a" />
-                                            <Text fontWeight="bold">
-                                                {artesao.notaMedia ? artesao.notaMedia.toFixed(1) : "N/A"}
-                                            </Text>
-                                            <Text fontSize="xs" color="gray.500">
-                                                ({artesao.totalAvaliacoes || 0} reviews)
-                                            </Text>
-                                        </HStack>
-                                    </Flex>
                             <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="bg.subtle">
                                 <Image
                                     src={primeiraImagem}
@@ -246,24 +204,40 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                     : "Adicionar ao Carrinho"}
                         </Button>
 
+                        {/* Bloco do Artesão */}
                         <Box pt={6} borderTop="1px solid" borderColor="border" w="full">
                             {artesao ? (
                                 <Box bg="bg.subtle" p={4} borderRadius="md" borderWidth="1px" borderColor="border" w="full">
-                                    <Text fontSize="sm" fontWeight="bold" color="fg.muted" textTransform="uppercase" mb={1}>
-                                        Criado por
-                                    </Text>
-                                    <Heading as="h3" size="md" color="fg" mb={2}>
-                                        {artesao.nome}
-                                    </Heading>
-                                    <Text fontSize="sm" color="fg.muted" mb={4}>
-                                        Região de Produção: {artesao.regiaoProducao}
-                                    </Text>
+                                    <Flex justify="space-between" align="start" wrap="wrap" mb={2}>
+                                        <Box>
+                                            <Text fontSize="sm" fontWeight="bold" color="fg.muted" textTransform="uppercase">
+                                                Criado por
+                                            </Text>
+                                            <Heading as="h3" size="md" color="fg" mb={1}>
+                                                {artesao.nome}
+                                            </Heading>
+                                            <Text fontSize="sm" color="fg.muted">
+                                                Região de Produção: {artesao.regiaoProducao}
+                                            </Text>
+                                        </Box>
+                                        <HStack bg="white" p={2} borderRadius="md" borderWidth="1px">
+                                            <FiStar fill="#b8ad2a" color="#b8ad2a" />
+                                            <Text fontWeight="bold">
+                                                {artesao.notaMedia ? artesao.notaMedia.toFixed(1) : "N/A"}
+                                            </Text>
+                                            <Text fontSize="xs" color="gray.500">
+                                                ({artesao.totalAvaliacoes || 0} reviews)
+                                            </Text>
+                                        </HStack>
+                                    </Flex>
                                     <NextLink href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}>
                                         <Button size="sm" variant="outline" colorPalette="brand">
                                             Ver Perfil do Artesão
                                         </Button>
                                     </NextLink>
                                 </Box>
+                            ) : (
+                                <Text fontSize="sm" color="fg.muted">Informações do artesão não disponíveis.</Text>
                             )}
                         </Box>
 
@@ -290,7 +264,6 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                         </Box>
                                     ))}
                                 </VStack>
-                                <Text fontSize="sm" color="fg.muted">Informações do artesão não disponíveis.</Text>
                             )}
                         </Box>
 
