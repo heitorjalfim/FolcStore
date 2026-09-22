@@ -29,7 +29,7 @@ export interface ProductCardProps {
 export function ProductCard({ product, onAddToCart }: ProductCardProps) {
     const addItem = useCartStore((state) => state.addItem);
     const imageSrc = product.linkImagens?.[0] ?? product.imagem ?? "/placeholder-product.png";
-    const productUrl = `/product/${createSlug(product.titulo)}-${product.id}`;
+    const productUrl = `/product/${createSlug(product.titulo)}--${product.id}`;
 
     const handleAdd = (e: React.MouseEvent) => {
         e.preventDefault();

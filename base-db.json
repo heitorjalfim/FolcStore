@@ -175,5 +175,63 @@
       "id": "wasd"
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "idComprador": "3s3mp3B0t4n0F1nnn",
+      "nomeComprador": "João Cliente",
+      "idProduto": "posseee",
+      "tituloProduto": "Vaso de Barro Decorativo",
+      "quantidade": 1,
+      "precoUnitario": 95,
+      "status": "Pago",
+      "dataCompra": "2026-09-21T15:12:50.247Z",
+      "enderecoEntrega": {
+        "cep": "a",
+        "rua": "2",
+        "numero": "2",
+        "bairro": "2",
+        "complemento": "",
+        "cidade": "2",
+        "estado": "b",
+        "id": "267b7b7b-583e-4416-95b6-2952af2de216"
+      },
+      "pagamento": {
+        "metodo": "pix",
+        "status": "aprovado"
+      },
+      "id": "bf83479f-64b6-4d1c-a4df-f6a4b03f3bde",
+      "situacaoEntrega": "Enviado",
+      "codigoPostagem": "1"
+    },
+    {
+      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "idComprador": "3s3mp3B0t4n0F1nnn",
+      "nomeComprador": "João Cliente",
+      "idProduto": "posseee",
+      "tituloProduto": "Vaso de Barro Decorativo",
+      "quantidade": 1,
+      "precoUnitario": 95,
+      "status": "Pago",
+      "dataCompra": "2026-09-21T15:18:02.130Z",
+      "enderecoEntrega": {
+        "id": "end-1",
+        "cep": "50000-000",
+        "bairro": "São Thomaz",
+        "rua": "Rua da avenida",
+        "numero": "97",
+        "complemento": "casa",
+        "cidade": "Recife",
+        "estado": "PE"
+      },
+      "pagamento": {
+        "metodo": "pix",
+        "status": "aprovado"
+      },
+      "situacaoEntrega": "aguardadoEnvio",
+      "codigoPostagem": null,
+      "id": "8eaef0bd-f056-4224-947d-e8c6abb50df6"
+    }
+  ],
+  "avaliacoes": []
 }

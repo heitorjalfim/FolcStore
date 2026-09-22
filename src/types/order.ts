@@ -8,20 +8,20 @@ export interface Pagamento {
     cartaoMascarado?: string;
 }
 
-export interface OrderItem {
-    productId: string | number;
-    titulo: string;
-    precoUnitario: number;
-    quantidade: number;
-}
-
 export interface Order {
-    id: string;
-    customerId: string;
-    itens: OrderItem[];
-    total: number;
+    id?: string;
+    idArtesao: string;
+    idComprador: string;
+    nomeComprador: string;
+    idProduto: string | number;
+    tituloProduto: string;
+    quantidade: number;
+    precoUnitario: number;
+    status: string;
+    dataCompra: string;
     enderecoEntrega: Endereco;
     pagamento: Pagamento;
-    status: "Confirmado";
-    createdAt: string;
+    situacaoEntrega: "aguardadoEnvio" | "Enviado" | "Entregue";
+    codigoPostagem: string | null;
+    avaliado?: boolean; 
 }
