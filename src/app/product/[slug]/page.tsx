@@ -35,32 +35,12 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         async function fetchDados() {
             setLoading(true);
             try {
-                // O ID do produto pode conter hífens (ex: "prod-02"), então não dá
-                // para confiar em pegar só o último pedaço depois do último "-" na URL.
-                // Em vez disso, buscamos todos os produtos e comparamos o slug inteiro
-                // com o ID real de cada um (como sufixo ou como valor exato).
-                const todosProdutos = await productService.getAll();
-                const produtoEncontrado = todosProdutos.find(
-                    (p: Product) =>
-                        String(p.id) === rawUrlParam || rawUrlParam.endsWith(`-${p.id}`)
-                );
-
-                if (!produtoEncontrado) {
-                    throw new Error(`Produto não encontrado para o slug: ${rawUrlParam}`);
-                }
-
-                setProduto(produtoEncontrado);
+                const produtoRes = await productService.getById(Number(productId) || productId);
+                setProduto(produtoRes);
 
                 if (produtoRes && produtoRes.idArtesao) {
                     const artesaoRes = await userService.getArtesaoById(produtoRes.idArtesao);
                     setArtesao(artesaoRes);
-                if (produtoEncontrado.idArtesao) {
-                    try {
-                        const artesaoRes = await userService.getArtesaoById(produtoEncontrado.idArtesao);
-                        setArtesao(artesaoRes);
-                    } catch (artesaoError) {
-                        console.error("Erro ao buscar o artesão:", artesaoError);
-                    }
                 }
 
                 // Busca avaliações do produto e recorta as últimas 5
@@ -74,31 +54,11 @@ export default function DetalheProdutoPage({ params }: PageProps) {
             }
         }
         fetchDados();
-    }, [rawUrlParam]);
+    }, [productId]);
 
     // ... (Blocos if(loading) e if(!produto) se mantêm exatamente como no arquivo original) ...
     if (loading) return <Box maxW="7xl" mx="auto" py={8} px={4}><Text>Carregando...</Text></Box>;
     if (!produto) return <Box maxW="7xl" mx="auto" py={8} px={4}><Text>Produto não encontrado.</Text></Box>;
-    if (loading) {
-        return (
-            <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <Text color="fg.muted">Carregando produto...</Text>
-            </Box>
-        );
-    }
-
-    if (!produto) {
-        return (
-            <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <VStack gap={4} align="start">
-                    <Heading as="h1" size="lg" color="red.500">
-                        Produto não encontrado
-                    </Heading>
-                    <Text color="fg.muted">Não foi possível localizar este produto pelo ID fornecido.</Text>
-                </VStack>
-            </Box>
-        );
-    }
 
     const primeiraImagem = produto.linkImagens?.[0] || produto.imagem;
     const estoqueDisponivel = produto.quantidadeEstoque ?? 0;
@@ -128,11 +88,8 @@ export default function DetalheProdutoPage({ params }: PageProps) {
             <Box maxW="7xl" mx="auto" py={8} px={4}>
                 <VStack gap={6} align="start" w="full">
                     <Heading as="h1" size="xl" color="gray.800">{produto.titulo}</Heading>
-                    <Heading as="h1" size="xl" color="fg">
-                        {produto.titulo}
-                    </Heading>
 
-                    <Box mt={4} p={6} borderWidth="1px" borderColor="border" borderRadius="lg" bg="bg" w="full" boxShadow="sm">
+                    <Box mt={4} p={6} borderWidth="1px" borderRadius="lg" bg="white" w="full" boxShadow="sm">
                         {primeiraImagem && (
                             <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="gray.100">
                                 <Image src={primeiraImagem} alt={produto.titulo} objectFit="cover" w="full" h="300px" />
@@ -175,94 +132,6 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                             </Text>
                                         </HStack>
                                     </Flex>
-                            <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="bg.subtle">
-                                <Image
-                                    src={primeiraImagem}
-                                    alt={produto.titulo}
-                                    objectFit="cover"
-                                    w="full"
-                                    h="300px"
-                                />
-                            </Box>
-                        )}
-
-                        <Text fontSize="2xl" fontWeight="bold" color="brand.700" mb={2}>
-                            R$ {Number(produto.preco).toFixed(2)}
-                        </Text>
-
-                        <Text fontSize="sm" color={esgotado ? "red.500" : "fg.muted"} mb={1}>
-                            {esgotado ? "Produto Esgotado" : `Estoque total: ${estoqueDisponivel}`}
-                        </Text>
-
-                        <Text color="fg.muted" mb={6} mt={3}>
-                            {produto.descricao}
-                        </Text>
-
-                        {!esgotado && quantidadeNoCarrinho > 0 && !isNavigating && (
-                            <Text fontSize="sm" color="orange.500" mb={4} fontWeight="medium">
-                                Você já tem esse item no seu carrinho. (Total {quantidadeNoCarrinho})
-                            </Text>
-                        )}
-
-                        {!esgotado && estoqueRestante > 0 && (
-                            <HStack gap={4} mb={6} align="center">
-                                <Text fontWeight="medium" color="fg">Quantidade:</Text>
-                                <HStack>
-                                    <Button
-                                        size="sm"
-                                        colorPalette="brand"
-                                        variant="outline"
-                                        onClick={handleDecrement}
-                                        disabled={quantidade <= 1 || isNavigating}
-                                    >
-                                        -
-                                    </Button>
-                                    <Text px={2} fontWeight="bold" color="fg">{quantidade}</Text>
-                                    <Button
-                                        size="sm"
-                                        colorPalette="brand"
-                                        variant="outline"
-                                        onClick={handleIncrement}
-                                        disabled={quantidade >= estoqueRestante || isNavigating}
-                                    >
-                                        +
-                                    </Button>
-                                </HStack>
-                            </HStack>
-                        )}
-
-                        <Button
-                            size="lg"
-                            colorPalette="brand"
-                            onClick={handleAddToCart}
-                            disabled={botaoDesabilitado}
-                            loading={isNavigating}
-                            mb={6}
-                        >
-                            {esgotado || estoqueRestante < 1
-                                ? "Indisponível"
-                                : limiteAtingido
-                                    ? "Limite do estoque no carrinho"
-                                    : "Adicionar ao Carrinho"}
-                        </Button>
-
-                        <Box pt={6} borderTop="1px solid" borderColor="border" w="full">
-                            {artesao ? (
-                                <Box bg="bg.subtle" p={4} borderRadius="md" borderWidth="1px" borderColor="border" w="full">
-                                    <Text fontSize="sm" fontWeight="bold" color="fg.muted" textTransform="uppercase" mb={1}>
-                                        Criado por
-                                    </Text>
-                                    <Heading as="h3" size="md" color="fg" mb={2}>
-                                        {artesao.nome}
-                                    </Heading>
-                                    <Text fontSize="sm" color="fg.muted" mb={4}>
-                                        Região de Produção: {artesao.regiaoProducao}
-                                    </Text>
-                                    <NextLink href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}>
-                                        <Button size="sm" variant="outline" colorPalette="brand">
-                                            Ver Perfil do Artesão
-                                        </Button>
-                                    </NextLink>
                                 </Box>
                             )}
                         </Box>
@@ -290,7 +159,6 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                         </Box>
                                     ))}
                                 </VStack>
-                                <Text fontSize="sm" color="fg.muted">Informações do artesão não disponíveis.</Text>
                             )}
                         </Box>
 
