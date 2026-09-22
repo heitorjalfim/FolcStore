@@ -44,10 +44,12 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
     return (
         <NextLink href={productUrl} style={{ textDecoration: 'none', display: 'block' }}>
             <Box
-                bg="white"
+                bg="bg"
                 borderRadius="lg"
                 overflow="hidden"
                 shadow="md"
+                borderWidth="1px"
+                borderColor="border"
                 transition="transform 0.2s"
                 _hover={{ transform: "translateY(-4px)", shadow: "lg" }}
             >
@@ -59,20 +61,20 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
                     objectFit="cover"
                 />
                 <VStack p={4} align="stretch" gap={2}>
-                    <Badge colorScheme="purple" alignSelf="flex-start" fontSize="xs">
+                    <Badge colorPalette="brand" alignSelf="flex-start" fontSize="xs">
                         {product.categoria}
                     </Badge>
-                    <Text fontWeight="bold" fontSize="md" lineClamp={1}>
+                    <Text fontWeight="bold" fontSize="md" lineClamp={1} color="fg">
                         {product.titulo}
                     </Text>
-                    <Text fontSize="sm" color="gray.500" lineClamp={2}>
+                    <Text fontSize="sm" color="fg.muted" lineClamp={2}>
                         {product.descricao}
                     </Text>
                     <Text fontWeight="bold" fontSize="lg" color="brand.600">
                         R$ {Number(product.preco).toFixed(2)}
                     </Text>
                     <Button
-                        colorScheme="blue"
+                        colorPalette="brand"
                         size="sm"
                         onClick={handleAdd}
                     >

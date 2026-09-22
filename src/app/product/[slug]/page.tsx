@@ -18,10 +18,7 @@ type PageProps = {
 
 export default function DetalheProdutoPage({ params }: PageProps) {
     const resolvedParams = use(params);
-
     const rawUrlParam = decodeURIComponent(resolvedParams.slug);
-    const urlParts = rawUrlParam.split("-");
-    const productId = urlParts[urlParts.length - 1];
 
     const [produto, setProduto] = useState<Product | null>(null);
     const [artesao, setArtesao] = useState<Artesao | null>(null);
@@ -37,12 +34,25 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         async function fetchDados() {
             setLoading(true);
             try {
-                const produtoRes = await productService.getById(Number(productId) || productId);
-                setProduto(produtoRes);
+                // O ID do produto pode conter hífens (ex: "prod-02"), então não dá
+                // para confiar em pegar só o último pedaço depois do último "-" na URL.
+                // Em vez disso, buscamos todos os produtos e comparamos o slug inteiro
+                // com o ID real de cada um (como sufixo ou como valor exato).
+                const todosProdutos = await productService.getAll();
+                const produtoEncontrado = todosProdutos.find(
+                    (p: Product) =>
+                        String(p.id) === rawUrlParam || rawUrlParam.endsWith(`-${p.id}`)
+                );
 
-                if (produtoRes && produtoRes.idArtesao) {
+                if (!produtoEncontrado) {
+                    throw new Error(`Produto não encontrado para o slug: ${rawUrlParam}`);
+                }
+
+                setProduto(produtoEncontrado);
+
+                if (produtoEncontrado.idArtesao) {
                     try {
-                        const artesaoRes = await userService.getArtesaoById(produtoRes.idArtesao);
+                        const artesaoRes = await userService.getArtesaoById(produtoEncontrado.idArtesao);
                         setArtesao(artesaoRes);
                     } catch (artesaoError) {
                         console.error("Erro ao buscar o artesão:", artesaoError);
@@ -57,12 +67,12 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         }
 
         fetchDados();
-    }, [productId]);
+    }, [rawUrlParam]);
 
     if (loading) {
         return (
             <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <Text color="gray.500">Carregando produto...</Text>
+                <Text color="fg.muted">Carregando produto...</Text>
             </Box>
         );
     }
@@ -74,7 +84,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                     <Heading as="h1" size="lg" color="red.500">
                         Produto não encontrado
                     </Heading>
-                    <Text color="gray.600">Não foi possível localizar este produto pelo ID fornecido.</Text>
+                    <Text color="fg.muted">Não foi possível localizar este produto pelo ID fornecido.</Text>
                 </VStack>
             </Box>
         );
@@ -124,13 +134,13 @@ export default function DetalheProdutoPage({ params }: PageProps) {
             <HeaderCarrinho />
             <Box maxW="7xl" mx="auto" py={8} px={4}>
                 <VStack gap={6} align="start" w="full">
-                    <Heading as="h1" size="xl" color="gray.800">
+                    <Heading as="h1" size="xl" color="fg">
                         {produto.titulo}
                     </Heading>
 
-                    <Box mt={4} p={6} borderWidth="1px" borderRadius="lg" bg="white" w="full" boxShadow="sm">
+                    <Box mt={4} p={6} borderWidth="1px" borderColor="border" borderRadius="lg" bg="bg" w="full" boxShadow="sm">
                         {primeiraImagem && (
-                            <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="gray.100">
+                            <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="bg.subtle">
                                 <Image
                                     src={primeiraImagem}
                                     alt={produto.titulo}
@@ -141,15 +151,15 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                             </Box>
                         )}
 
-                        <Text fontSize="2xl" fontWeight="bold" color="green.600" mb={2}>
+                        <Text fontSize="2xl" fontWeight="bold" color="brand.700" mb={2}>
                             R$ {Number(produto.preco).toFixed(2)}
                         </Text>
 
-                        <Text fontSize="sm" color={esgotado ? "red.500" : "gray.600"} mb={1}>
+                        <Text fontSize="sm" color={esgotado ? "red.500" : "fg.muted"} mb={1}>
                             {esgotado ? "Produto Esgotado" : `Estoque total: ${estoqueDisponivel}`}
                         </Text>
 
-                        <Text color="gray.700" mb={6} mt={3}>
+                        <Text color="fg.muted" mb={6} mt={3}>
                             {produto.descricao}
                         </Text>
 
@@ -161,18 +171,22 @@ export default function DetalheProdutoPage({ params }: PageProps) {
 
                         {!esgotado && estoqueRestante > 0 && (
                             <HStack gap={4} mb={6} align="center">
-                                <Text fontWeight="medium">Quantidade:</Text>
+                                <Text fontWeight="medium" color="fg">Quantidade:</Text>
                                 <HStack>
                                     <Button
                                         size="sm"
+                                        colorPalette="brand"
+                                        variant="outline"
                                         onClick={handleDecrement}
                                         disabled={quantidade <= 1 || isNavigating}
                                     >
                                         -
                                     </Button>
-                                    <Text px={2} fontWeight="bold">{quantidade}</Text>
+                                    <Text px={2} fontWeight="bold" color="fg">{quantidade}</Text>
                                     <Button
                                         size="sm"
+                                        colorPalette="brand"
+                                        variant="outline"
                                         onClick={handleIncrement}
                                         disabled={quantidade >= estoqueRestante || isNavigating}
                                     >
@@ -184,9 +198,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
 
                         <Button
                             size="lg"
-                            bg="blue.500"
-                            color="white"
-                            _hover={{ bg: "blue.600" }}
+                            colorPalette="brand"
                             onClick={handleAddToCart}
                             disabled={botaoDesabilitado}
                             loading={isNavigating}
@@ -199,26 +211,26 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                     : "Adicionar ao Carrinho"}
                         </Button>
 
-                        <Box pt={6} borderTop="1px solid" borderColor="gray.200" w="full">
+                        <Box pt={6} borderTop="1px solid" borderColor="border" w="full">
                             {artesao ? (
-                                <Box bg="gray.50" p={4} borderRadius="md" borderWidth="1px" borderColor="gray.200" w="full">
-                                    <Text fontSize="sm" fontWeight="bold" color="gray.500" textTransform="uppercase" mb={1}>
+                                <Box bg="bg.subtle" p={4} borderRadius="md" borderWidth="1px" borderColor="border" w="full">
+                                    <Text fontSize="sm" fontWeight="bold" color="fg.muted" textTransform="uppercase" mb={1}>
                                         Criado por
                                     </Text>
-                                    <Heading as="h3" size="md" color="gray.800" mb={2}>
+                                    <Heading as="h3" size="md" color="fg" mb={2}>
                                         {artesao.nome}
                                     </Heading>
-                                    <Text fontSize="sm" color="gray.600" mb={4}>
+                                    <Text fontSize="sm" color="fg.muted" mb={4}>
                                         Região de Produção: {artesao.regiaoProducao}
                                     </Text>
                                     <NextLink href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}>
-                                        <Button size="sm" variant="outline">
+                                        <Button size="sm" variant="outline" colorPalette="brand">
                                             Ver Perfil do Artesão
                                         </Button>
                                     </NextLink>
                                 </Box>
                             ) : (
-                                <Text fontSize="sm" color="gray.500">Informações do artesão não disponíveis.</Text>
+                                <Text fontSize="sm" color="fg.muted">Informações do artesão não disponíveis.</Text>
                             )}
                         </Box>
                     </Box>

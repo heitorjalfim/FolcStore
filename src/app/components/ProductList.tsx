@@ -27,7 +27,7 @@ export function ProductList({ products, isLoading, error, onAddToCart }: Product
           <Text color="red.500" fontWeight="bold">
             Erro ao carregar produtos
           </Text>
-          <Text color="gray.500" fontSize="sm">
+          <Text color="fg.muted" fontSize="sm">
             {error}
           </Text>
         </VStack>
@@ -38,7 +38,7 @@ export function ProductList({ products, isLoading, error, onAddToCart }: Product
   if (products.length === 0) {
     return (
       <Center py={20}>
-        <Text color="gray.400">Nenhum produto encontrado.</Text>
+        <Text color="fg.muted">Nenhum produto encontrado.</Text>
       </Center>
     );
   }
