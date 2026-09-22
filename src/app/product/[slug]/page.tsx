@@ -54,6 +54,12 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                     } catch (artesaoError) {
                         console.error("Erro ao buscar o artesão:", artesaoError);
                     }
+                const produtoRes = await productService.getById(Number(productId) || productId);
+                setProduto(produtoRes);
+
+                if (produtoRes && produtoRes.idArtesao) {
+                    const artesaoRes = await userService.getArtesaoById(produtoRes.idArtesao);
+                    setArtesao(artesaoRes);
                 }
 
                 // Busca avaliações do produto e recorta as últimas 5
@@ -72,7 +78,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         }
 
         fetchDados();
-    }, [rawUrlParam]);
+    }, [productId]);
 
     if (loading) {
         return (
@@ -94,6 +100,9 @@ export default function DetalheProdutoPage({ params }: PageProps) {
             </Box>
         );
     }
+    // ... (Blocos if(loading) e if(!produto) se mantêm exatamente como no arquivo original) ...
+    if (loading) return <Box maxW="7xl" mx="auto" py={8} px={4}><Text>Carregando...</Text></Box>;
+    if (!produto) return <Box maxW="7xl" mx="auto" py={8} px={4}><Text>Produto não encontrado.</Text></Box>;
 
     const primeiraImagem = produto.linkImagens?.[0] || produto.imagem;
     const estoqueDisponivel = produto.quantidadeEstoque ?? 0;
@@ -130,8 +139,9 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                     <Heading as="h1" size="xl" color="gray.800">
                         {produto.titulo}
                     </Heading>
+                    <Heading as="h1" size="xl" color="gray.800">{produto.titulo}</Heading>
 
-                    <Box mt={4} p={6} borderWidth="1px" borderColor="border" borderRadius="lg" bg="bg" w="full" boxShadow="sm">
+                    <Box mt={4} p={6} borderWidth="1px" borderRadius="lg" bg="white" w="full" boxShadow="sm">
                         {primeiraImagem && (
                             <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="bg.subtle">
                                 <Image
@@ -219,6 +229,36 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                                             <Text fontSize="sm" color="fg.muted">
                                                 Região de Produção: {artesao.regiaoProducao}
                                             </Text>
+                            <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="gray.100">
+                                <Image src={primeiraImagem} alt={produto.titulo} objectFit="cover" w="full" h="300px" />
+                            </Box>
+                        )}
+                        <Text fontSize="2xl" fontWeight="bold" color="green.600" mb={2}>
+                            R$ {Number(produto.preco).toFixed(2)}
+                        </Text>
+                        <Text fontSize="sm" color={esgotado ? "red.500" : "gray.600"} mb={1}>
+                            {esgotado ? "Esgotado" : `Estoque: ${estoqueDisponivel}`}
+                        </Text>
+                        <Text color="gray.700" mb={6} mt={3}>{produto.descricao}</Text>
+
+                        {/* Botões do Carrinho aqui (ocultados para concisão, idênticos ao código anterior) */}
+                        <HStack gap={4} mb={6} align="center">
+                            <Button size="sm" onClick={handleDecrement} disabled={quantidade <= 1}>-</Button>
+                            <Text px={2} fontWeight="bold">{quantidade}</Text>
+                            <Button size="sm" onClick={handleIncrement} disabled={limiteAtingido}>+</Button>
+                        </HStack>
+                        <Button size="lg" colorPalette="blue" onClick={handleAddToCart} disabled={esgotado || limiteAtingido}>
+                            Adicionar ao Carrinho
+                        </Button>
+
+                        <Box pt={6} mt={8} borderTop="1px solid" borderColor="gray.200" w="full">
+                            {artesao && (
+                                <Box bg="gray.50" p={4} borderRadius="md" borderWidth="1px" borderColor="gray.200" w="full">
+                                    <Flex justify="space-between" align="start" wrap="wrap">
+                                        <Box>
+                                            <Text fontSize="sm" fontWeight="bold" color="gray.500" textTransform="uppercase">Criado por</Text>
+                                            <Heading as="h3" size="md" color="gray.800" mb={1}>{artesao.nome}</Heading>
+                                            <Text fontSize="sm" color="gray.600" mb={2}>Região: {artesao.regiaoProducao}</Text>
                                         </Box>
                                         <HStack bg="white" p={2} borderRadius="md" borderWidth="1px">
                                             <FiStar fill="#b8ad2a" color="#b8ad2a" />
