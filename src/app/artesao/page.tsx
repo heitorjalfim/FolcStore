@@ -9,9 +9,11 @@ import {
     Box, Button, Container, Flex, Heading, HStack, Text, VStack, Spinner,
     Table, Badge, Dialog, Portal, Input, Field
 } from '@chakra-ui/react';
-import { FiPackage, FiLogOut } from 'react-icons/fi';
+import { FiPackage, FiLogOut, FiHome } from 'react-icons/fi';
 import { orderService } from '@/services/orderService';
+import { apiService } from '@/services/apiService';
 import { Order } from '@/types/order';
+import { Avaliacao } from '@/types/avaliacao';
 
 const emptySubscribe = () => () => { };
 
@@ -27,6 +29,11 @@ export default function Artesao() {
     const [compras, setCompras] = useState<Order[]>([]);
     const [isLoadingCompras, setIsLoadingCompras] = useState(true);
 
+    // Estados de Avaliações (Dinâmicas)
+    const [avaliacoes, setAvaliacoes] = useState<Avaliacao[]>([]);
+    const [media, setMedia] = useState<string>("0.0");
+    const [isLoadingAvaliacoes, setIsLoadingAvaliacoes] = useState(true);
+
     // Estados do Modal de Envio
     const [modalAberto, setModalAberto] = useState(false);
     const [compraEditando, setCompraEditando] = useState<Order | null>(null);
@@ -41,10 +48,26 @@ export default function Artesao() {
         }
 
         setIsLoadingCompras(true);
-        orderService.getComprasPorArtesao(artesao.id)
-            .then(setCompras)
-            .catch(console.error)
-            .finally(() => setIsLoadingCompras(false));
+        setIsLoadingAvaliacoes(true);
+
+        // Busca simultânea de compras e avaliações do artesão
+        Promise.all([
+            orderService.getComprasPorArtesao(artesao.id),
+            apiService.get<Avaliacao[]>('/avaliacoes', { params: { idArtesao: artesao.id } })
+        ]).then(([comprasData, avaliacoesRes]) => {
+            setCompras(comprasData);
+
+            const avaliacoesData = avaliacoesRes.data;
+            setAvaliacoes(avaliacoesData);
+            if (avaliacoesData.length > 0) {
+                const calcMedia = avaliacoesData.reduce((t, a) => t + a.nota, 0) / avaliacoesData.length;
+                setMedia(calcMedia.toFixed(1));
+            }
+        }).catch(console.error)
+          .finally(() => {
+              setIsLoadingCompras(false);
+              setIsLoadingAvaliacoes(false);
+          });
 
     }, [mounted, artesao, router]);
 
@@ -82,36 +105,62 @@ export default function Artesao() {
         }
     };
 
-    const avaliacoes = [
-        { nota: 5, comentario: "Peça linda, chegou rápido!", data: "10/09/2026" },
-        { nota: 4, comentario: "Muito bonita, só demorou um pouco.", data: "05/09/2026" },
-    ];
-    const media = (avaliacoes.reduce((t, a) => t + a.nota, 0) / avaliacoes.length).toFixed(1);
-
     return (
-        <Box minH="100vh" bg="gray.50" py={8}>
-            <Container maxW="1000px">
-                <Box bg="white" p={6} borderRadius="xl" shadow="sm" borderWidth="1px" borderColor="gray.200" mb={8}>
+        <Box minH="100vh" bg="gray.50" pb={12}>
+            {/* Header de Navegação */}
+            <Box bg="white" shadow="sm" py={4} px={8} mb={8}>
+                <Container maxW="1200px">
                     <Flex justify="space-between" align="center">
-                        <VStack align="start" gap={1}>
-                            <Heading size="lg" color="brand.500">
-                                Olá, {artesao?.nome || 'Mestre Artesão'}!
-                            </Heading>
-                            <Text color="gray.600" fontSize="sm">
-                                Polo Regional: <b>{artesao?.regiaoProducao || 'Pernambuco'}</b>
-                            </Text>
-                        </VStack>
-                        <HStack gap={3}>
-                            <NextLink href="/artesao/produtos">
-                                <Button colorPalette="brand" size="md">
-                                    <HStack gap={2}><FiPackage /><Text>Gerenciar Catálogo</Text></HStack>
+                        <HStack gap={4}>
+                            <NextLink href="/">
+                                <Button variant="ghost" size="sm">
+                                    <HStack gap={2}>
+                                        <FiHome />
+                                        <Text>Home</Text>
+                                    </HStack>
                                 </Button>
                             </NextLink>
-                            <Button variant="outline" colorPalette="red" size="md" onClick={handleLogout}>
-                                <HStack gap={2}><FiLogOut /><Text>Sair</Text></HStack>
+                            <Heading size="md" color="brand.500">
+                                Painel do Artesão
+                            </Heading>
+                        </HStack>
+
+                        <HStack gap={3}>
+                            <NextLink href="/artesao/produtos">
+                                <Button variant="outline" size="sm" colorPalette="brand">
+                                    <HStack gap={2}>
+                                        <FiPackage />
+                                        <Text>Meu Catálogo</Text>
+                                    </HStack>
+                                </Button>
+                            </NextLink>
+                            <Button
+                                colorPalette="red"
+                                variant="outline"
+                                size="sm"
+                                onClick={handleLogout}
+                            >
+                                <HStack gap={2}>
+                                    <FiLogOut />
+                                    <Text>Sair</Text>
+                                </HStack>
                             </Button>
                         </HStack>
                     </Flex>
+                </Container>
+            </Box>
+
+            <Container maxW="1000px">
+                {/* Perfil */}
+                <Box bg="white" p={6} borderRadius="xl" shadow="sm" borderWidth="1px" borderColor="gray.200" mb={8}>
+                    <VStack align="start" gap={1}>
+                        <Heading size="lg" color="gray.800">
+                            Olá, {artesao?.nome || 'Mestre Artesão'}!
+                        </Heading>
+                        <Text color="gray.600" fontSize="sm">
+                            Polo Regional: <b>{artesao?.regiaoProducao || 'Pernambuco'}</b>
+                        </Text>
+                    </VStack>
                 </Box>
 
                 <VStack align="stretch" gap={8}>
@@ -182,15 +231,32 @@ export default function Artesao() {
                         )}
                     </Box>
 
-                    {/* Avaliações */}
+                    {/* Avaliações Dinâmicas */}
                     <Box bg="white" p={6} borderRadius="xl" shadow="sm" borderWidth="1px" borderColor="gray.200">
                         <Heading size="md" mb={2}>Avaliações do Vendedor</Heading>
-                        <Text fontSize="sm" color="gray.600" mb={6}>Nota média: <b>{media} / 5</b></Text>
-                        <VStack align="stretch" gap={4}>
-                            {avaliacoes.map((item, idx) => (
-                                <AvaliacaoCard key={idx} avaliacao={item} />
-                            ))}
-                        </VStack>
+                        {isLoadingAvaliacoes ? (
+                            <Flex justify="center" py={6}>
+                                <Spinner size="lg" color="brand.500" />
+                            </Flex>
+                        ) : avaliacoes.length === 0 ? (
+                            <Text color="gray.500" mt={2}>Você ainda não possui avaliações.</Text>
+                        ) : (
+                            <>
+                                <Text fontSize="sm" color="gray.600" mb={6}>Nota média: <b>{media} / 5</b></Text>
+                                <VStack align="stretch" gap={4}>
+                                    {avaliacoes.map((item, idx) => (
+                                        <AvaliacaoCard 
+                                            key={item.id || idx} 
+                                            avaliacao={{
+                                                nota: item.nota,
+                                                comentario: item.comentario,
+                                                data: new Date(item.data).toLocaleDateString('pt-BR')
+                                            }} 
+                                        />
+                                    ))}
+                                </VStack>
+                            </>
+                        )}
                     </Box>
                 </VStack>
 

@@ -7,6 +7,7 @@ import { sessionStore } from "@/store/sessionStore";
 import { useCartStore } from "@/store/cartStore";
 import { orderService } from "@/services/orderService";
 import { paymentService } from "@/services/paymentService";
+import { productService } from "@/services/productService";
 import EnderecoManager from "../../components/EnderecoManager";
 import { Endereco, MetodoPagamento, Order } from "@/types";
 import {
@@ -94,7 +95,16 @@ export default function CheckoutPage() {
                 codigoPostagem: null
             }));
 
+            // 1. Registra as compras na API
             await orderService.registrarCompras(compras);
+
+            // 2. Deduz o estoque de cada produto simultaneamente
+            await Promise.all(items.map(item => {
+                const novoEstoque = Math.max(0, item.product.quantidadeEstoque - item.quantity);
+                return productService.update(item.product.id, {
+                    quantidadeEstoque: novoEstoque
+                });
+            }));
 
             setTotalConfirmado(totalPrice());
             setPedidoConfirmado(true);

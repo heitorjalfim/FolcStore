@@ -99,14 +99,19 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     const estoqueDisponivel = produto.quantidadeEstoque ?? 0;
 
     const quantidadeNoCarrinho = cartItems.reduce((total: number, item: CartItem) => {
-        if (Number(item?.product?.id) === Number(produto.id)) return total + (item.quantity || 1);
+        if (String(item?.product?.id) === String(produto.id)) {
+            return total + (item.quantity || 1);
+        }
         return total;
     }, 0);
 
     const estoqueRestante = estoqueDisponivel - quantidadeNoCarrinho;
-    const esgotado = estoqueDisponivel < 1 || estoqueRestante < 1;
-    const limiteAtingido = quantidade > estoqueRestante || estoqueRestante < 1;
-    const botaoDesabilitado = esgotado || limiteAtingido || isNavigating;
+    
+    // Separação correta da lógica
+    const esgotado = estoqueDisponivel < 1; // Realmente não tem na loja
+    const limiteAtingido = quantidadeNoCarrinho > 0 && estoqueRestante < 1; // Tem na loja, mas o usuário já pegou tudo pro carrinho
+    
+    const botaoDesabilitado = esgotado || limiteAtingido || quantidade > estoqueRestante || isNavigating;
 
     const handleIncrement = () => {
         if (quantidade < estoqueRestante) setQuantidade(q => q + 1);
@@ -116,7 +121,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     };
 
     const handleAddToCart = () => {
-        if (esgotado || limiteAtingido || isNavigating) return;
+        if (botaoDesabilitado) return;
         setIsNavigating(true);
         for (let i = 0; i < quantidade; i++) addItem(produto);
         router.push("/customer/checkout");
@@ -148,8 +153,14 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                             R$ {Number(produto.preco).toFixed(2)}
                         </Text>
 
-                        <Text fontSize="sm" color={esgotado ? "red.500" : "fg.muted"} mb={1}>
-                            {esgotado ? "Esgotado" : `Estoque total: ${estoqueDisponivel}`}
+                        {/* Status do Estoque / Carrinho atualizado aqui */}
+                        <Text fontSize="sm" color={(esgotado || limiteAtingido) ? "red.500" : "fg.muted"} mb={1}>
+                            {esgotado 
+                                ? "Esgotado" 
+                                : limiteAtingido 
+                                    ? "Limite atingido no carrinho" 
+                                    : `Estoque total: ${estoqueDisponivel}`
+                            }
                         </Text>
 
                         <Text color="fg.muted" mb={6} mt={3}>
@@ -189,6 +200,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                             </HStack>
                         )}
 
+                        {/* Texto do Botão atualizado aqui */}
                         <Button
                             size="lg"
                             colorPalette="brand"
@@ -196,11 +208,13 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                             disabled={botaoDesabilitado}
                             mb={6}
                         >
-                            {esgotado || estoqueRestante < 1
-                                ? "Indisponível"
+                            {esgotado
+                                ? "Esgotado"
                                 : limiteAtingido
-                                    ? "Limite do estoque no carrinho"
-                                    : "Adicionar ao Carrinho"}
+                                    ? "Limite atingido no carrinho"
+                                    : quantidade > estoqueRestante
+                                        ? "Quantidade indisponível"
+                                        : "Adicionar ao Carrinho"}
                         </Button>
 
                         {/* Bloco do Artesão */}
