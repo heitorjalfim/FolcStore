@@ -1,26 +1,30 @@
+// src/app/product/[slug]/page.tsx (Corrigido - Sem o HeaderCarrinho manual)
 "use client";
 
 import { useEffect, useState, use } from "react";
-import { Box, Heading, Text, VStack, HStack, Button, Image, Flex } from "@chakra-ui/react";
+import { Box, Heading, Text, VStack, HStack, Button, Image } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import NextLink from "next/link";
 import { userService } from "@/services/userService";
 import { productService } from "@/services/productService";
-import { avaliacaoService } from "@/services/avaliacaoService";
 import { useCartStore } from "@/store/cartStore";
-import { Product, Artesao, CartItem, Avaliacao } from "@/types";
-import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
-import { FiStar } from "react-icons/fi";
+import { Product, Artesao, CartItem } from "@/types";
 
-type PageProps = { params: Promise<{ slug: string }>; };
+type PageProps = {
+    params: Promise<{
+        slug: string;
+    }>;
+};
 
 export default function DetalheProdutoPage({ params }: PageProps) {
     const resolvedParams = use(params);
+
     const rawUrlParam = decodeURIComponent(resolvedParams.slug);
+    const urlParts = rawUrlParam.split("-");
+    const productId = urlParts[urlParts.length - 1];
 
     const [produto, setProduto] = useState<Product | null>(null);
     const [artesao, setArtesao] = useState<Artesao | null>(null);
-    const [avaliacoes, setAvaliacoes] = useState<Avaliacao[]>([]);
     const [loading, setLoading] = useState(true);
     const [quantidade, setQuantidade] = useState(1);
     const [isNavigating, setIsNavigating] = useState(false);
@@ -33,51 +37,32 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         async function fetchDados() {
             setLoading(true);
             try {
-                // Busca todos os produtos para bater com o slug ou id da URL
-                const todosProdutos = await productService.getAll();
-                const produtoEncontrado = todosProdutos.find(
-                    (p: Product) =>
-                        String(p.id) === rawUrlParam || rawUrlParam.endsWith(`-${p.id}`)
-                );
+                const produtoRes = await productService.getById(Number(productId) || productId);
+                setProduto(produtoRes);
 
-                if (!produtoEncontrado) {
-                    throw new Error(`Produto não encontrado para o slug: ${rawUrlParam}`);
-                }
-
-                setProduto(produtoEncontrado);
-
-                // Busca dados do artesão
-                if (produtoEncontrado.idArtesao) {
+                if (produtoRes && produtoRes.idArtesao) {
                     try {
-                        const artesaoRes = await userService.getArtesaoById(produtoEncontrado.idArtesao);
+                        const artesaoRes = await userService.getArtesaoById(produtoRes.idArtesao);
                         setArtesao(artesaoRes);
                     } catch (artesaoError) {
                         console.error("Erro ao buscar o artesão:", artesaoError);
                     }
                 }
-
-                // Busca avaliações do produto e recorta as últimas 5
-                try {
-                    const avaliacoesRes = await avaliacaoService.getPorProduto(produtoEncontrado.id);
-                    setAvaliacoes(avaliacoesRes.slice(0, 5));
-                } catch (avError) {
-                    console.error("Erro ao buscar avaliações:", avError);
-                }
-
             } catch (error) {
-                console.error("Erro ao carregar dados:", error);
+                console.error("Erro ao carregar dados do produto:", error);
+                setProduto(null);
             } finally {
                 setLoading(false);
             }
         }
 
         fetchDados();
-    }, [rawUrlParam]);
+    }, [productId]);
 
     if (loading) {
         return (
             <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <Text color="fg.muted">Carregando...</Text>
+                <Text color="gray.500">Carregando produto...</Text>
             </Box>
         );
     }
@@ -89,7 +74,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                     <Heading as="h1" size="lg" color="red.500">
                         Produto não encontrado
                     </Heading>
-                    <Text color="fg.muted">Não foi possível localizar este produto pelo ID fornecido.</Text>
+                    <Text color="gray.600">Não foi possível localizar este produto pelo ID fornecido.</Text>
                 </VStack>
             </Box>
         );
@@ -99,46 +84,52 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     const estoqueDisponivel = produto.quantidadeEstoque ?? 0;
 
     const quantidadeNoCarrinho = cartItems.reduce((total: number, item: CartItem) => {
-        if (String(item?.product?.id) === String(produto.id)) {
+        if (Number(item?.product?.id) === Number(produto.id)) {
             return total + (item.quantity || 1);
         }
         return total;
     }, 0);
 
     const estoqueRestante = estoqueDisponivel - quantidadeNoCarrinho;
-    
-    // Separação correta da lógica
-    const esgotado = estoqueDisponivel < 1; // Realmente não tem na loja
-    const limiteAtingido = quantidadeNoCarrinho > 0 && estoqueRestante < 1; // Tem na loja, mas o usuário já pegou tudo pro carrinho
-    
-    const botaoDesabilitado = esgotado || limiteAtingido || quantidade > estoqueRestante || isNavigating;
+    const esgotado = estoqueDisponivel < 1 || estoqueRestante < 1;
+    const limiteAtingido = quantidade > estoqueRestante || estoqueRestante < 1;
 
     const handleIncrement = () => {
-        if (quantidade < estoqueRestante) setQuantidade(q => q + 1);
+        if (quantidade < estoqueRestante) {
+            setQuantidade((prev) => prev + 1);
+        }
     };
+
     const handleDecrement = () => {
-        if (quantidade > 1) setQuantidade(q => q - 1);
+        if (quantidade > 1) {
+            setQuantidade((prev) => prev - 1);
+        }
     };
 
     const handleAddToCart = () => {
-        if (botaoDesabilitado) return;
+        if (esgotado || limiteAtingido || isNavigating) return;
+
         setIsNavigating(true);
-        for (let i = 0; i < quantidade; i++) addItem(produto);
+        for (let i = 0; i < quantidade; i++) {
+            addItem(produto);
+        }
         router.push("/customer/checkout");
     };
 
+    const botaoDesabilitado = Boolean(esgotado || limiteAtingido || isNavigating);
+
     return (
-        <Box minH="100vh" bg="bg.subtle" pb={12}>
-            <HeaderCarrinho />
+        <Box minH="100vh">
+            {/* O HeaderCarrinho foi removido daqui pois já é gerido globalmente pelo layout.tsx */}
             <Box maxW="7xl" mx="auto" py={8} px={4}>
                 <VStack gap={6} align="start" w="full">
-                    <Heading as="h1" size="xl" color="fg">
+                    <Heading as="h1" size="xl" color="gray.800">
                         {produto.titulo}
                     </Heading>
 
-                    <Box mt={4} p={6} borderWidth="1px" borderColor="border" borderRadius="lg" bg="bg" w="full" boxShadow="sm">
+                    <Box mt={4} p={6} borderWidth="1px" borderRadius="lg" bg="white" w="full" boxShadow="sm">
                         {primeiraImagem && (
-                            <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="bg.subtle">
+                            <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="gray.100">
                                 <Image
                                     src={primeiraImagem}
                                     alt={produto.titulo}
@@ -149,21 +140,15 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                             </Box>
                         )}
 
-                        <Text fontSize="2xl" fontWeight="bold" color="brand.700" mb={2}>
+                        <Text fontSize="2xl" fontWeight="bold" color="green.600" mb={2}>
                             R$ {Number(produto.preco).toFixed(2)}
                         </Text>
 
-                        {/* Status do Estoque / Carrinho atualizado aqui */}
-                        <Text fontSize="sm" color={(esgotado || limiteAtingido) ? "red.500" : "fg.muted"} mb={1}>
-                            {esgotado 
-                                ? "Esgotado" 
-                                : limiteAtingido 
-                                    ? "Limite atingido no carrinho" 
-                                    : `Estoque total: ${estoqueDisponivel}`
-                            }
+                        <Text fontSize="sm" color={esgotado ? "red.500" : "gray.600"} mb={1}>
+                            {esgotado ? "Produto Esgotado" : `Estoque total: ${estoqueDisponivel}`}
                         </Text>
 
-                        <Text color="fg.muted" mb={6} mt={3}>
+                        <Text color="gray.700" mb={6} mt={3}>
                             {produto.descricao}
                         </Text>
 
@@ -175,22 +160,18 @@ export default function DetalheProdutoPage({ params }: PageProps) {
 
                         {!esgotado && estoqueRestante > 0 && (
                             <HStack gap={4} mb={6} align="center">
-                                <Text fontWeight="medium" color="fg">Quantidade:</Text>
+                                <Text fontWeight="medium">Quantidade:</Text>
                                 <HStack>
                                     <Button
                                         size="sm"
-                                        variant="outline"
-                                        colorPalette="brand"
                                         onClick={handleDecrement}
                                         disabled={quantidade <= 1 || isNavigating}
                                     >
                                         -
                                     </Button>
-                                    <Text px={2} fontWeight="bold" color="fg">{quantidade}</Text>
+                                    <Text px={2} fontWeight="bold">{quantidade}</Text>
                                     <Button
                                         size="sm"
-                                        variant="outline"
-                                        colorPalette="brand"
                                         onClick={handleIncrement}
                                         disabled={quantidade >= estoqueRestante || isNavigating}
                                     >
@@ -200,86 +181,45 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                             </HStack>
                         )}
 
-                        {/* Texto do Botão atualizado aqui */}
                         <Button
                             size="lg"
-                            colorPalette="brand"
+                            bg="blue.500"
+                            color="white"
+                            _hover={{ bg: "blue.600" }}
                             onClick={handleAddToCart}
                             disabled={botaoDesabilitado}
+                            loading={isNavigating}
                             mb={6}
                         >
-                            {esgotado
-                                ? "Esgotado"
+                            {esgotado || estoqueRestante < 1
+                                ? "Indisponível"
                                 : limiteAtingido
-                                    ? "Limite atingido no carrinho"
-                                    : quantidade > estoqueRestante
-                                        ? "Quantidade indisponível"
-                                        : "Adicionar ao Carrinho"}
+                                    ? "Limite do estoque no carrinho"
+                                    : "Adicionar ao Carrinho"}
                         </Button>
 
-                        {/* Bloco do Artesão */}
-                        <Box pt={6} mt={6} borderTop="1px solid" borderColor="border" w="full">
+                        <Box pt={6} borderTop="1px solid" borderColor="gray.200" w="full">
                             {artesao ? (
-                                <Box bg="bg.subtle" p={4} borderRadius="md" borderWidth="1px" borderColor="border" w="full">
-                                    <Flex justify="space-between" align="start" wrap="wrap" mb={2}>
-                                        <Box>
-                                            <Text fontSize="sm" fontWeight="bold" color="fg.muted" textTransform="uppercase">
-                                                Criado por
-                                            </Text>
-                                            <Heading as="h3" size="md" color="fg" mb={1}>
-                                                {artesao.nome}
-                                            </Heading>
-                                            <Text fontSize="sm" color="fg.muted" mb={2}>
-                                                Região de Produção: {artesao.regiaoProducao}
-                                            </Text>
-                                        </Box>
-                                        <HStack bg="bg" p={2} borderRadius="md" borderWidth="1px" borderColor="border">
-                                            <FiStar fill="var(--chakra-colors-brand-500)" color="var(--chakra-colors-brand-500)" />
-                                            <Text fontWeight="bold" color="fg">
-                                                {artesao.notaMedia ? artesao.notaMedia.toFixed(1) : "N/A"}
-                                            </Text>
-                                            <Text fontSize="xs" color="fg.muted">
-                                                ({artesao.totalAvaliacoes || 0} reviews)
-                                            </Text>
-                                        </HStack>
-                                    </Flex>
+                                <Box bg="gray.50" p={4} borderRadius="md" borderWidth="1px" borderColor="gray.200" w="full">
+                                    <Text fontSize="sm" fontWeight="bold" color="gray.500" textTransform="uppercase" mb={1}>
+                                        Criado por
+                                    </Text>
+                                    <Heading as="h3" size="md" color="gray.800" mb={2}>
+                                        {artesao.nome}
+                                    </Heading>
+                                    <Text fontSize="sm" color="gray.600" mb={4}>
+                                        Região de Produção: {artesao.regiaoProducao}
+                                    </Text>
                                     <NextLink href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}>
-                                        <Button size="sm" variant="outline" colorPalette="brand">
+                                        <Button size="sm" variant="outline">
                                             Ver Perfil do Artesão
                                         </Button>
                                     </NextLink>
                                 </Box>
                             ) : (
-                                <Text fontSize="sm" color="fg.muted">Informações do artesão não disponíveis.</Text>
+                                <Text fontSize="sm" color="gray.500">Informações do artesão não disponíveis.</Text>
                             )}
                         </Box>
-
-                        {/* Bloco de Avaliações */}
-                        <Box pt={8} mt={4} w="full">
-                            <Heading size="md" mb={4} color="fg">Últimas Avaliações da Peça</Heading>
-                            {avaliacoes.length === 0 ? (
-                                <Text color="fg.muted" fontSize="sm">Ainda não há avaliações para este produto.</Text>
-                            ) : (
-                                <VStack align="stretch" gap={4}>
-                                    {avaliacoes.map((av) => (
-                                        <Box key={av.id} p={4} bg="bg.subtle" borderRadius="md" borderWidth="1px" borderColor="border">
-                                            <Flex justify="space-between" mb={2}>
-                                                <Text fontWeight="bold" fontSize="sm" color="fg">{av.nomeComprador}</Text>
-                                                <HStack gap={1}>
-                                                    <Text fontWeight="bold" color="brand.700">{av.nota}</Text>
-                                                    <FiStar fill="var(--chakra-colors-brand-500)" color="var(--chakra-colors-brand-500)" size={14} />
-                                                </HStack>
-                                            </Flex>
-                                            <Text color="fg.muted" fontSize="sm">{av.comentario}</Text>
-                                            <Text mt={2} fontSize="xs" color="fg.muted">
-                                                Publicado em: {new Date(av.data).toLocaleDateString('pt-BR')}
-                                            </Text>
-                                        </Box>
-                                    ))}
-                                </VStack>
-                            )}
-                        </Box>
-
                     </Box>
                 </VStack>
             </Box>
