@@ -2,6 +2,16 @@ import { apiService } from './apiService';
 import { Order } from '@/types/order';
 
 export const orderService = {
+    async getTodasCompras(): Promise<Order[]> {
+        try {
+            const response = await apiService.get<Order[]>('/orders');
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao buscar todas as compras:", error);
+            throw error;
+        }
+    },
+
     async registrarCompras(compras: Order[]): Promise<void> {
         try {
             await Promise.all(compras.map(compra =>
