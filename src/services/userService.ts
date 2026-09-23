@@ -70,4 +70,14 @@ export const userService = {
             throw error;
         }
     },
+
+    async getAllArtesaos(): Promise<Artesao[]> {
+        try {
+            const response = await apiService.get<Artesao[]>('/artesaos');
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao buscar artesãos:', error);
+            throw error;
+        }
+    },
 };

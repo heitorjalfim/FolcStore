@@ -77,7 +77,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     if (loading) {
         return (
             <Box maxW="7xl" mx="auto" py={8} px={4}>
-                <Text>Carregando...</Text>
+                <Text color="fg.muted">Carregando...</Text>
             </Box>
         );
     }
@@ -89,7 +89,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                     <Heading as="h1" size="lg" color="red.500">
                         Produto não encontrado
                     </Heading>
-                    <Text color="gray.600">Não foi possível localizar este produto pelo ID fornecido.</Text>
+                    <Text color="fg.muted">Não foi possível localizar este produto pelo ID fornecido.</Text>
                 </VStack>
             </Box>
         );
@@ -108,11 +108,11 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     const limiteAtingido = quantidade > estoqueRestante || estoqueRestante < 1;
     const botaoDesabilitado = esgotado || limiteAtingido || isNavigating;
 
-    const handleIncrement = () => { 
-        if (quantidade < estoqueRestante) setQuantidade(q => q + 1); 
+    const handleIncrement = () => {
+        if (quantidade < estoqueRestante) setQuantidade(q => q + 1);
     };
-    const handleDecrement = () => { 
-        if (quantidade > 1) setQuantidade(q => q - 1); 
+    const handleDecrement = () => {
+        if (quantidade > 1) setQuantidade(q => q - 1);
     };
 
     const handleAddToCart = () => {
@@ -123,17 +123,17 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     };
 
     return (
-        <Box minH="100vh" bg="gray.55" pb={12}>
+        <Box minH="100vh" bg="bg.subtle" pb={12}>
             <HeaderCarrinho />
             <Box maxW="7xl" mx="auto" py={8} px={4}>
                 <VStack gap={6} align="start" w="full">
-                    <Heading as="h1" size="xl" color="gray.800">
+                    <Heading as="h1" size="xl" color="fg">
                         {produto.titulo}
                     </Heading>
 
-                    <Box mt={4} p={6} borderWidth="1px" borderRadius="lg" bg="white" w="full" boxShadow="sm">
+                    <Box mt={4} p={6} borderWidth="1px" borderColor="border" borderRadius="lg" bg="bg" w="full" boxShadow="sm">
                         {primeiraImagem && (
-                            <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="gray.100">
+                            <Box mb={6} borderRadius="md" overflow="hidden" maxW="md" bg="bg.subtle">
                                 <Image
                                     src={primeiraImagem}
                                     alt={produto.titulo}
@@ -144,15 +144,15 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                             </Box>
                         )}
 
-                        <Text fontSize="2xl" fontWeight="bold" color="green.600" mb={2}>
+                        <Text fontSize="2xl" fontWeight="bold" color="brand.700" mb={2}>
                             R$ {Number(produto.preco).toFixed(2)}
                         </Text>
 
-                        <Text fontSize="sm" color={esgotado ? "red.500" : "gray.600"} mb={1}>
+                        <Text fontSize="sm" color={esgotado ? "red.500" : "fg.muted"} mb={1}>
                             {esgotado ? "Esgotado" : `Estoque total: ${estoqueDisponivel}`}
                         </Text>
 
-                        <Text color="gray.700" mb={6} mt={3}>
+                        <Text color="fg.muted" mb={6} mt={3}>
                             {produto.descricao}
                         </Text>
 
@@ -164,20 +164,22 @@ export default function DetalheProdutoPage({ params }: PageProps) {
 
                         {!esgotado && estoqueRestante > 0 && (
                             <HStack gap={4} mb={6} align="center">
-                                <Text fontWeight="medium" color="gray.700">Quantidade:</Text>
+                                <Text fontWeight="medium" color="fg">Quantidade:</Text>
                                 <HStack>
                                     <Button
                                         size="sm"
                                         variant="outline"
+                                        colorPalette="brand"
                                         onClick={handleDecrement}
                                         disabled={quantidade <= 1 || isNavigating}
                                     >
                                         -
                                     </Button>
-                                    <Text px={2} fontWeight="bold">{quantidade}</Text>
+                                    <Text px={2} fontWeight="bold" color="fg">{quantidade}</Text>
                                     <Button
                                         size="sm"
                                         variant="outline"
+                                        colorPalette="brand"
                                         onClick={handleIncrement}
                                         disabled={quantidade >= estoqueRestante || isNavigating}
                                     >
@@ -189,7 +191,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
 
                         <Button
                             size="lg"
-                            colorPalette="blue"
+                            colorPalette="brand"
                             onClick={handleAddToCart}
                             disabled={botaoDesabilitado}
                             mb={6}
@@ -202,60 +204,60 @@ export default function DetalheProdutoPage({ params }: PageProps) {
                         </Button>
 
                         {/* Bloco do Artesão */}
-                        <Box pt={6} mt={6} borderTop="1px solid" borderColor="gray.200" w="full">
+                        <Box pt={6} mt={6} borderTop="1px solid" borderColor="border" w="full">
                             {artesao ? (
-                                <Box bg="gray.50" p={4} borderRadius="md" borderWidth="1px" borderColor="gray.200" w="full">
+                                <Box bg="bg.subtle" p={4} borderRadius="md" borderWidth="1px" borderColor="border" w="full">
                                     <Flex justify="space-between" align="start" wrap="wrap" mb={2}>
                                         <Box>
-                                            <Text fontSize="sm" fontWeight="bold" color="gray.500" textTransform="uppercase">
+                                            <Text fontSize="sm" fontWeight="bold" color="fg.muted" textTransform="uppercase">
                                                 Criado por
                                             </Text>
-                                            <Heading as="h3" size="md" color="gray.800" mb={1}>
+                                            <Heading as="h3" size="md" color="fg" mb={1}>
                                                 {artesao.nome}
                                             </Heading>
-                                            <Text fontSize="sm" color="gray.600" mb={2}>
+                                            <Text fontSize="sm" color="fg.muted" mb={2}>
                                                 Região de Produção: {artesao.regiaoProducao}
                                             </Text>
                                         </Box>
-                                        <HStack bg="white" p={2} borderRadius="md" borderWidth="1px">
-                                            <FiStar fill="#b8ad2a" color="#b8ad2a" />
-                                            <Text fontWeight="bold">
+                                        <HStack bg="bg" p={2} borderRadius="md" borderWidth="1px" borderColor="border">
+                                            <FiStar fill="var(--chakra-colors-brand-500)" color="var(--chakra-colors-brand-500)" />
+                                            <Text fontWeight="bold" color="fg">
                                                 {artesao.notaMedia ? artesao.notaMedia.toFixed(1) : "N/A"}
                                             </Text>
-                                            <Text fontSize="xs" color="gray.500">
+                                            <Text fontSize="xs" color="fg.muted">
                                                 ({artesao.totalAvaliacoes || 0} reviews)
                                             </Text>
                                         </HStack>
                                     </Flex>
                                     <NextLink href={`/artesao/${encodeURIComponent(artesao.nome.toLowerCase().replace(/\s+/g, '-'))}`}>
-                                        <Button size="sm" variant="outline" colorPalette="blue">
+                                        <Button size="sm" variant="outline" colorPalette="brand">
                                             Ver Perfil do Artesão
                                         </Button>
                                     </NextLink>
                                 </Box>
                             ) : (
-                                <Text fontSize="sm" color="gray.500">Informações do artesão não disponíveis.</Text>
+                                <Text fontSize="sm" color="fg.muted">Informações do artesão não disponíveis.</Text>
                             )}
                         </Box>
 
                         {/* Bloco de Avaliações */}
                         <Box pt={8} mt={4} w="full">
-                            <Heading size="md" mb={4}>Últimas Avaliações da Peça</Heading>
+                            <Heading size="md" mb={4} color="fg">Últimas Avaliações da Peça</Heading>
                             {avaliacoes.length === 0 ? (
-                                <Text color="gray.500" fontSize="sm">Ainda não há avaliações para este produto.</Text>
+                                <Text color="fg.muted" fontSize="sm">Ainda não há avaliações para este produto.</Text>
                             ) : (
                                 <VStack align="stretch" gap={4}>
                                     {avaliacoes.map((av) => (
-                                        <Box key={av.id} p={4} bg="gray.50" borderRadius="md" borderWidth="1px">
+                                        <Box key={av.id} p={4} bg="bg.subtle" borderRadius="md" borderWidth="1px" borderColor="border">
                                             <Flex justify="space-between" mb={2}>
-                                                <Text fontWeight="bold" fontSize="sm" color="gray.800">{av.nomeComprador}</Text>
+                                                <Text fontWeight="bold" fontSize="sm" color="fg">{av.nomeComprador}</Text>
                                                 <HStack gap={1}>
-                                                    <Text fontWeight="bold" color="blue.600">{av.nota}</Text>
-                                                    <FiStar fill="#b8ad2a" color="#b8ad2a" size={14} />
+                                                    <Text fontWeight="bold" color="brand.700">{av.nota}</Text>
+                                                    <FiStar fill="var(--chakra-colors-brand-500)" color="var(--chakra-colors-brand-500)" size={14} />
                                                 </HStack>
                                             </Flex>
-                                            <Text color="gray.700" fontSize="sm">{av.comentario}</Text>
-                                            <Text mt={2} fontSize="xs" color="gray.400">
+                                            <Text color="fg.muted" fontSize="sm">{av.comentario}</Text>
+                                            <Text mt={2} fontSize="xs" color="fg.muted">
                                                 Publicado em: {new Date(av.data).toLocaleDateString('pt-BR')}
                                             </Text>
                                         </Box>
