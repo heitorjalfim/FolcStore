@@ -80,4 +80,14 @@ export const userService = {
             throw error;
         }
     },
+
+    async atualizarArtesao(id: string, dados: Partial<Artesao>): Promise<Artesao> {
+        try {
+            const response = await apiService.patch<Artesao>(`/artesaos/${id}`, dados);
+            return response.data;
+        } catch (error) {
+            console.error(`Erro ao atualizar artesão ${id}:`, error);
+            throw error;
+        }
+    },
 };

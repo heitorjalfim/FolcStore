@@ -1,5 +1,6 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import { Box, Container, Flex, Text, Button, Badge, useDisclosure } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { FiShoppingCart } from "react-icons/fi";
@@ -13,8 +14,11 @@ const NAV_LINKS = [
     { label: "Admin", href: "/admin" },
 ];
 
+const emptySubscribe = () => () => { };
+
 export function HeaderCarrinho() {
     const { open, onOpen, onClose } = useDisclosure();
+    const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
     const totalItems = useCartStore((state) => state.totalItems());
 
     return (
@@ -45,7 +49,7 @@ export function HeaderCarrinho() {
                         <Button variant="outline" colorPalette="brand" onClick={onOpen} position="relative">
                             <FiShoppingCart />
                             Carrinho
-                            {totalItems > 0 && (
+                            {mounted && totalItems > 0 && (
                                 <Badge
                                     ml={2}
                                     colorPalette="red"

@@ -9,7 +9,7 @@ import {
     Box, Button, Container, Flex, Heading, HStack, Text, VStack, Spinner,
     Table, Badge, Dialog, Portal, Input, Field
 } from '@chakra-ui/react';
-import { FiPackage, FiLogOut } from 'react-icons/fi';
+import { FiPackage, FiLogOut, FiUser } from 'react-icons/fi';
 import { orderService } from '@/services/orderService';
 import { Order } from '@/types/order';
 
@@ -105,6 +105,11 @@ export default function Artesao() {
                             <NextLink href="/artesao/produtos">
                                 <Button colorPalette="brand" size="md">
                                     <HStack gap={2}><FiPackage /><Text>Gerenciar Catálogo</Text></HStack>
+                                </Button>
+                            </NextLink>
+                            <NextLink href="/artesao/perfil">
+                                <Button variant="outline" colorPalette="brand" size="md">
+                                    <HStack gap={2}><FiUser /><Text>Editar Perfil</Text></HStack>
                                 </Button>
                             </NextLink>
                             <Button variant="outline" colorPalette="red" size="md" onClick={handleLogout}>
