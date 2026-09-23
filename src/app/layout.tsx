@@ -1,6 +1,7 @@
+// src/app/layout.tsx
 import { Provider } from "./provider";
-import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
-import { Footer } from "@/app/components/Footer"; // Ajuste o caminho caso tenha criado em outra subpasta (ex: src/app/components/layout/Footer)
+import { ConditionalHeader } from "@/app/components/ConditionalHeader";
+import { Footer } from "@/app/components/Footer";
 
 export const metadata = {
     title: "FolcStore - Marketplace de Artesanato de Pernambuco",
@@ -16,15 +17,15 @@ export default function RootLayout({
         <html lang="pt-BR">
             <body suppressHydrationWarning={true} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', margin: 0 }}>
                 <Provider>
-                    {/* Cabeçalho Global */}
-                    <HeaderCarrinho />
+                    {/* Cabeçalho Inteligente que muda conforme a rota (Cliente, Artesão ou Admin) */}
+                    <ConditionalHeader />
 
-                    {/* Conteúdo Dinâmico da Rota */}
+                    {/* Conteúdo Dinâmico */}
                     <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                         {children}
                     </main>
 
-                    {/* Rodapé Global */}
+                    {/* Rodapé Global em todas as páginas */}
                     <Footer />
                 </Provider>
             </body>
