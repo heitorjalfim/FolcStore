@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Box, Flex, Text, Button, Container, HStack } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { HeaderCarrinho } from './HeaderCarrinho';
-import { FiPackage, FiHome, FiArrowLeft } from 'react-icons/fi';
+import { FiPackage, FiHome } from 'react-icons/fi';
 
 export function ConditionalHeader() {
   const pathname = usePathname() || '';
@@ -14,18 +14,18 @@ export function ConditionalHeader() {
   // 1. Área de Admin (/admin...)
   if (pathname.startsWith('/admin')) {
     return (
-      <Box as="header" bg="gray.900" color="white" py={4} px={8} shadow="sm">
+      <Box as="header" bg="white" borderBottomWidth="1px" borderColor="gray.200" py={3} px={8} shadow="sm">
         <Container maxW="1200px">
           <Flex justify="space-between" align="center">
             <HStack gap={3}>
               <Box w={7} h={7} borderRadius="md" bg="brand.500" color="gray.900" display="flex" align="center" justify="center" fontWeight="bold">
                 ✦
               </Box>
-              <Text fontWeight="bold" fontSize="md">FolcStore • Painel Administrativo</Text>
+              <Text fontWeight="bold" fontSize="md" color="gray.950">FolcStore • Painel Administrativo</Text>
             </HStack>
             <NextLink href="/">
-              <Button size="xs" variant="outline" colorScheme="whiteAlpha">
-                <FiArrowLeft /> Sair para a Loja
+              <Button size="sm" variant="ghost" colorPalette="gray">
+                <FiHome /> Sair para a Loja
               </Button>
             </NextLink>
           </Flex>
