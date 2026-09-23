@@ -19,7 +19,7 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 | ChatGPT | | |
 | GitHub Copilot | | |
 | Gemini | Estruturação de estado global (Zustand), resolução de bugs do Next.js, comandos Git, configuração de Fake API (json-server) e automação de scripts NPM. | Paulo Nery |
-| Claude | | |
+| Claude | Elaboração de planos de implementação (endereço/pagamento no checkout e recomendação de produtos - RF31) revisados com a equipe antes da execução, seguidos da implementação, correção de contrato inválido na Fake API e testes contra dados reais. | Manoel |
 | Outra | | |
 
 ---
@@ -53,6 +53,8 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 | 23/09/2026 | Gemini | Adição de dados realistas de avaliações na base de testes (`base-db.json`) para renderizar a reputação correta do vendedor. | Banco de Dados / Fake API | Sim | O arquivo `base-db.json` foi atualizado para inicializar corretamente com métricas prontas. |
 | 23/09/2026 | Gemini | Implementação de tabela de histórico completo de compras no painel de Administrador, com recursos de filtragem por comprador, status de envio e conversão visual do ID do artesão pelo Nome. | Frontend, Dashboard Admin | Sim | A equipe validou o cruzamento de dados de `/orders` e `/artesaos`. |
 | 23/09/2026 | Gemini | Correção da validação de limite de itens ao adicionar no carrinho a partir da página do produto e diferenciação de feedback visual ("Esgotado" vs "Limite atingido"). | Frontend, Produto e Carrinho | Sim | A IA resolveu um problema de tipagem (String vs Number) que impedia o cálculo correto do estoque restante com o carrinho. |
+| 17/09/2026 | Claude | Modelagem de tipos (`Endereco` com `id`/`cep`, `Order`, `Pagamento`), criação de `addressService` e `paymentService` seguindo o padrão já existente em `productService`, ativação do botão "Finalizar Compra" (sem `onClick` antes) e implementação da tela `/customer/checkout` com wizard de 2 passos (endereço → pagamento). | Frontend, Checkout, Endereço e Pagamento | Sim | A equipe testou o fluxo simulando as chamadas contra o `json-server` real (`curl`) e corrigiu um JSON inválido no `base-db.json` (vírgula faltando) que impedia a Fake API de subir. |
+| 22/09/2026 | Claude | Implementação do módulo de recomendação de produtos (RF31): novo `recommendationService` com lógica em cascata (histórico de compras por categoria → produtos mais vendidos globalmente → mais recentes), novo método `getTodasCompras` no `orderService`, e seção "Recomendados para Você" no painel do comprador. | Frontend, Recomendação e Pedidos | Sim | A equipe simulou os 3 cenários (cliente com histórico, cliente novo, banco sem pedidos) contra dados reais do `json-server` e corrigiu 2 bugs de lógica encontrados nesse teste: o sistema recomendava de volta um produto que o cliente já havia comprado, e o fallback final quebrava por causa de um campo (`ativo`) `undefined` no banco de testes. |
 
 ---
 
@@ -186,7 +188,7 @@ Marquem os itens em que houve uso de IA.
 - [x] Autenticação *(Mock de papéis/roles)*
 - [x] Carrinho
 - [x] Pedidos
-- [ ] Recomendação
+- [x] Recomendação
 - [ ] Processamento assíncrono
 - [x] Cache *(Uso de LocalStorage)*
 - [ ] Testes
