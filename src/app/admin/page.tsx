@@ -8,7 +8,7 @@ import { Order } from '@/types/order';
 import { Artesao } from '@/types';
 import {
     Box, Button, Container, Flex, Heading, HStack, Text, VStack,
-    SimpleGrid, Card, Spinner, Icon, Table, Badge, Input, Field
+    SimpleGrid, Card, Spinner, Icon, Table, Badge, Input, Field, Progress
 } from '@chakra-ui/react';
 import { FiLogOut, FiDollarSign, FiShoppingBag, FiTruck, FiPackage } from 'react-icons/fi';
 
@@ -27,6 +27,7 @@ export default function AdminPage() {
 
     const [orders, setOrders] = useState<Order[]>([]);
     const [artesaosMap, setArtesaosMap] = useState<Record<string, string>>({});
+    const [products, setProducts] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     // Estados para os filtros
@@ -43,12 +44,13 @@ export default function AdminPage() {
         }
 
         if (mounted && isAdminLogged()) {
-            // Busca pedidos e artesãos simultaneamente para mapear os nomes
+            // Busca pedidos, artesãos e produtos simultaneamente
             Promise.all([
                 apiService.get<Order[]>('/orders'),
-                apiService.get<Artesao[]>('/artesaos')
+                apiService.get<Artesao[]>('/artesaos'),
+                apiService.get<Product[]>('/products')
             ])
-                .then(([resOrders, resArtesaos]) => {
+                .then(([resOrders, resArtesaos, resProducts]) => {
                     // Ordena por data decrescente (mais recentes primeiro)
                     const sortedOrders = resOrders.data.sort((a, b) => 
                         new Date(b.dataCompra).getTime() - new Date(a.dataCompra).getTime()
@@ -61,6 +63,9 @@ export default function AdminPage() {
                         map[artesao.id] = artesao.nome;
                     });
                     setArtesaosMap(map);
+
+                    // Guarda os produtos no estado para o mapeamento de regiões
+                    setProducts(resProducts.data);
                 })
                 .catch((err) => {
                     console.error("Erro ao buscar dados do dashboard", err);
