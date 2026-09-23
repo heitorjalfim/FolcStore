@@ -27,11 +27,14 @@ A aplicação soluciona esses problemas ao estruturar:
 
 ## 👥 Integrantes
 
-* **Cirio Adinilson** — Full Stack Developer
-* **Heitor Jalfim** — Full Stack Developer
-* **Maria Eduarda** — Frontend Developer & UI/UX
+* **Enzo Amorim** — Full Stack Developer
+* **Heitor Jalfim** — Full Stack Developer & Techleader
+* **Luiz Xavier** — Full stack Developer & UI/UX
+* **Manoel Henrique** — Full Stack Developer & Arquiteto de banco de dados
 * **Paulo Nery da Fonseca** — Full Stack Developer
-* **Rodrigo** — Full Stack Developer & DevOps
+* **Rodrigo Souza** — Full Stack Developer & DevOps
+* **Thomaz Barros** — Administrador de banco de dados 
+* **
 
 ---
 
