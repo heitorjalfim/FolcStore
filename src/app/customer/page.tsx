@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { sessionStore } from '@/store/sessionStore';
 import { productService } from '@/services/productService';
+import { orderService } from '@/services/orderService';
+import { recommendationService } from '@/services/recommendationService';
 import { Product } from '@/types/product';
 import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
 import NextLink from 'next/link';
@@ -31,6 +33,7 @@ export default function CustomerDashboard() {
     const [products, setProducts] = useState<Product[]>([]);
     const [isLoadingProducts, setIsLoadingProducts] = useState(true);
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [recomendados, setRecomendados] = useState<Product[]>([]);
 
     const router = useRouter();
 
@@ -68,6 +71,23 @@ export default function CustomerDashboard() {
         }
     }, [isCustomerLogged]);
 
+    useEffect(() => {
+        async function loadRecomendados() {
+            if (!customer || products.length === 0) return;
+            try {
+                const [historico, todasCompras] = await Promise.all([
+                    orderService.getComprasPorComprador(customer.id),
+                    orderService.getTodasCompras(),
+                ]);
+                const ids = recommendationService.getRecommendedIds(products, historico, todasCompras);
+                setRecomendados(products.filter((p) => ids.includes(String(p.id))));
+            } catch (err) {
+                console.error("Erro ao carregar recomendações:", err);
+            }
+        }
+        loadRecomendados();
+    }, [customer, products]);
+
     if (!mounted || !isCustomerLogged()) {
         return (
             <Flex minH="80vh" align="center" justify="center">
@@ -82,7 +102,7 @@ export default function CustomerDashboard() {
     };
 
     const handleCardClick = (productId: string | number) => {
-        router.push(`/artesao/produto/${productId}`);
+        router.push(`/product/${productId}`);
     };
 
     return (
@@ -167,6 +187,43 @@ export default function CustomerDashboard() {
                         </Text>
                     </VStack>
                 </Box>
+
+                {/* Recomendados para Você */}
+                {recomendados.length > 0 && (
+                    <Box mb={8}>
+                        <Heading size="md" mb={4}>Recomendados para Você</Heading>
+                        <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} gap={4}>
+                            {recomendados.map((product) => (
+                                <Card.Root
+                                    key={product.id}
+                                    p={4}
+                                    borderWidth="1px"
+                                    borderRadius="lg"
+                                    bg="white"
+                                    cursor="pointer"
+                                    _hover={{ shadow: "md", borderColor: "brand.500", transform: "translateY(-2px)" }}
+                                    transition="all 0.2s"
+                                    onClick={() => handleCardClick(product.id)}
+                                >
+                                    <Image
+                                        src={product.imagem || "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400"}
+                                        alt={product.titulo}
+                                        borderRadius="md"
+                                        h="140px"
+                                        objectFit="cover"
+                                        mb={2}
+                                    />
+                                    <Text fontWeight="bold" fontSize="sm" lineClamp={1}>
+                                        {product.titulo}
+                                    </Text>
+                                    <Text color="brand.600" fontWeight="semibold" fontSize="sm">
+                                        R$ {Number(product.preco || 0).toFixed(2)}
+                                    </Text>
+                                </Card.Root>
+                            ))}
+                        </SimpleGrid>
+                    </Box>
+                )}
 
                 {/* Listagem de Produtos */}
                 {isLoadingProducts ? (

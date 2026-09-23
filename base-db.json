@@ -8,7 +8,9 @@
       "regiaoProducao": "Olinda",
       "telefone": "81999999999",
       "biografia": "Claro! Aqui vai uma versão curta e profissional: Biografia de artesão [Nome do artesão] é um artesão dedicado à criação de peças únicas, feitas à mão com criatividade, cuidado e atenção aos detalhes. Seu trabalho valoriza a tradição artesanal e transforma materiais em objetos que carregam personalidade, beleza e significado. Se quiser, posso adaptar para um artesão de madeira, cerâmica, palha, couro, tecido ou outro material, deixando a biografia mais pessoal.",
-      "id": "e1eK141d4u70m471c4m3n73"
+      "id": "artesao-1",
+      "notaMedia": 4.5,
+      "totalAvaliacoes": 2
     }
   ],
   "customers": [
@@ -30,12 +32,12 @@
           "estado": "PE"
         }
       ],
-      "id": "3s3mp3B0t4n0F1nnn"
+      "id": "customer-1"
     }
   ],
   "products": [
     {
-      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "idArtesao": "artesao-1",
       "titulo": "Vaso de Barro Decorativo",
       "descricao": "Vaso artesanal feito com argila regional.",
       "materiaPrima": "Argila",
@@ -52,7 +54,7 @@
       "id": "posseee"
     },
     {
-      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "idArtesao": "artesao-1",
       "titulo": "Boneco de Barro Vitalino",
       "descricao": "Escultura figurativa inspirada no estilo tradicional pernambucano.",
       "materiaPrima": "Argila",
@@ -69,7 +71,7 @@
       "id": "prod-02"
     },
     {
-      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "idArtesao": "artesao-1",
       "titulo": "Bolsa de Palha Artesanal",
       "descricao": "Bolsa trançada à mão com palha de carnaúba, ideal para o dia a dia.",
       "materiaPrima": "Palha de Carnaúba",
@@ -86,7 +88,7 @@
       "id": "prod-03"
     },
     {
-      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "idArtesao": "artesao-1",
       "titulo": "Renda de Bilro - Toalha de Mesa",
       "descricao": "Toalha de mesa produzida artesanalmente com a técnica tradicional de renda de bilro.",
       "materiaPrima": "Linha de Algodão",
@@ -103,7 +105,7 @@
       "id": "prod-04"
     },
     {
-      "idArtesao": "e1eK141d4u70m471c4m3n73",
+      "idArtesao": "artesao-1",
       "titulo": "Fruteira de Madeira Maciça",
       "descricao": "Fruteira esculpida em madeira de reaproveitamento com acabamento em cera natural.",
       "materiaPrima": "Madeira Reciclada",
@@ -123,46 +125,10 @@
   "productSuggestions": [
     {
       "id": "sug-01",
-      "idCliente": "3s3mp3B0t4n0F1nnn",
+      "idCliente": "customer-1",
       "tituloSugerido": "Porta-copos de Madeira Entalhada",
       "descricao": "Sugestão de um kit com 6 porta-copos com temática de cordel e madeira reaproveitada.",
       "categoriaDesejada": "Utilidades Domésticas",
-      "status": "Pendente",
-      "dataCriacao": "2026-09-19"
-    },
-    {
-      "id": "sug-02",
-      "idCliente": "3s3mp3B0t4n0F1nnn",
-      "tituloSugerido": "Rede de Descanso Bordada à Mão",
-      "descricao": "Gostaria de ver redes de casal com detalhes de renascença ou bordado regional na varanda.",
-      "categoriaDesejada": "Cama, Mesa e Banho",
-      "status": "Em Análise",
-      "dataCriacao": "2026-09-19"
-    },
-    {
-      "id": "sug-03",
-      "idCliente": "3s3mp3B0t4n0F1nnn",
-      "tituloSugerido": "Abajur de Chita com Base de Cerâmica",
-      "descricao": "Luminária de mesa com cúpula forrada em tecido de chita colorida.",
-      "categoriaDesejada": "Decoração",
-      "status": "Pendente",
-      "dataCriacao": "2026-09-19"
-    },
-    {
-      "id": "sug-04",
-      "idCliente": "3s3mp3B0t4n0F1nnn",
-      "tituloSugerido": "Carteira de Couro Bovino Estampado",
-      "descricao": "Carteira masculina e feminina em couro legítimo com entalhes inspirados no cangaço.",
-      "categoriaDesejada": "Acessórios",
-      "status": "Aprovado",
-      "dataCriacao": "2026-09-19"
-    },
-    {
-      "id": "sug-05",
-      "idCliente": "3s3mp3B0t4n0F1nnn",
-      "tituloSugerido": "Prato de Parede em Cerâmica Vitrificada",
-      "descricao": "Prato decorativo pintado à mão com traços do barroco pernambucano.",
-      "categoriaDesejada": "Arte Sacra e Escultura",
       "status": "Pendente",
       "dataCriacao": "2026-09-19"
     }
@@ -177,8 +143,8 @@
   ],
   "orders": [
     {
-      "idArtesao": "e1eK141d4u70m471c4m3n73",
-      "idComprador": "3s3mp3B0t4n0F1nnn",
+      "idArtesao": "artesao-1",
+      "idComprador": "customer-1",
       "nomeComprador": "João Cliente",
       "idProduto": "posseee",
       "tituloProduto": "Vaso de Barro Decorativo",
@@ -187,31 +153,32 @@
       "status": "Pago",
       "dataCompra": "2026-09-21T15:12:50.247Z",
       "enderecoEntrega": {
-        "cep": "a",
-        "rua": "2",
-        "numero": "2",
-        "bairro": "2",
-        "complemento": "",
-        "cidade": "2",
-        "estado": "b",
-        "id": "267b7b7b-583e-4416-95b6-2952af2de216"
-      },
+          "id": "end-1",
+          "cep": "50000-000",
+          "bairro": "São Thomaz",
+          "rua": "Rua da avenida",
+          "numero": "97",
+          "complemento": "casa",
+          "cidade": "Recife",
+          "estado": "PE"
+        },
       "pagamento": {
         "metodo": "pix",
         "status": "aprovado"
       },
       "id": "bf83479f-64b6-4d1c-a4df-f6a4b03f3bde",
       "situacaoEntrega": "Enviado",
-      "codigoPostagem": "1"
+      "codigoPostagem": "1",
+      "avaliado": true
     },
     {
-      "idArtesao": "e1eK141d4u70m471c4m3n73",
-      "idComprador": "3s3mp3B0t4n0F1nnn",
+      "idArtesao": "artesao-1",
+      "idComprador": "customer-1",
       "nomeComprador": "João Cliente",
-      "idProduto": "posseee",
-      "tituloProduto": "Vaso de Barro Decorativo",
+      "idProduto": "prod-02",
+      "tituloProduto": "Boneco de Barro Vitalino",
       "quantidade": 1,
-      "precoUnitario": 95,
+      "precoUnitario": 150,
       "status": "Pago",
       "dataCompra": "2026-09-21T15:18:02.130Z",
       "enderecoEntrega": {
@@ -228,10 +195,32 @@
         "metodo": "pix",
         "status": "aprovado"
       },
-      "situacaoEntrega": "aguardadoEnvio",
-      "codigoPostagem": null,
-      "id": "8eaef0bd-f056-4224-947d-e8c6abb50df6"
+      "situacaoEntrega": "Entregue",
+      "codigoPostagem": "BR987654321BR",
+      "id": "8eaef0bd-f056-4224-947d-e8c6abb50df6",
+      "avaliado": true
     }
   ],
-  "avaliacoes": []
+  "avaliacoes": [
+    {
+      "id": "aval-01",
+      "idComprador": "customer-1",
+      "nomeComprador": "João Cliente",
+      "idArtesao": "artesao-1",
+      "idProduto": "posseee",
+      "nota": 5,
+      "comentario": "Peça maravilhosa, chegou super bem embalada e é ainda mais bonita pessoalmente. O acabamento de Maria é impecável! Dá um toque especial na sala.",
+      "data": "2026-09-21T18:30:00.000Z"
+    },
+    {
+      "id": "aval-02",
+      "idComprador": "customer-1",
+      "nomeComprador": "João Cliente",
+      "idArtesao": "artesao-1",
+      "idProduto": "prod-02",
+      "nota": 4,
+      "comentario": "A escultura é belíssima e muito fiel à tradição pernambucana. Só achei que demorou um pouquinho para chegar, mas a qualidade do artesanato compensou.",
+      "data": "2026-09-22T09:15:00.000Z"
+    }
+  ]
 }
