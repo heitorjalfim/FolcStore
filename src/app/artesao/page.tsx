@@ -4,16 +4,23 @@ import { useEffect, useState, useSyncExternalStore } from 'react';
 import { useRouter } from 'next/navigation';
 import NextLink from 'next/link';
 import { sessionStore } from '@/store/sessionStore';
-import AvaliacaoCard from "../components/AvaliacaoCard";
 import {
     Box, Button, Container, Flex, Heading, HStack, Text, VStack, Spinner,
-    Table, Badge, Dialog, Portal, Input, Field
+    Table, Badge, Dialog, Portal, Input, Field, SimpleGrid, Card, Stat, Avatar
 } from '@chakra-ui/react';
 import { FiPackage, FiLogOut, FiHome } from 'react-icons/fi';
 import { orderService } from '@/services/orderService';
 import { apiService } from '@/services/apiService';
 import { Order } from '@/types/order';
 import { Avaliacao } from '@/types/avaliacao';
+
+interface Review {
+    id: string;
+    idArtesao: string;
+    nomeComprador: string;
+    nota: number;
+    comentario: string;
+}
 
 const emptySubscribe = () => () => { };
 
@@ -27,6 +34,7 @@ export default function Artesao() {
 
     // Estados da Tabela e Compras
     const [compras, setCompras] = useState<Order[]>([]);
+    const [minhasAvaliacoes, setMinhasAvaliacoes] = useState<Review[]>([]);
     const [isLoadingCompras, setIsLoadingCompras] = useState(true);
 
     // Estados de Avaliações (Dinâmicas)
@@ -69,6 +77,7 @@ export default function Artesao() {
               setIsLoadingAvaliacoes(false);
           });
 
+        carregarDadosDoArtesao();
     }, [mounted, artesao, router]);
 
     if (!mounted || !isArtesaoLogged()) return null;
@@ -80,7 +89,7 @@ export default function Artesao() {
 
     const handleAbrirModal = (compra: Order) => {
         setCompraEditando(compra);
-        setCodigoPostagem('');
+        setCodigoPostagem(compra.codigoPostagem || '');
         setModalAberto(true);
     };
 
@@ -214,21 +223,34 @@ export default function Artesao() {
                                                         <VStack gap={1} align="center">
                                                             <Badge colorPalette="green">Enviado</Badge>
                                                             <Text fontSize="2xs" color="gray.600">
-                                                                Rast.: {compra.codigoPostagem}
+                                                                {compra.enderecoEntrega.rua}, {compra.enderecoEntrega.numero} <br />
+                                                                {compra.enderecoEntrega.bairro} - {compra.enderecoEntrega.cidade}/{compra.enderecoEntrega.estado}
                                                             </Text>
-                                                        </VStack>
-                                                    ) : (
-                                                        <Button size="xs" colorPalette="brand" onClick={() => handleAbrirModal(compra)}>
-                                                            Declarar Postagem
-                                                        </Button>
-                                                    )}
-                                                </Table.Cell>
-                                            </Table.Row>
-                                        ))}
-                                    </Table.Body>
-                                </Table.Root>
-                            </Box>
-                        )}
+                                                        ) : (
+                                                            <Text color="gray.400" fontSize="xs">Endereço não registrado</Text>
+                                                        )}
+                                                    </Table.Cell>
+                                                    <Table.Cell textAlign="center">
+                                                        {compra.situacaoEntrega === "Enviado" ? (
+                                                            <VStack gap={1} align="center">
+                                                                <Badge colorPalette="green">Enviado</Badge>
+                                                                <Text fontSize="2xs" color="gray.600">
+                                                                    Rast.: {compra.codigoPostagem}
+                                                                </Text>
+                                                            </VStack>
+                                                        ) : (
+                                                            <Button size="xs" colorPalette="orange" bg="#C85A32" color="white" _hover={{ bg: "#A64724" }} onClick={() => handleAbrirModal(compra)}>
+                                                                Declarar Postagem
+                                                            </Button>
+                                                        )}
+                                                    </Table.Cell>
+                                                </Table.Row>
+                                            ))}
+                                        </Table.Body>
+                                    </Table.Root>
+                                )}
+                            </Card.Body>
+                        </Card.Root>
                     </Box>
 
                     {/* Avaliações Dinâmicas */}
@@ -258,14 +280,14 @@ export default function Artesao() {
                             </>
                         )}
                     </Box>
-                </VStack>
+                </SimpleGrid>
 
                 {/* Modal para Adicionar Código de Postagem */}
                 <Dialog.Root open={modalAberto} onOpenChange={(e) => !e.open && setModalAberto(false)}>
                     <Portal>
                         <Dialog.Backdrop />
                         <Dialog.Positioner>
-                            <Dialog.Content as="form" onSubmit={handleSalvarEnvio}>
+                            <Dialog.Content as="form" onSubmit={handleSalvarEnvio} bg="white" p={2} borderRadius="xl">
                                 <Dialog.Header>
                                     <Dialog.Title>Declarar Envio</Dialog.Title>
                                 </Dialog.Header>
@@ -285,13 +307,15 @@ export default function Artesao() {
                                         </Field.Root>
                                     </VStack>
                                 </Dialog.Body>
-                                <Dialog.Footer>
-                                    <Button variant="ghost" size="sm" onClick={() => setModalAberto(false)} disabled={salvandoEnvio}>
-                                        Cancelar
-                                    </Button>
-                                    <Button type="submit" colorPalette="brand" size="sm" loading={salvandoEnvio} disabled={!codigoPostagem}>
-                                        Salvar Envio
-                                    </Button>
+                                <Dialog.Footer mt={4}>
+                                    <HStack gap={3}>
+                                        <Button variant="ghost" size="sm" onClick={() => setModalAberto(false)} disabled={salvandoEnvio}>
+                                            Cancelar
+                                        </Button>
+                                        <Button type="submit" colorPalette="orange" bg="#C85A32" color="white" size="sm" loading={salvandoEnvio} disabled={!codigoPostagem}>
+                                            Salvar Envio
+                                        </Button>
+                                    </HStack>
                                 </Dialog.Footer>
                             </Dialog.Content>
                         </Dialog.Positioner>
