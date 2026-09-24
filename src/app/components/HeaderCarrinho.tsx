@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Box, Container, Flex, Text, Button, Badge, useDisclosure } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { FiShoppingCart } from "react-icons/fi";
@@ -14,8 +15,14 @@ const NAV_LINKS = [
 ];
 
 export function HeaderCarrinho() {
+    const [isHydrated, setIsHydrated] = useState(false);
     const { open, onOpen, onClose } = useDisclosure();
     const totalItems = useCartStore((state) => state.totalItems());
+
+    // Garante que o componente sabe quando foi montado no browser
+    useEffect(() => {
+        setIsHydrated(true);
+    }, []);
 
     return (
         <>
@@ -23,7 +30,6 @@ export function HeaderCarrinho() {
                 as="header"
                 bg="neutral.white"
                 shadow="sm"
-
             >
                 <Container maxW="7xl">
                     <Flex h="16" align="center" justify="space-between">
@@ -45,7 +51,8 @@ export function HeaderCarrinho() {
                         <Button variant="outline" colorPalette="brand" onClick={onOpen} position="relative">
                             <FiShoppingCart />
                             Carrinho
-                            {totalItems > 0 && (
+                            {/* O badge só renderiza após a hidratação completa no cliente */}
+                            {isHydrated && totalItems > 0 && (
                                 <Badge
                                     ml={2}
                                     colorPalette="red"

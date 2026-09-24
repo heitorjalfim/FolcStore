@@ -18,8 +18,8 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 |---|---|---|
 | ChatGPT | | |
 | GitHub Copilot | | |
-| Gemini | Estruturação de estado global (Zustand), resolução de bugs do Next.js, comandos Git, configuração de Fake API (json-server) e automação de scripts NPM. | Equipe de Desenvolvimento |
-| Claude | | |
+| Gemini | Estruturação de estado global (Zustand), resolução de bugs do Next.js, comandos Git, configuração de Fake API (json-server) e automação de scripts NPM. | Paulo Nery |
+| Claude | Elaboração de planos de implementação (endereço/pagamento no checkout e recomendação de produtos - RF31) revisados com a equipe antes da execução, seguidos da implementação, correção de contrato inválido na Fake API e testes contra dados reais. | Manoel |
 | Outra | | |
 
 ---
@@ -48,6 +48,13 @@ A equipe utilizou Inteligência Artificial (Gemini) como assistente para criar a
 21/09/2026 | Gemini | Unificação das páginas de Checkout e Pagamento e adição de fluxo de envio ("Declarar Postagem") via PATCH. | Frontend, Fluxo de Compra e Envios | Sim | A equipe substituiu os fluxos separados por um checkout mais robusto e validou os modais de inserção de código de rastreio.
 21/09/2026 | Gemini	Criação do Dashboard Administrativo com cards de estatísticas (Total Arrecadado, Itens Vendidos, Pendências). | Frontend, Dashboard Admin | Sim | A equipe testou o fluxo de login de administrador e a renderização correta dos cálculos com base na API.
 | 21/09/2026 | Gemini | Implementação do endpoint de avaliações, página de acompanhamento de pedidos para o comprador (`/customer/pedidos`), fluxos de confirmação de recebimento, submissão de reviews (nota 0-10 com limite de 2000 caracteres) e atualização dinâmica de nota média do artesão. | Backend, Avaliações, Pedidos e Vitrine | Sim | A equipe validou a persistência dos dados no json-server, a restrição de caracteres/nota e a listagem correta das últimas 5 reviews e nota média na página do produto. |
+| 23/09/2026 | Gemini | Criação de header de navegação e substituição de avaliações hard coded pela integração com a API de avaliações. | Frontend, Painel do Artesão | Sim | A equipe validou a requisição dupla (Promise.all) e a exibição condicional no painel do artesão. |
+| 23/09/2026 | Gemini | Implementação da dedução automática de estoque de produtos no momento de confirmação da compra via requisição `PATCH`. | Frontend/Backend, Checkout e Integração | Sim | A equipe testou o fluxo simulado de pagamento e validou a baixa correta do estoque no banco simulado. |
+| 23/09/2026 | Gemini | Adição de dados realistas de avaliações na base de testes (`base-db.json`) para renderizar a reputação correta do vendedor. | Banco de Dados / Fake API | Sim | O arquivo `base-db.json` foi atualizado para inicializar corretamente com métricas prontas. |
+| 23/09/2026 | Gemini | Implementação de tabela de histórico completo de compras no painel de Administrador, com recursos de filtragem por comprador, status de envio e conversão visual do ID do artesão pelo Nome. | Frontend, Dashboard Admin | Sim | A equipe validou o cruzamento de dados de `/orders` e `/artesaos`. |
+| 23/09/2026 | Gemini | Correção da validação de limite de itens ao adicionar no carrinho a partir da página do produto e diferenciação de feedback visual ("Esgotado" vs "Limite atingido"). | Frontend, Produto e Carrinho | Sim | A IA resolveu um problema de tipagem (String vs Number) que impedia o cálculo correto do estoque restante com o carrinho. |
+| 17/09/2026 | Claude | Modelagem de tipos (`Endereco` com `id`/`cep`, `Order`, `Pagamento`), criação de `addressService` e `paymentService` seguindo o padrão já existente em `productService`, ativação do botão "Finalizar Compra" (sem `onClick` antes) e implementação da tela `/customer/checkout` com wizard de 2 passos (endereço → pagamento). | Frontend, Checkout, Endereço e Pagamento | Sim | A equipe testou o fluxo simulando as chamadas contra o `json-server` real (`curl`) e corrigiu um JSON inválido no `base-db.json` (vírgula faltando) que impedia a Fake API de subir. |
+| 22/09/2026 | Claude | Implementação do módulo de recomendação de produtos (RF31): novo `recommendationService` com lógica em cascata (histórico de compras por categoria → produtos mais vendidos globalmente → mais recentes), novo método `getTodasCompras` no `orderService`, e seção "Recomendados para Você" no painel do comprador. | Frontend, Recomendação e Pedidos | Sim | A equipe simulou os 3 cenários (cliente com histórico, cliente novo, banco sem pedidos) contra dados reais do `json-server` e corrigiu 2 bugs de lógica encontrados nesse teste: o sistema recomendava de volta um produto que o cliente já havia comprado, e o fallback final quebrava por causa de um campo (`ativo`) `undefined` no banco de testes. |
 
 ---
 
@@ -146,6 +153,22 @@ Prompt ou descrição:
 Como a resposta foi utilizada:
 > A IA auxiliou na criação do ecossistema completo de avaliações (endpoint `/avaliacoes`, cálculo dinâmico de nota média e contagem no perfil do artesão), desenvolvimento da página de gerenciamento de pedidos do cliente com rastreio e botões de confirmação de entrega, além da estruturação do modal de submissão de reviews (0 a 10 com limitação de 2000 caracteres) e exibição das 5 últimas reviews na vitrine pública do produto.
 
+### Prompt 12
+
+Prompt ou descrição:
+> "altere carrinho para reduzir do estoque a quantidade que é comprada" e "faça que /admin mostre uma lista com todas as compras, podendo filtrar por comprador, vendedor, estado de envio" e "use nome do vendedor inves de id"
+
+Como a resposta foi utilizada:
+> A resposta da IA serviu para conectar múltiplos pontos do sistema simultaneamente: implementamos o `PATCH` de atualização de estoque (deduzindo a quantidade comprada) no momento da finalização da venda, e ao mesmo tempo estruturamos a tabela do Admin para mapear os pedidos, convertendo os IDs criptografados dos artesãos para seus nomes reais e aplicando filtros combinados.
+
+### Prompt 13
+
+Prompt ou descrição:
+> "altere /product para contar quantos ja tem no carrinho para nao ser possivel adicionar no carrinho uma quantidade alem do estoque" e "se o item já tiver no carrinho, diga 'limite atingido no carrinho' inves de 'esgotado'"
+
+Como a resposta foi utilizada:
+> A IA identificou e resolveu um problema lógico sutil em que as comparações de ID no Zustand estavam quebrando por conta da conversão indevida para `Number()`. A correção garantiu a estabilidade do carrinho e melhorou a experiência visual diferenciando um produto puramente sem estoque de um produto cujas últimas unidades já estão na posse (carrinho) do próprio cliente.
+
 ---
 
 ## 5. Partes do projeto que tiveram apoio de IA
@@ -154,7 +177,7 @@ Marquem os itens em que houve uso de IA.
 
 - [x] Entendimento do problema
 - [ ] Pesquisa técnica
-- [ ] Prototipação de telas
+- [x] Prototipação de telas
 - [x] Estruturação do frontend
 - [x] Componentização
 - [x] Tipagem TypeScript
@@ -164,8 +187,8 @@ Marquem os itens em que houve uso de IA.
 - [ ] Banco de dados
 - [x] Autenticação *(Mock de papéis/roles)*
 - [x] Carrinho
-- [ ] Pedidos
-- [ ] Recomendação
+- [x] Pedidos
+- [x] Recomendação
 - [ ] Processamento assíncrono
 - [x] Cache *(Uso de LocalStorage)*
 - [ ] Testes

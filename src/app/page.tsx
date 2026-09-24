@@ -1,3 +1,4 @@
+// src/app/page.tsx (Corrigido - Sem o HeaderCarrinho manual)
 "use client";
 
 import { useEffect, useState } from "react";
@@ -6,7 +7,6 @@ import { LuSearch } from "react-icons/lu";
 import { Product } from "@/types/product";
 import { productService } from "@/services/productService";
 import { useCartStore } from "@/store/cartStore";
-import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
 import { CategoryFilter } from "./components/CategoryFilter";
 import { ProductList } from "./components/ProductList";
 
@@ -18,14 +18,12 @@ export default function Home() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [searchInput, setSearchInput] = useState("");
 
-    // Carrinho (zustand)
     const addItem = useCartStore((state) => state.addItem);
 
     function handleAddToCart(product: Product) {
         addItem(product);
     }
 
-    // Carrega todos os produtos uma vez na inicialização
     useEffect(() => {
         async function loadProducts() {
             try {
@@ -46,7 +44,6 @@ export default function Home() {
         loadProducts();
     }, []);
 
-    // Função centralizada de busca (pode ser chamada de forma imediata)
     async function handleSearch(termOverride?: string) {
         const term = (termOverride !== undefined ? termOverride : searchInput).trim();
 
@@ -67,7 +64,6 @@ export default function Home() {
         }
     }
 
-    // Busca automática a cada letra digitada (com debounce de 300ms)
     useEffect(() => {
         if (allProducts.length === 0 && !isLoading) return;
 
@@ -86,7 +82,7 @@ export default function Home() {
 
     return (
         <Box minH="100vh">
-            <HeaderCarrinho />
+            {/* O HeaderCarrinho foi removido daqui porque já está no layout.tsx raiz! */}
             <Container maxW="1200px" py={8}>
                 <VStack align="stretch" gap={6}>
                     <Box>
@@ -109,12 +105,12 @@ export default function Home() {
                     >
                         <InputGroup startElement={<LuSearch color="var(--chakra-colors-neutral-muted)" />} flex={1}>
                             <Input
-                                placeholder="Procure por tipo, material, artesão"
+                                placeholder="Search crafts, artisans, city or material"
                                 value={searchInput}
                                 onChange={(e) => setSearchInput(e.target.value)}
                                 onKeyDown={(e) => {
                                     if (e.key === "Enter") {
-                                        handleSearch(); // Busca imediata ao apertar Enter
+                                        handleSearch();
                                     }
                                 }}
                                 variant="subtle"
@@ -124,7 +120,6 @@ export default function Home() {
                             />
                         </InputGroup>
 
-                        {/* Botão funcional que dispara a busca imediatamente ao ser clicado */}
                         <Button
                             colorPalette="brand"
                             borderRadius="full"
