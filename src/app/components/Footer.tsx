@@ -12,7 +12,7 @@ export function Footer() {
       <Container maxW="1200px">
         <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" gap={8} mb={10}>
           
-          {/* Coluna 1 */}
+          {/* Coluna 1: Sobre */}
           <VStack align="flex-start" maxW="320px" gap={4}>
             <Text fontSize="xl" fontWeight="bold" color="white">
               FolcStore ✦
@@ -25,23 +25,23 @@ export function Footer() {
             </Flex>
           </VStack>
 
-          {/* Coluna 2 */}
+          {/* Coluna 2: Navegação */}
           <VStack align="flex-start" gap={3}>
             <Text fontSize="md" fontWeight="bold" color="white">
               Navegação
             </Text>
-            <NextLink href="/" passHref style={{ textDecoration: 'none' }}>
-              <ChakraLink fontSize="sm" color="gray.400" _hover={{ color: 'brand.500' }}>Início / Vitrine</ChakraLink>
-            </NextLink>
-            <NextLink href="/artesao" passHref style={{ textDecoration: 'none' }}>
-              <ChakraLink fontSize="sm" color="gray.400" _hover={{ color: 'brand.500' }}>Portal do Artesão</ChakraLink>
-            </NextLink>
-            <NextLink href="/admin" passHref style={{ textDecoration: 'none' }}>
-              <ChakraLink fontSize="sm" color="gray.400" _hover={{ color: 'brand.500' }}>Painel Administrativo</ChakraLink>
-            </NextLink>
+            <ChakraLink as={NextLink} href="/" fontSize="sm" color="gray.400" _hover={{ color: 'brand.500' }}>
+              Início / Vitrine
+            </ChakraLink>
+            <ChakraLink as={NextLink} href="/artesao" fontSize="sm" color="gray.400" _hover={{ color: 'brand.500' }}>
+              Portal do Artesão
+            </ChakraLink>
+            <ChakraLink as={NextLink} href="/admin" fontSize="sm" color="gray.400" _hover={{ color: 'brand.500' }}>
+              Painel Administrativo
+            </ChakraLink>
           </VStack>
 
-          {/* Coluna 3 */}
+          {/* Coluna 3: Pagamento */}
           <VStack align="flex-start" gap={3}>
             <Text fontSize="md" fontWeight="bold" color="white">
               Formas de Pagamento
@@ -56,7 +56,7 @@ export function Footer() {
             </HStack>
           </VStack>
 
-          {/* Coluna 4 */}
+          {/* Coluna 4: Newsletter */}
           <VStack align="flex-start" maxW="300px" gap={3}>
             <Text fontSize="md" fontWeight="bold" color="white">
               Newsletter
