@@ -128,7 +128,7 @@ export default function Artesao() {
                         align={{ base: "flex-start", md: "center" }}
                         gap={4}
                     >
-                        <HStack spacing={4}>
+                        <HStack gap={4}>
                             <Avatar.Root size="lg" bg="#C85A32" color="white">
                                 <Avatar.Fallback name={artesao?.nome || 'Mestre Artesão'} />
                             </Avatar.Root>

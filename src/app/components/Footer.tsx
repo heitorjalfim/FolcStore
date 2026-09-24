@@ -12,8 +12,8 @@ export function Footer() {
       <Container maxW="1200px">
         <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" gap={8} mb={10}>
           
-          {/* Coluna 1: Sobre / Pernambuco */}
-          <VStack align="flex-start" maxW="320px" spacing={4}>
+          {/* Coluna 1 */}
+          <VStack align="flex-start" maxW="320px" gap={4}>
             <Text fontSize="xl" fontWeight="bold" color="white">
               FolcStore ✦
             </Text>
@@ -25,8 +25,8 @@ export function Footer() {
             </Flex>
           </VStack>
 
-          {/* Coluna 2: Navegação Útil */}
-          <VStack align="flex-start" spacing={3}>
+          {/* Coluna 2 */}
+          <VStack align="flex-start" gap={3}>
             <Text fontSize="md" fontWeight="bold" color="white">
               Navegação
             </Text>
@@ -41,23 +41,23 @@ export function Footer() {
             </NextLink>
           </VStack>
 
-          {/* Coluna 3: Formas de Pagamento */}
-          <VStack align="flex-start" spacing={3}>
+          {/* Coluna 3 */}
+          <VStack align="flex-start" gap={3}>
             <Text fontSize="md" fontWeight="bold" color="white">
               Formas de Pagamento
             </Text>
             <Text fontSize="sm" color="gray.400">
               Aceitamos Pix, Cartão de Crédito e Boleto Bancário com total segurança.
             </Text>
-            <HStack spacing={2} pt={1}>
+            <HStack gap={2} pt={1}>
               <Box px={2} py={1} bg="gray.800" borderRadius="md" fontSize="xs" fontWeight="bold" color="white">PIX</Box>
               <Box px={2} py={1} bg="gray.800" borderRadius="md" fontSize="xs" fontWeight="bold" color="white">Crédito</Box>
               <Box px={2} py={1} bg="gray.800" borderRadius="md" fontSize="xs" fontWeight="bold" color="white">Boleto</Box>
             </HStack>
           </VStack>
 
-          {/* Coluna 4: Newsletter */}
-          <VStack align="flex-start" maxW="300px" spacing={3}>
+          {/* Coluna 4 */}
+          <VStack align="flex-start" maxW="300px" gap={3}>
             <Text fontSize="md" fontWeight="bold" color="white">
               Newsletter
             </Text>
