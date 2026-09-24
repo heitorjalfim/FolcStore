@@ -2165,7 +2165,6 @@
   ],
   "products": [
     {
-<<<<<<< HEAD
       "id": "prod-001",
       "sku": "LOT-3001",
       "titulo": "Banda de Pífanos Tradicional em Terracota",
@@ -2173,14 +2172,6 @@
       "materiaPrima": "Argila Queimada",
       "tecnica": "Modelagem Figurativa",
       "regiaoProducao": "Alto do Moura (Caruaru)",
-=======
-      "idArtesao": "artesao-1",
-      "titulo": "Vaso de Barro Decorativo",
-      "descricao": "Vaso artesanal feito com argila regional.",
-      "materiaPrima": "Argila",
-      "tecnica": "Modelagem Manual",
-      "regiaoProducao": "Alto do Moura",
->>>>>>> 4025771028b37eb48a5b59c69569a7d7bc2051fd
       "categoria": "Decoração",
       "preco": 43,
       "tipo": "lote",
