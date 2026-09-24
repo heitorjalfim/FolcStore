@@ -1,4 +1,3 @@
-// src/app/product/[slug]/page.tsx (Corrigido - Sem o HeaderCarrinho manual)
 "use client";
 
 import { useEffect, useState, use } from "react";
@@ -6,7 +5,7 @@ import { Box, Heading, Text, VStack, HStack, Button, Image } from "@chakra-ui/re
 import { useRouter } from "next/navigation";
 import NextLink from "next/link";
 import { userService } from "@/services/userService";
-import { productService } from "@/services/productService";
+import { productService, extractProductId } from "@/services/productService";
 import { useCartStore } from "@/store/cartStore";
 import { Product, Artesao, CartItem } from "@/types";
 
@@ -18,10 +17,8 @@ type PageProps = {
 
 export default function DetalheProdutoPage({ params }: PageProps) {
     const resolvedParams = use(params);
-
     const rawUrlParam = decodeURIComponent(resolvedParams.slug);
-    const urlParts = rawUrlParam.split("-");
-    const productId = urlParts[urlParts.length - 1];
+    const productId = extractProductId(rawUrlParam);
 
     const [produto, setProduto] = useState<Product | null>(null);
     const [artesao, setArtesao] = useState<Artesao | null>(null);
@@ -37,10 +34,10 @@ export default function DetalheProdutoPage({ params }: PageProps) {
         async function fetchDados() {
             setLoading(true);
             try {
-                const produtoRes = await productService.getById(Number(productId) || productId);
+                const produtoRes = await productService.getById(productId);
                 setProduto(produtoRes);
 
-                if (produtoRes && produtoRes.idArtesao) {
+                if (produtoRes?.idArtesao) {
                     try {
                         const artesaoRes = await userService.getArtesaoById(produtoRes.idArtesao);
                         setArtesao(artesaoRes);
@@ -84,7 +81,7 @@ export default function DetalheProdutoPage({ params }: PageProps) {
     const estoqueDisponivel = produto.quantidadeEstoque ?? 0;
 
     const quantidadeNoCarrinho = cartItems.reduce((total: number, item: CartItem) => {
-        if (Number(item?.product?.id) === Number(produto.id)) {
+        if (String(item?.product?.id) === String(produto.id)) {
             return total + (item.quantity || 1);
         }
         return total;
@@ -120,7 +117,6 @@ export default function DetalheProdutoPage({ params }: PageProps) {
 
     return (
         <Box minH="100vh">
-            {/* O HeaderCarrinho foi removido daqui pois já é gerido globalmente pelo layout.tsx */}
             <Box maxW="7xl" mx="auto" py={8} px={4}>
                 <VStack gap={6} align="start" w="full">
                     <Heading as="h1" size="xl" color="gray.800">
