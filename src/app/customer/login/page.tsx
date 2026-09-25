@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { sessionStore } from "@/store/sessionStore";
 import { userService } from "@/services/userService";
-import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -15,9 +14,7 @@ import {
   Text,
   VStack,
   Spinner,
-  IconButton
 } from "@chakra-ui/react";
-import { LuHouse } from 'react-icons/lu';
 
 export default function CustomerLoginPage() {
   const [mounted, setMounted] = useState(false);
@@ -36,7 +33,7 @@ export default function CustomerLoginPage() {
     if (isCustomerLogged()) {
       router.push("/customer");
     }
-  }, []);
+  }, [isCustomerLogged, router]);
 
   if (!mounted || isCustomerLogged())
     return (
@@ -68,7 +65,7 @@ export default function CustomerLoginPage() {
   };
 
   return (
-    <Flex minH="80vh" align="center" justify="center">
+    <Flex minH="80vh" align="center" justify="center" px={4}>
       <Box
         bg="white"
         p={8}
@@ -79,19 +76,7 @@ export default function CustomerLoginPage() {
         w="full"
         maxW="md"
       >
-        <VStack gap={6} align="stretch">
-          <Flex justify="center" mb={-2}>
-            <NextLink href="/">
-              <IconButton
-                aria-label="Voltar para a página inicial"
-                variant="ghost"
-                size="lg"
-                borderRadius="full"
-              >
-                <LuHouse size={24} />
-              </IconButton>
-            </NextLink>
-          </Flex>
+        <VStack align="stretch" gap={6}>
           <Heading size="lg" textAlign="center" color="brand.500">
             Login de Cliente
           </Heading>
