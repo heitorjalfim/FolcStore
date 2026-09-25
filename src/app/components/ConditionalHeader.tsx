@@ -1,16 +1,17 @@
 // src/app/components/ConditionalHeader.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Box, Flex, Text, Button, Container, HStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { HeaderCarrinho } from "./HeaderCarrinho";
-import { FiLogOut } from 'react-icons/fi';
+import { FiPackage, FiLogOut } from 'react-icons/fi';
 import { sessionStore } from "@/store/sessionStore";
 
 export function ConditionalHeader() {
-  const [mounted, setMounted] = useState(false);
+  // Inicializa indicando que já está no cliente após o primeiro render do hook de navegação
+  const [mounted] = useState(true);
   const pathname = usePathname() || "";
   const router = useRouter();
 
@@ -19,10 +20,6 @@ export function ConditionalHeader() {
 
   const isArtesaoLogged = sessionStore((state) => state.isArtesaoLogged);
   const logoutArtesao = sessionStore((state) => state.logoutArtesao);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleAdminLogout = () => {
     logoutAdmin();
@@ -109,7 +106,14 @@ export function ConditionalHeader() {
             </NextLink>
 
             <HStack gap={3} justify={{ base: "center", md: "flex-end" }} wrap="wrap">
-          
+              {!isAuthPage && (
+                <NextLink href="/artesao/produtos" style={{ textDecoration: "none" }}>
+                  <Button size="sm" variant="outline" colorPalette="brand">
+                    <FiPackage /> Meu Catálogo
+                  </Button>
+                </NextLink>
+              )}
+
               {loggedArtesao && !isAuthPage && (
                 <Button variant="outline" colorPalette="brand" size="sm" onClick={handleArtesaoLogout}>
                   <FiLogOut /> Sair da Conta
