@@ -158,12 +158,7 @@ export default function AdminPage() {
                             <Badge bg="#E2DCD5" color="#4A3E3D" px={4} py={2} borderRadius="full" fontSize="xs">
                                 Período Consolidado
                             </Badge>
-                            <Button variant="outline" colorPalette="red" size="sm" onClick={handleLogout}>
-                                <HStack gap={2}>
-                                    <FiLogOut />
-                                    <Text>Sair</Text>
-                                </HStack>
-                            </Button>
+                            
                         </HStack>
                     </Flex>
                 </Box>

@@ -108,59 +108,61 @@ export default function CustomerDashboard() {
     return (
         <Box minH="100vh" bg="gray.50" pb={12}>
             {/* Header */}
-            <Box bg="white" shadow="sm" py={4} px={8} mb={8}>
+            <Box as="header" bg="gray.900" color="white" py={4} px={{ base: 4, md: 8 }} shadow="sm" mb={8}>
                 <Container maxW="1200px">
                     <Flex justify="space-between" align="center">
-                        <HStack gap={4}>
-                            <NextLink href="/">
-                                <Button variant="ghost" size="sm">
-                                    <HStack gap={2}>
-                                        <FiHome />
-                                        <Text>Home</Text>
-                                    </HStack>
-                                </Button>
-                            </NextLink>
-                            <Heading size="md" color="brand.500">
-                                Vitrine
-                            </Heading>
-                        </HStack>
+                        {/* Logo com ícone dourado e texto branco */}
+                        <NextLink href="/" style={{ textDecoration: "none" }}>
+                            <HStack gap={3} cursor="pointer">
+                                <Flex w={7} h={7} borderRadius="md" bg="brand.500" color="gray.900" align="center" justify="center" fontWeight="bold">
+                                    ✦
+                                </Flex>
+                                <Text fontWeight="bold" fontSize={{ base: "sm", md: "md" }} color="white">
+                                    FolcStore
+                                </Text>
+                            </HStack>
+                        </NextLink>
 
-                        <HStack gap={3}>
-                            {/* Botão que direciona para a central "Sua Conta" */}
-                            <NextLink href="/customer/minha-conta">
-                                <Button variant="outline" size="sm">
-                                    <HStack gap={2}>
-                                        <FiUser />
-                                        <Text>Sua Conta</Text>
-                                    </HStack>
-                                </Button>
+                        {/* Ações à Direita */}
+                        <HStack gap={{ base: 2, md: 4 }}>
+                            {/* Link "Sua Conta" - Oculto em telas muito pequenas, visível em tablet/desktop */}
+                            <NextLink href="/customer/minha-conta" style={{ textDecoration: "none" }}>
+                                <Text display={{ base: "none", sm: "block" }} color="gray.300" _hover={{ color: "white" }} fontSize="sm" fontWeight="medium">
+                                    Sua Conta
+                                </Text>
                             </NextLink>
 
+                            {/* Botão do Carrinho */}
                             <Button 
                                 variant="outline" 
                                 size="sm" 
+                                colorPalette="brand"
                                 onClick={() => setIsCartOpen(true)}
+                                borderColor="brand.500"
+                                color="brand.500"
+                                _hover={{ bg: "brand.500", color: "gray.900" }}
                             >
                                 <HStack gap={2}>
                                     <FiShoppingCart />
-                                    <Text>Carrinho</Text>
+                                    <Text display={{ base: "none", sm: "inline" }}>Carrinho</Text>
                                     {totalItems > 0 && (
-                                        <Badge colorPalette="brand" borderRadius="full">
+                                        <Badge bg="brand.500" color="gray.900" borderRadius="full">
                                             {totalItems}
                                         </Badge>
                                     )}
                                 </HStack>
                             </Button>
 
+                            {/* Botão Sair */}
                             <Button
-                                colorScheme="red"
+                                colorPalette="red"
                                 variant="outline"
                                 size="sm"
                                 onClick={handleLogout}
                             >
-                                <HStack gap={2}>
+                                <HStack gap={1}>
                                     <FiLogOut />
-                                    <Text>Sair</Text>
+                                    <Text display={{ base: "none", md: "inline" }}>Sair</Text>
                                 </HStack>
                             </Button>
                         </HStack>
