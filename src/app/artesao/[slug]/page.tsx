@@ -1,3 +1,4 @@
+// src/app/artesao/[slug]/page.tsx
 "use client";
 
 import { useEffect, useState, use } from "react";
@@ -6,15 +7,13 @@ import { userService } from "@/services/userService";
 import { productService } from "@/services/productService";
 import { useCartStore } from "@/store/cartStore";
 import { Artesao, Product } from "@/types";
-import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
+// REMOVA ESTA LINHA: import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
 import { ProductList } from "@/app/components/ProductList";
 import { CategoryFilter } from "@/app/components/CategoryFilter";
 import { FiStar } from "react-icons/fi";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
-// Mesma transformação usada ao gerar o link "Ver Perfil do Artesão"
-// na página de produto: nome em minúsculas com espaços trocados por hífen.
 function slugFromNome(nome: string) {
     return nome.toLowerCase().replace(/\s+/g, "-");
 }
@@ -73,8 +72,8 @@ export default function PerfilArtesaoPage({ params }: PageProps) {
 
     if (loading) {
         return (
-            <Box minH="100vh" bg="bg.subtle">
-                <HeaderCarrinho />
+            <Box minH="100vh" bg="bg.subtle" pt={8}>
+                {/* REMOVIDO O <HeaderCarrinho /> DAQUI */}
                 <Container maxW="1200px" py={8}>
                     <Text color="fg.muted">Carregando perfil do artesão...</Text>
                 </Container>
@@ -84,8 +83,8 @@ export default function PerfilArtesaoPage({ params }: PageProps) {
 
     if (error || !artesao) {
         return (
-            <Box minH="100vh" bg="bg.subtle">
-                <HeaderCarrinho />
+            <Box minH="100vh" bg="bg.subtle" pt={8}>
+                {/* REMOVIDO O <HeaderCarrinho /> DAQUI */}
                 <Container maxW="1200px" py={8}>
                     <VStack gap={4} align="start">
                         <Heading as="h1" size="lg" color="red.500">
@@ -102,7 +101,7 @@ export default function PerfilArtesaoPage({ params }: PageProps) {
 
     return (
         <Box minH="100vh" bg="bg.subtle" pb={12}>
-            <HeaderCarrinho />
+            {/* REMOVIDO O <HeaderCarrinho /> DAQUI */}
 
             {/* Banner com dados do artesão */}
             <Box bg="brand.700" color="white" py={10} px={4}>

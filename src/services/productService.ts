@@ -3,7 +3,14 @@ import { Produto, CriarProdutoDTO, AtualizarProdutoDTO } from '@/types/product';
 
 export function extractProductId(slugOrId: string | number): string {
     const str = String(slugOrId);
-    const match = str.match(/(?:--|-)?(prod-[a-zA-Z0-9]+|[a-f0-9-]{36}|\d+)$/i);
+    
+    // Se o slug vier no formato "titulo--id", separa e pega a última parte (ex: "posseee")
+    if (str.includes('--')) {
+        const parts = str.split('--');
+        return parts[parts.length - 1];
+    }
+
+    const match = str.match(/(?:--|-)?(prod-[a-zA-Z0-9]+|[a-f0-9-]{36}|\d+|posseee)$/i);
     return match ? match[1] : str;
 }
 

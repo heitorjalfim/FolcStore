@@ -65,7 +65,7 @@ export default function CustomerAccountHubPage() {
 
                 <VStack align="start" mb={8} gap={1}>
                     <Heading size="xl">Sua Conta</Heading>
-                    <Text color="gray.600">Olá, <b>{customer?.nome}</b> ({customer?.email})</Text>
+                    <Text color="gray.600">Olá, <b>{customer?.nome}</b></Text>
                 </VStack>
 
                 {/* Grid com as seções da conta */}
