@@ -152,9 +152,7 @@ export default function GerenciarCatalogoPage() {
               <Heading size="lg" color="gray.900">
                 Gerenciar Catálogo
               </Heading>
-              <Badge colorPalette="brand" size="md">
-                HU 128-130
-              </Badge>
+              
             </HStack>
             <Text fontSize="xs" color="gray.600">
               Painel de manutenção de preços, descrições e estoque das peças artesanais cadastradas.

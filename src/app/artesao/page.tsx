@@ -146,11 +146,7 @@ export default function Artesao() {
                                 Oficina Aberta & Recebendo Pedidos
                             </Badge>
                             
-                            <NextLink href="/">
-                                <Button variant="outline" size="sm">
-                                    <HStack gap={2}><FiHome /><Text>Início</Text></HStack>
-                                </Button>
-                            </NextLink>
+                            
 
                             <NextLink href="/artesao/produtos">
                                 <Button colorPalette="brand" size="sm">
@@ -158,9 +154,7 @@ export default function Artesao() {
                                 </Button>
                             </NextLink>
                             
-                            <Button variant="outline" colorPalette="red" size="sm" onClick={handleLogout}>
-                                <HStack gap={2}><FiLogOut /><Text>Sair</Text></HStack>
-                            </Button>
+                           
                         </HStack>
                     </Flex>
                 </Card.Root>
