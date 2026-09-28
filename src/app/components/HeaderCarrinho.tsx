@@ -6,6 +6,7 @@ import { Box, Flex, Text, Button, Container, HStack, VStack, IconButton } from "
 import NextLink from "next/link";
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { useCartStore } from "@/store/cartStore";
+import { CartDrawer } from "./CartDrawer"; // Importa a gaveta do carrinho
 
 const NAV_LINKS = [
   { label: "Cliente", href: "/customer" },
@@ -15,6 +16,8 @@ const NAV_LINKS = [
 
 export function HeaderCarrinho({ mounted = true }: { mounted?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false); // Estado para controlar a gaveta do carrinho
+  
   const cartItems = useCartStore((state) => state.items);
   const totalItens = mounted ? cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0) : 0;
 
@@ -59,15 +62,19 @@ export function HeaderCarrinho({ mounted = true }: { mounted?: boolean }) {
 
           {/* 3. Ações à Direita (Carrinho + Botão Menu Mobile) */}
           <HStack gap={3}>
-            <NextLink href="/customer/checkout" style={{ textDecoration: "none" }}>
-              <Button size="sm" variant="outline" colorPalette="brand">
-                <FiShoppingCart /> 
-                <Box as="span" display={{ base: "none", sm: "inline" }} ml={1}>
-                  Carrinho
-                </Box> 
-                {mounted && totalItens > 0 ? ` (${totalItens})` : ""}
-              </Button>
-            </NextLink>
+            {/* Botão do Carrinho agora abre o CartDrawer em vez de redirecionar */}
+            <Button 
+              size="sm" 
+              variant="outline" 
+              colorPalette="brand" 
+              onClick={() => setIsCartOpen(true)}
+            >
+              <FiShoppingCart /> 
+              <Box as="span" display={{ base: "none", sm: "inline" }} ml={1}>
+                Carrinho
+              </Box> 
+              {mounted && totalItens > 0 ? ` (${totalItens})` : ""}
+            </Button>
 
             {/* Botão Hambúrguer para Telemóveis */}
             <IconButton
@@ -112,6 +119,9 @@ export function HeaderCarrinho({ mounted = true }: { mounted?: boolean }) {
           </VStack>
         )}
       </Container>
+
+      {/* Gaveta do Carrinho integrada */}
+      <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </Box>
   );
 }
