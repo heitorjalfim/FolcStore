@@ -7,10 +7,7 @@ import { productService } from '@/services/productService';
 import { orderService } from '@/services/orderService';
 import { recommendationService } from '@/services/recommendationService';
 import { Product } from '@/types/product';
-import { HeaderCarrinho } from "@/app/components/HeaderCarrinho";
-import NextLink from 'next/link';
 import { useCartStore } from '@/store/cartStore';
-import { CartDrawer } from '../components/CartDrawer';
 import {
     Box,
     Button,
@@ -19,31 +16,23 @@ import {
     Heading,
     Text,
     VStack,
-    HStack,
-    Spinner,
-    Image,
     SimpleGrid,
     Card,
-    Badge
+    Image,
+    Spinner
 } from '@chakra-ui/react';
-import { FiHome, FiLogOut, FiShoppingCart, FiUser } from 'react-icons/fi';
 
 export default function CustomerDashboard() {
     const [mounted, setMounted] = useState(false);
     const [products, setProducts] = useState<Product[]>([]);
     const [isLoadingProducts, setIsLoadingProducts] = useState(true);
-    const [isCartOpen, setIsCartOpen] = useState(false);
     const [recomendados, setRecomendados] = useState<Product[]>([]);
 
     const router = useRouter();
 
-    // Funções corretas vindas do seu sessionStore.ts
-    const logoutCustomer = sessionStore((state) => state.logoutCustomer);
     const isCustomerLogged = sessionStore((state) => state.isCustomerLogged);
     const customer = sessionStore((state) => state.customer);
-
     const addItem = useCartStore((state) => state.addItem);
-    const totalItems = useCartStore((state) => state.totalItems)();
 
     useEffect(() => setMounted(true), []);
 
@@ -96,80 +85,12 @@ export default function CustomerDashboard() {
         );
     }
 
-    const handleLogout = () => {
-        logoutCustomer();
-        router.push('/');
-    };
-
     const handleCardClick = (productId: string | number) => {
         router.push(`/product/${productId}`);
     };
 
     return (
-        <Box minH="100vh" bg="gray.50" pb={12}>
-            {/* Header */}
-            <Box as="header" bg="gray.900" color="white" py={4} px={{ base: 4, md: 8 }} shadow="sm" mb={8}>
-                <Container maxW="1200px">
-                    <Flex justify="space-between" align="center">
-                        {/* Logo com ícone dourado e texto branco */}
-                        <NextLink href="/" style={{ textDecoration: "none" }}>
-                            <HStack gap={3} cursor="pointer">
-                                <Flex w={7} h={7} borderRadius="md" bg="brand.500" color="gray.900" align="center" justify="center" fontWeight="bold">
-                                    ✦
-                                </Flex>
-                                <Text fontWeight="bold" fontSize={{ base: "sm", md: "md" }} color="white">
-                                    FolcStore
-                                </Text>
-                            </HStack>
-                        </NextLink>
-
-                        {/* Ações à Direita */}
-                        <HStack gap={{ base: 2, md: 4 }}>
-                            {/* Link "Sua Conta" - Oculto em telas muito pequenas, visível em tablet/desktop */}
-                            <NextLink href="/customer/minha-conta" style={{ textDecoration: "none" }}>
-                                <Text display={{ base: "none", sm: "block" }} color="gray.300" _hover={{ color: "white" }} fontSize="sm" fontWeight="medium">
-                                    Sua Conta
-                                </Text>
-                            </NextLink>
-
-                            {/* Botão do Carrinho */}
-                            <Button 
-                                variant="outline" 
-                                size="sm" 
-                                colorPalette="brand"
-                                onClick={() => setIsCartOpen(true)}
-                                borderColor="brand.500"
-                                color="brand.500"
-                                _hover={{ bg: "brand.500", color: "gray.900" }}
-                            >
-                                <HStack gap={2}>
-                                    <FiShoppingCart />
-                                    <Text display={{ base: "none", sm: "inline" }}>Carrinho</Text>
-                                    {totalItems > 0 && (
-                                        <Badge bg="brand.500" color="gray.900" borderRadius="full">
-                                            {totalItems}
-                                        </Badge>
-                                    )}
-                                </HStack>
-                            </Button>
-
-                            {/* Botão Sair */}
-                            <Button
-                                colorPalette="red"
-                                variant="outline"
-                                size="sm"
-                                onClick={handleLogout}
-                            >
-                                <HStack gap={1}>
-                                    <FiLogOut />
-                                    <Text display={{ base: "none", md: "inline" }}>Sair</Text>
-                                </HStack>
-                            </Button>
-                        </HStack>
-                    </Flex>
-                </Container>
-            </Box>
-
+        <Box minH="100vh" bg="gray.50" pb={12} pt={6}>
             <Container maxW="1200px">
                 {/* Perfil do Cliente */}
                 <Box
@@ -277,9 +198,6 @@ export default function CustomerDashboard() {
                     </SimpleGrid>
                 )}
             </Container>
-
-            {/* Drawer do Carrinho */}
-            <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} />
         </Box>
     );
 }
