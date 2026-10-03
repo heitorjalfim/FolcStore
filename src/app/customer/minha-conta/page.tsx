@@ -51,8 +51,24 @@ export default function CustomerAccountHubPage() {
     }
 
     return (
-        <Box minH="100vh" bg="gray.50" py={8}>
-            <Container maxW="1100px">
+        <Box minH="100vh" bg="gray.50">
+            {/* Header só com a logo */}
+            <Box as="header" bg="gray.900" color="white" py={4} px={{ base: 4, md: 8 }} shadow="sm">
+                <Container maxW="1200px">
+                    <NextLink href="/" style={{ textDecoration: "none" }}>
+                        <HStack gap={3} cursor="pointer">
+                            <Flex w={7} h={7} borderRadius="md" bg="brand.500" color="gray.900" align="center" justify="center" fontWeight="bold">
+                                ✦
+                            </Flex>
+                            <Text fontWeight="bold" fontSize={{ base: "sm", md: "md" }} color="white">
+                                FolcStore
+                            </Text>
+                        </HStack>
+                    </NextLink>
+                </Container>
+            </Box>
+
+            <Container maxW="1100px" py={8}>
                 {/* Botão de voltar para a vitrine */}
                 <NextLink href="/customer">
                     <Button variant="ghost" size="sm" mb={6}>

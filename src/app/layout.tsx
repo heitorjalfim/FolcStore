@@ -1,6 +1,6 @@
 // src/app/layout.tsx
 import { Provider } from "./provider";
-import { ConditionalHeader } from "@/app/components/ConditionalHeader";
+import { ConditionalHeader } from "../app/components/ConditionalHeader";
 import { Footer } from "@/app/components/Footer";
 
 export const metadata = {
