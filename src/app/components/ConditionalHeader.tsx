@@ -43,9 +43,33 @@ export function ConditionalHeader() {
     router.push("/");
   };
 
-  // 1. Área do Cliente (/customer...): o header vem da própria página
+  // 1. Área do Cliente (/customer...)
   if (pathname.startsWith("/customer")) {
-    return null;
+    // Páginas que já renderizam o próprio header (vitrine e Sua Conta)
+    const temHeaderProprio =
+      pathname === "/customer" || pathname.startsWith("/customer/minha-conta");
+
+    if (temHeaderProprio) {
+      return null;
+    }
+
+    // Demais páginas (login, registro, checkout etc.): header só com a logo
+    return (
+      <Box as="header" bg="gray.900" color="white" py={4} px={{ base: 4, md: 8 }} shadow="sm">
+        <Container maxW="1200px">
+          <NextLink href="/" style={{ textDecoration: "none" }}>
+            <HStack gap={3} cursor="pointer">
+              <Flex w={7} h={7} borderRadius="md" bg="brand.500" color="gray.900" align="center" justify="center" fontWeight="bold">
+                ✦
+              </Flex>
+              <Text fontWeight="bold" fontSize={{ base: "sm", md: "md" }} color="white">
+                FolcStore
+              </Text>
+            </HStack>
+          </NextLink>
+        </Container>
+      </Box>
+    );
   }
 
   // 2. Área de Admin (/admin...)
@@ -53,62 +77,23 @@ export function ConditionalHeader() {
     const logged = mounted && isAdminLogged();
 
     return (
-      <Box
-        as="header"
-        bg="gray.900"
-        color="white"
-        py={4}
-        px={{ base: 4, md: 8 }}
-        shadow="sm"
-      >
+      <Box as="header" bg="gray.900" color="white" py={4} px={{ base: 4, md: 8 }} shadow="sm">
         <Container maxW="1200px">
-          <Flex
-            direction={{ base: "column", md: "row" }}
-            justify="space-between"
-            align={{ base: "stretch", md: "center" }}
-            gap={{ base: 3, md: 4 }}
-          >
+          <Flex direction={{ base: "column", md: "row" }} justify="space-between" align={{ base: "stretch", md: "center" }} gap={{ base: 3, md: 4 }}>
             <NextLink href="/" style={{ textDecoration: "none" }}>
-              <HStack
-                gap={3}
-                justify={{ base: "center", md: "flex-start" }}
-                cursor="pointer"
-              >
-                <Flex
-                  w={7}
-                  h={7}
-                  borderRadius="md"
-                  bg="brand.500"
-                  color="gray.900"
-                  align="center"
-                  justify="center"
-                  fontWeight="bold"
-                >
+              <HStack gap={3} justify={{ base: "center", md: "flex-start" }} cursor="pointer">
+                <Flex w={7} h={7} borderRadius="md" bg="brand.500" color="gray.900" align="center" justify="center" fontWeight="bold">
                   ✦
                 </Flex>
-                <Text
-                  fontWeight="bold"
-                  fontSize={{ base: "sm", md: "md" }}
-                  textAlign={{ base: "center", md: "left" }}
-                  color="white"
-                >
+                <Text fontWeight="bold" fontSize={{ base: "sm", md: "md" }} textAlign={{ base: "center", md: "left" }} color="white">
                   FolcStore
                 </Text>
               </HStack>
             </NextLink>
 
-            <HStack
-              gap={2}
-              justify={{ base: "center", md: "flex-end" }}
-              wrap="wrap"
-            >
+            <HStack gap={2} justify={{ base: "center", md: "flex-end" }} wrap="wrap">
               {logged && (
-                <Button
-                  variant="outline"
-                  colorPalette="brand"
-                  size="sm"
-                  onClick={handleAdminLogout}
-                >
+                <Button variant="outline" colorPalette="brand" size="sm" onClick={handleAdminLogout}>
                   <FiLogOut /> Sair da Conta
                 </Button>
               )}
@@ -130,60 +115,23 @@ export function ConditionalHeader() {
       pathname === "/artesao/login" || pathname === "/artesao/register";
 
     return (
-      <Box
-        as="header"
-        bg="gray.900"
-        color="white"
-        py={4}
-        px={{ base: 4, md: 8 }}
-        shadow="sm"
-      >
+      <Box as="header" bg="gray.900" color="white" py={4} px={{ base: 4, md: 8 }} shadow="sm">
         <Container maxW="1200px">
-          <Flex
-            direction={{ base: "column", md: "row" }}
-            justify="space-between"
-            align={{ base: "stretch", md: "center" }}
-            gap={{ base: 3, md: 4 }}
-          >
+          <Flex direction={{ base: "column", md: "row" }} justify="space-between" align={{ base: "stretch", md: "center" }} gap={{ base: 3, md: 4 }}>
             <NextLink href="/" style={{ textDecoration: "none" }}>
-              <HStack
-                gap={3}
-                justify={{ base: "center", md: "flex-start" }}
-                cursor="pointer"
-              >
-                <Flex
-                  w={7}
-                  h={7}
-                  borderRadius="md"
-                  bg="brand.500"
-                  color="gray.900"
-                  align="center"
-                  justify="center"
-                  fontWeight="bold"
-                >
+              <HStack gap={3} justify={{ base: "center", md: "flex-start" }} cursor="pointer">
+                <Flex w={7} h={7} borderRadius="md" bg="brand.500" color="gray.900" align="center" justify="center" fontWeight="bold">
                   ✦
                 </Flex>
-                <Text
-                  fontWeight="bold"
-                  fontSize={{ base: "sm", md: "md" }}
-                  textAlign={{ base: "center", md: "left" }}
-                  color="white"
-                >
+                <Text fontWeight="bold" fontSize={{ base: "sm", md: "md" }} textAlign={{ base: "center", md: "left" }} color="white">
                   FolcStore
                 </Text>
               </HStack>
             </NextLink>
 
-            <HStack
-              gap={3}
-              justify={{ base: "center", md: "flex-end" }}
-              wrap="wrap"
-            >
+            <HStack gap={3} justify={{ base: "center", md: "flex-end" }} wrap="wrap">
               {!isAuthPage && (
-                <NextLink
-                  href="/artesao/produtos"
-                  style={{ textDecoration: "none" }}
-                >
+                <NextLink href="/artesao/produtos" style={{ textDecoration: "none" }}>
                   <Button size="sm" variant="outline" colorPalette="brand">
                     <FiPackage /> Meu Catálogo
                   </Button>
@@ -191,12 +139,7 @@ export function ConditionalHeader() {
               )}
 
               {loggedArtesao && !isAuthPage && (
-                <Button
-                  variant="outline"
-                  colorPalette="brand"
-                  size="sm"
-                  onClick={handleArtesaoLogout}
-                >
+                <Button variant="outline" colorPalette="brand" size="sm" onClick={handleArtesaoLogout}>
                   <FiLogOut /> Sair da Conta
                 </Button>
               )}
@@ -207,6 +150,6 @@ export function ConditionalHeader() {
     );
   }
 
-  // 4. Visitantes e clientes: header com carrinho
+  // 4. Visitantes: header com carrinho
   return <HeaderCarrinho mounted={mounted} />;
 }
