@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { sessionStore } from "@/store/sessionStore";
 import { productService } from "@/services/productService";
@@ -27,8 +27,19 @@ import {
 } from "@chakra-ui/react";
 import { FiLogOut, FiShoppingCart } from "react-icons/fi";
 
+// Auxiliares do useSyncExternalStore (definidos fora do componente para ficarem estáveis)
+const subscribeVazio = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export default function CustomerDashboard() {
-  const [mounted, setMounted] = useState(false);
+  // false no servidor e na hidratação; true depois que está no navegador
+  const mounted = useSyncExternalStore(
+    subscribeVazio,
+    getClientSnapshot,
+    getServerSnapshot
+  );
+
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -43,8 +54,6 @@ export default function CustomerDashboard() {
 
   const addItem = useCartStore((state) => state.addItem);
   const totalItems = useCartStore((state) => state.totalItems)();
-
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (mounted && !isCustomerLogged()) {
